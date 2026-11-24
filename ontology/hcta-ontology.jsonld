@@ -1,0 +1,4473 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "AIProposal": "hcta:AIProposal",
+    "Actual": "hcta:Actual",
+    "Ambiguity": "hcta:Ambiguity",
+    "ArbitrationClause": "hcta:ArbitrationClause",
+    "ArbitrationForum": "hcta:ArbitrationForum",
+    "ArbitrationRules": "hcta:ArbitrationRules",
+    "BLIssued": "hcta:BLIssued",
+    "BackOffice": "hcta:BackOffice",
+    "Branch": "hcta:Branch",
+    "Breached": "hcta:Breached",
+    "CFR": "hcta:CFR",
+    "CIF": "hcta:CIF",
+    "CalendarDays": "hcta:CalendarDays",
+    "Cancelled": "hcta:Cancelled",
+    "CanonicalConcept": "hcta:CanonicalConcept",
+    "Cargo": "hcta:Cargo",
+    "CargoInsurance": "hcta:CargoInsurance",
+    "CharterParty": "hcta:CharterParty",
+    "CharterPartyForm": "hcta:CharterPartyForm",
+    "Chartering": "hcta:Chartering",
+    "ClaimNotified": "hcta:ClaimNotified",
+    "ClaimTimeBar": "hcta:ClaimTimeBar",
+    "ClaimsProcess": "hcta:ClaimsProcess",
+    "Clause": "hcta:Clause",
+    "Commodity": "hcta:Commodity",
+    "Compilation": "hcta:Compilation",
+    "ConceptMapping": "hcta:ConceptMapping",
+    "Condition": "hcta:Condition",
+    "Contract": "hcta:Contract",
+    "ContractAttachment": "hcta:ContractAttachment",
+    "ContractOption": "hcta:ContractOption",
+    "ContractWashedOut": "hcta:ContractWashedOut",
+    "ContractWashedOutState": "hcta:ContractWashedOutState",
+    "CostAllocation": "hcta:CostAllocation",
+    "CostBearer": "hcta:CostBearer",
+    "CostCategory": "hcta:CostCategory",
+    "CountingRule": "hcta:CountingRule",
+    "CoverageGap": "hcta:CoverageGap",
+    "DamagedKernels": "hcta:DamagedKernels",
+    "Deadline": "hcta:Deadline",
+    "DeadlineDue": "hcta:DeadlineDue",
+    "DealAgreed": "hcta:DealAgreed",
+    "DefaultClause": "hcta:DefaultClause",
+    "DefaultSettlement": "hcta:DefaultSettlement",
+    "Defaulted": "hcta:Defaulted",
+    "Definition": "hcta:Definition",
+    "Demurrage": "hcta:Demurrage",
+    "Despatch": "hcta:Despatch",
+    "DetachmentReason": "hcta:DetachmentReason",
+    "Diagnostic": "hcta:Diagnostic",
+    "DiagnosticKind": "hcta:DiagnosticKind",
+    "DischargeCompleted": "hcta:DischargeCompleted",
+    "DocumentaryCreditRules": "hcta:DocumentaryCreditRules",
+    "DocumentsPresented": "hcta:DocumentsPresented",
+    "DoubleCostAllocation": "hcta:DoubleCostAllocation",
+    "Draft": "hcta:Draft",
+    "Duration": "hcta:Duration",
+    "Edition": "hcta:Edition",
+    "Error": "hcta:Error",
+    "EstimatedPnL": "hcta:EstimatedPnL",
+    "Event": "hcta:Event",
+    "EventType": "hcta:EventType",
+    "ExportProhibition": "hcta:ExportProhibition",
+    "FOB": "hcta:FOB",
+    "FactStatus": "hcta:FactStatus",
+    "Final": "hcta:Final",
+    "FinalAtDischarge": "hcta:FinalAtDischarge",
+    "FinalAtLoading": "hcta:FinalAtLoading",
+    "FinalPnL": "hcta:FinalPnL",
+    "FinalityMismatch": "hcta:FinalityMismatch",
+    "FinalityPoint": "hcta:FinalityPoint",
+    "Finance": "hcta:Finance",
+    "ForceMajeure": "hcta:ForceMajeure",
+    "ForceMajeureEvent": "hcta:ForceMajeureEvent",
+    "Forecast": "hcta:Forecast",
+    "ForeignMatter": "hcta:ForeignMatter",
+    "ForumMismatch": "hcta:ForumMismatch",
+    "Freight": "hcta:Freight",
+    "Fulfilled": "hcta:Fulfilled",
+    "Fumigation": "hcta:Fumigation",
+    "GoverningLaw": "hcta:GoverningLaw",
+    "HedgePosition": "hcta:HedgePosition",
+    "Holon": "hcta:Holon",
+    "Incorporation": "hcta:Incorporation",
+    "IncotermRule": "hcta:IncotermRule",
+    "Info": "hcta:Info",
+    "InspectionMandate": "hcta:InspectionMandate",
+    "InspectionProcess": "hcta:InspectionProcess",
+    "InspectionReported": "hcta:InspectionReported",
+    "InsurancePolicy": "hcta:InsurancePolicy",
+    "IntercompanyContract": "hcta:IntercompanyContract",
+    "InvoiceIssued": "hcta:InvoiceIssued",
+    "InvoicingProcess": "hcta:InvoicingProcess",
+    "IssuingBody": "hcta:IssuingBody",
+    "LCCharges": "hcta:LCCharges",
+    "LCOpened": "hcta:LCOpened",
+    "Laycan": "hcta:Laycan",
+    "Laytime": "hcta:Laytime",
+    "LaytimeMismatch": "hcta:LaytimeMismatch",
+    "LaytimeProcess": "hcta:LaytimeProcess",
+    "LaytimeProvision": "hcta:LaytimeProvision",
+    "LaytimeStarted": "hcta:LaytimeStarted",
+    "LegacyRecord": "hcta:LegacyRecord",
+    "Legal": "hcta:Legal",
+    "LegalEntity": "hcta:LegalEntity",
+    "LetterOfCredit": "hcta:LetterOfCredit",
+    "LetterOfCreditProcess": "hcta:LetterOfCreditProcess",
+    "LifecycleState": "hcta:LifecycleState",
+    "LivePnL": "hcta:LivePnL",
+    "LoadingCompleted": "hcta:LoadingCompleted",
+    "MarketReference": "hcta:MarketReference",
+    "Moisture": "hcta:Moisture",
+    "MoneyTerm": "hcta:MoneyTerm",
+    "NORTenderedDischarge": "hcta:NORTenderedDischarge",
+    "NORTenderedLoad": "hcta:NORTenderedLoad",
+    "NominationProcess": "hcta:NominationProcess",
+    "NoticeOfAppropriation": "hcta:NoticeOfAppropriation",
+    "NoticeOfReadiness": "hcta:NoticeOfReadiness",
+    "Obligation": "hcta:Obligation",
+    "ObligationBreached": "hcta:ObligationBreached",
+    "OilContent": "hcta:OilContent",
+    "OrphanCost": "hcta:OrphanCost",
+    "OrphanObligation": "hcta:OrphanObligation",
+    "Party": "hcta:Party",
+    "Pending": "hcta:Pending",
+    "Performed": "hcta:Performed",
+    "Performing": "hcta:Performing",
+    "Period": "hcta:Period",
+    "Persona": "hcta:Persona",
+    "PhytosanitaryCertificate": "hcta:PhytosanitaryCertificate",
+    "PnLEvaluation": "hcta:PnLEvaluation",
+    "PnLLine": "hcta:PnLLine",
+    "PnLState": "hcta:PnLState",
+    "Port": "hcta:Port",
+    "PortCharges": "hcta:PortCharges",
+    "PrecedenceConflict": "hcta:PrecedenceConflict",
+    "PriceFormula": "hcta:PriceFormula",
+    "ProcessHolon": "hcta:ProcessHolon",
+    "Prohibition": "hcta:Prohibition",
+    "ProhibitionClause": "hcta:ProhibitionClause",
+    "Protein": "hcta:Protein",
+    "Provision": "hcta:Provision",
+    "PurchaseContract": "hcta:PurchaseContract",
+    "QualityFinality": "hcta:QualityFinality",
+    "QualityParameter": "hcta:QualityParameter",
+    "QualityTerm": "hcta:QualityTerm",
+    "QuantityTerm": "hcta:QuantityTerm",
+    "QuantityTolerance": "hcta:QuantityTolerance",
+    "ReconciliationDifference": "hcta:ReconciliationDifference",
+    "ReferenceText": "hcta:ReferenceText",
+    "ResaleFixed": "hcta:ResaleFixed",
+    "Right": "hcta:Right",
+    "Risk": "hcta:Risk",
+    "RiskTransfer": "hcta:RiskTransfer",
+    "RiskTransferPoint": "hcta:RiskTransferPoint",
+    "RunningHours": "hcta:RunningHours",
+    "SaleContract": "hcta:SaleContract",
+    "Sampling": "hcta:Sampling",
+    "Sanction": "hcta:Sanction",
+    "Settled": "hcta:Settled",
+    "Severity": "hcta:Severity",
+    "ShipmentPeriod": "hcta:ShipmentPeriod",
+    "Signed": "hcta:Signed",
+    "SourceDocument": "hcta:SourceDocument",
+    "SourceSpan": "hcta:SourceSpan",
+    "SoybeanMeal": "hcta:SoybeanMeal",
+    "Soybeans": "hcta:Soybeans",
+    "StandardConcept": "hcta:StandardConcept",
+    "StandardForm": "hcta:StandardForm",
+    "Superintendence": "hcta:Superintendence",
+    "Term": "hcta:Term",
+    "TimeBar": "hcta:TimeBar",
+    "TimeBarGap": "hcta:TimeBarGap",
+    "TimeTerm": "hcta:TimeTerm",
+    "TradeExecution": "hcta:TradeExecution",
+    "TradeTermRules": "hcta:TradeTermRules",
+    "Trader": "hcta:Trader",
+    "Triggered": "hcta:Triggered",
+    "TypeError": "hcta:TypeError",
+    "UnresolvedReference": "hcta:UnresolvedReference",
+    "Vessel": "hcta:Vessel",
+    "VesselFixed": "hcta:VesselFixed",
+    "VesselNominated": "hcta:VesselNominated",
+    "Waived": "hcta:Waived",
+    "Warning": "hcta:Warning",
+    "WashedOut": "hcta:WashedOut",
+    "WashoutClause": "hcta:WashoutClause",
+    "WeatherWorkingDaysSHEX": "hcta:WeatherWorkingDaysSHEX",
+    "Weighing": "hcta:Weighing",
+    "WeightFinality": "hcta:WeightFinality",
+    "WorkingDays": "hcta:WorkingDays",
+    "about": {
+      "@id": "hcta:about",
+      "@type": "@id"
+    },
+    "action": {
+      "@id": "hcta:action"
+    },
+    "allowedTransition": {
+      "@id": "hcta:allowedTransition",
+      "@type": "@id"
+    },
+    "amount": {
+      "@id": "hcta:amount",
+      "@type": "xsd:decimal"
+    },
+    "anchorEvent": {
+      "@id": "hcta:anchorEvent",
+      "@type": "@id"
+    },
+    "asKnownAt": {
+      "@id": "hcta:asKnownAt",
+      "@type": "xsd:dateTime"
+    },
+    "attachedContract": {
+      "@id": "hcta:attachedContract",
+      "@type": "@id"
+    },
+    "attachedFrom": {
+      "@id": "hcta:attachedFrom",
+      "@type": "xsd:dateTime"
+    },
+    "attachedTo": {
+      "@id": "hcta:attachedTo",
+      "@type": "@id"
+    },
+    "backToBackWith": {
+      "@id": "hcta:backToBackWith",
+      "@type": "@id"
+    },
+    "bookedTo": {
+      "@id": "hcta:bookedTo",
+      "@type": "@id"
+    },
+    "branchOf": {
+      "@id": "hcta:branchOf",
+      "@type": "@id"
+    },
+    "buyer": {
+      "@id": "hcta:buyer",
+      "@type": "@id"
+    },
+    "carriedBy": {
+      "@id": "hcta:carriedBy",
+      "@type": "@id"
+    },
+    "charterer": {
+      "@id": "hcta:charterer",
+      "@type": "@id"
+    },
+    "clauseNumber": {
+      "@id": "hcta:clauseNumber"
+    },
+    "comment": "rdfs:comment",
+    "commodity": {
+      "@id": "hcta:commodity",
+      "@type": "@id"
+    },
+    "compiledFrom": {
+      "@id": "hcta:compiledFrom",
+      "@type": "@id"
+    },
+    "compilerVersion": {
+      "@id": "hcta:compilerVersion"
+    },
+    "concernsCargo": {
+      "@id": "hcta:concernsCargo",
+      "@type": "@id"
+    },
+    "concernsContract": {
+      "@id": "hcta:concernsContract",
+      "@type": "@id"
+    },
+    "confidence": {
+      "@id": "hcta:confidence",
+      "@type": "xsd:decimal"
+    },
+    "contentHash": {
+      "@id": "hcta:contentHash"
+    },
+    "costCategory": {
+      "@id": "hcta:costCategory",
+      "@type": "@id"
+    },
+    "countingRule": {
+      "@id": "hcta:countingRule",
+      "@type": "@id"
+    },
+    "creditor": {
+      "@id": "hcta:creditor",
+      "@type": "@id"
+    },
+    "currency": {
+      "@id": "hcta:currency"
+    },
+    "dcterms": "http://purl.org/dc/terms/",
+    "debtor": {
+      "@id": "hcta:debtor",
+      "@type": "@id"
+    },
+    "definedIn": {
+      "@id": "hcta:definedIn",
+      "@type": "@id"
+    },
+    "demurrageRate": {
+      "@id": "hcta:demurrageRate",
+      "@type": "@id"
+    },
+    "detachedAt": {
+      "@id": "hcta:detachedAt",
+      "@type": "xsd:dateTime"
+    },
+    "detachmentReason": {
+      "@id": "hcta:detachmentReason",
+      "@type": "@id"
+    },
+    "diagnosticKind": {
+      "@id": "hcta:diagnosticKind",
+      "@type": "@id"
+    },
+    "directlyPartOf": {
+      "@id": "hcta:directlyPartOf",
+      "@type": "@id"
+    },
+    "dischargePort": {
+      "@id": "hcta:dischargePort",
+      "@type": "@id"
+    },
+    "discountScale": {
+      "@id": "hcta:discountScale"
+    },
+    "drivenBy": {
+      "@id": "hcta:drivenBy",
+      "@type": "@id"
+    },
+    "durationValue": {
+      "@id": "hcta:durationValue",
+      "@type": "xsd:duration"
+    },
+    "editionOf": {
+      "@id": "hcta:editionOf",
+      "@type": "@id"
+    },
+    "effectiveFrom": {
+      "@id": "hcta:effectiveFrom",
+      "@type": "xsd:date"
+    },
+    "effectiveUntil": {
+      "@id": "hcta:effectiveUntil",
+      "@type": "xsd:date"
+    },
+    "emits": {
+      "@id": "hcta:emits",
+      "@type": "@id"
+    },
+    "endOffset": {
+      "@id": "hcta:endOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "eventType": {
+      "@id": "hcta:eventType",
+      "@type": "@id"
+    },
+    "ex": "https://example.org/hcta/example/",
+    "exerciseDeadline": {
+      "@id": "hcta:exerciseDeadline",
+      "@type": "@id"
+    },
+    "explainedBy": {
+      "@id": "hcta:explainedBy",
+      "@type": "@id"
+    },
+    "factStatus": {
+      "@id": "hcta:factStatus",
+      "@type": "@id"
+    },
+    "finalAt": {
+      "@id": "hcta:finalAt",
+      "@type": "@id"
+    },
+    "forCargo": {
+      "@id": "hcta:forCargo",
+      "@type": "@id"
+    },
+    "fromStandardConcept": {
+      "@id": "hcta:fromStandardConcept",
+      "@type": "@id"
+    },
+    "goal": {
+      "@id": "hcta:goal"
+    },
+    "handledBy": {
+      "@id": "hcta:handledBy",
+      "@type": "@id"
+    },
+    "hasLine": {
+      "@id": "hcta:hasLine",
+      "@type": "@id"
+    },
+    "hasPart": {
+      "@id": "hcta:hasPart",
+      "@type": "@id"
+    },
+    "hasSeparateLegalPersonality": {
+      "@id": "hcta:hasSeparateLegalPersonality",
+      "@type": "xsd:boolean"
+    },
+    "hasTerm": {
+      "@id": "hcta:hasTerm",
+      "@type": "@id"
+    },
+    "hcta": "https://example.org/hcta#",
+    "hctash": "https://example.org/hcta/shapes#",
+    "hedgeInstrument": {
+      "@id": "hcta:hedgeInstrument",
+      "@type": "@id"
+    },
+    "hedgeQuantity": {
+      "@id": "hcta:hedgeQuantity",
+      "@type": "@id"
+    },
+    "hedgedExposure": {
+      "@id": "hcta:hedgedExposure",
+      "@type": "@id"
+    },
+    "hedges": {
+      "@id": "hcta:hedges",
+      "@type": "@id"
+    },
+    "holonId": {
+      "@id": "hcta:holonId"
+    },
+    "holonVersion": {
+      "@id": "hcta:holonVersion",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "id": "@id",
+    "inDocument": {
+      "@id": "hcta:inDocument",
+      "@type": "@id"
+    },
+    "incorporates": {
+      "@id": "hcta:incorporates",
+      "@type": "@id"
+    },
+    "incoterm": {
+      "@id": "hcta:incoterm",
+      "@type": "@id"
+    },
+    "issuingBody": {
+      "@id": "hcta:issuingBody",
+      "@type": "@id"
+    },
+    "jurisdiction": {
+      "@id": "hcta:jurisdiction"
+    },
+    "label": "rdfs:label",
+    "legacyKey": {
+      "@id": "hcta:legacyKey"
+    },
+    "legacySystem": {
+      "@id": "hcta:legacySystem"
+    },
+    "licence": {
+      "@id": "hcta:licence"
+    },
+    "limitKind": {
+      "@id": "hcta:limitKind"
+    },
+    "limitValue": {
+      "@id": "hcta:limitValue",
+      "@type": "xsd:decimal"
+    },
+    "lineAmount": {
+      "@id": "hcta:lineAmount",
+      "@type": "@id"
+    },
+    "listensTo": {
+      "@id": "hcta:listensTo",
+      "@type": "@id"
+    },
+    "loadPort": {
+      "@id": "hcta:loadPort",
+      "@type": "@id"
+    },
+    "mapsTo": {
+      "@id": "hcta:mapsTo",
+      "@type": "@id"
+    },
+    "marketReference": {
+      "@id": "hcta:marketReference",
+      "@type": "@id"
+    },
+    "matchKind": {
+      "@id": "hcta:matchKind",
+      "@type": "@id"
+    },
+    "message": {
+      "@id": "hcta:message"
+    },
+    "offset": {
+      "@id": "hcta:offset",
+      "@type": "@id"
+    },
+    "optionHolder": {
+      "@id": "hcta:optionHolder",
+      "@type": "@id"
+    },
+    "overrides": {
+      "@id": "hcta:overrides",
+      "@type": "@id"
+    },
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "partOf": {
+      "@id": "hcta:partOf",
+      "@type": "@id"
+    },
+    "perUnit": {
+      "@id": "hcta:perUnit"
+    },
+    "periodEnd": {
+      "@id": "hcta:periodEnd",
+      "@type": "xsd:dateTime"
+    },
+    "periodStart": {
+      "@id": "hcta:periodStart",
+      "@type": "xsd:dateTime"
+    },
+    "pnlState": {
+      "@id": "hcta:pnlState",
+      "@type": "@id"
+    },
+    "precedenceRank": {
+      "@id": "hcta:precedenceRank",
+      "@type": "xsd:positiveInteger"
+    },
+    "prefLabel": "skos:prefLabel",
+    "premium": {
+      "@id": "hcta:premium",
+      "@type": "@id"
+    },
+    "pricingPeriod": {
+      "@id": "hcta:pricingPeriod",
+      "@type": "@id"
+    },
+    "proposedBy": {
+      "@id": "hcta:proposedBy",
+      "@type": "@id"
+    },
+    "prov": "http://www.w3.org/ns/prov#",
+    "qualityParameter": {
+      "@id": "hcta:qualityParameter",
+      "@type": "@id"
+    },
+    "quantityValue": {
+      "@id": "hcta:quantityValue",
+      "@type": "xsd:decimal"
+    },
+    "quotedText": {
+      "@id": "hcta:quotedText"
+    },
+    "raisedAt": {
+      "@id": "hcta:raisedAt",
+      "@type": "xsd:dateTime"
+    },
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "realises": {
+      "@id": "hcta:realises",
+      "@type": "@id"
+    },
+    "referencedText": {
+      "@id": "hcta:referencedText",
+      "@type": "@id"
+    },
+    "refersTo": {
+      "@id": "hcta:refersTo",
+      "@type": "@id"
+    },
+    "resolutionDate": {
+      "@id": "hcta:resolutionDate",
+      "@type": "xsd:date"
+    },
+    "resolvedAtLevel": {
+      "@id": "hcta:resolvedAtLevel",
+      "@type": "@id"
+    },
+    "resolvedEdition": {
+      "@id": "hcta:resolvedEdition",
+      "@type": "@id"
+    },
+    "responsibleRole": {
+      "@id": "hcta:responsibleRole",
+      "@type": "@id"
+    },
+    "sameGroupAs": {
+      "@id": "hcta:sameGroupAs",
+      "@type": "@id"
+    },
+    "seller": {
+      "@id": "hcta:seller",
+      "@type": "@id"
+    },
+    "semanticDifference": {
+      "@id": "hcta:semanticDifference"
+    },
+    "severity": {
+      "@id": "hcta:severity",
+      "@type": "@id"
+    },
+    "sh": "http://www.w3.org/ns/shacl#",
+    "shipowner": {
+      "@id": "hcta:shipowner",
+      "@type": "@id"
+    },
+    "signedOn": {
+      "@id": "hcta:signedOn",
+      "@type": "xsd:date"
+    },
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "startOffset": {
+      "@id": "hcta:startOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "state": {
+      "@id": "hcta:state",
+      "@type": "@id"
+    },
+    "supersedes": {
+      "@id": "hcta:supersedes",
+      "@type": "@id"
+    },
+    "takesChargeOf": {
+      "@id": "hcta:takesChargeOf",
+      "@type": "@id"
+    },
+    "time": "http://www.w3.org/2006/time#",
+    "toCanonicalConcept": {
+      "@id": "hcta:toCanonicalConcept",
+      "@type": "@id"
+    },
+    "toleranceOption": {
+      "@id": "hcta:toleranceOption",
+      "@type": "@id"
+    },
+    "tolerancePercent": {
+      "@id": "hcta:tolerancePercent",
+      "@type": "xsd:decimal"
+    },
+    "transactionTime": {
+      "@id": "hcta:transactionTime",
+      "@type": "xsd:dateTime"
+    },
+    "transferPoint": {
+      "@id": "hcta:transferPoint",
+      "@type": "@id"
+    },
+    "triggeredBy": {
+      "@id": "hcta:triggeredBy",
+      "@type": "@id"
+    },
+    "type": "@type",
+    "unit": {
+      "@id": "hcta:unit"
+    },
+    "usesDefinition": {
+      "@id": "hcta:usesDefinition",
+      "@type": "@id"
+    },
+    "validTime": {
+      "@id": "hcta:validTime",
+      "@type": "xsd:dateTime"
+    },
+    "validatedBy": {
+      "@id": "hcta:validatedBy",
+      "@type": "@id"
+    },
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "id": "hcta:periodStart",
+      "label": {
+        "@language": "en",
+        "@value": "period start"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Period"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:supersedes",
+      "label": {
+        "@language": "en",
+        "@value": "supersedes"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "hcta:Event"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Unit the amount applies to, for example t or day."
+      },
+      "id": "hcta:perUnit",
+      "label": {
+        "@language": "en",
+        "@value": "per unit"
+      },
+      "rdfs:domain": {
+        "id": "hcta:MoneyTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:hasSeparateLegalPersonality",
+      "label": {
+        "@language": "en",
+        "@value": "has separate legal personality"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Party"
+      },
+      "rdfs:range": {
+        "id": "xsd:boolean"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:CostBearer",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Cost bearer"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:Ambiguity",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Ambiguity"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "One cash flow or valuation item, explained by the provision and the event that produced it."
+      },
+      "id": "hcta:PnLLine",
+      "label": {
+        "@language": "en",
+        "@value": "P&L line"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "goal": "Margin and optionality",
+      "id": "hcta:Trader",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Trader"
+      },
+      "type": "Persona"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Atomic holon: the smallest unit with autonomous normative meaning. It can be referenced, contested and evaluated on its own."
+      },
+      "id": "hcta:Provision",
+      "label": {
+        "@language": "en",
+        "@value": "Provision"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:DeadlineDue",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Deadline due"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:durationValue",
+      "label": {
+        "@language": "en",
+        "@value": "duration value"
+      },
+      "rdfs:range": {
+        "id": "xsd:duration"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:LaytimeProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Laytime and demurrage process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Normalised expression of the price adjustment per unit of deviation."
+      },
+      "id": "hcta:discountScale",
+      "label": {
+        "@language": "en",
+        "@value": "discount scale"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QualityTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Declared output interface: event types the holon can produce."
+      },
+      "id": "hcta:emits",
+      "label": {
+        "@language": "en",
+        "@value": "emits"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:FinalPnL",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final"
+      },
+      "type": "PnLState"
+    },
+    {
+      "id": "hcta:LetterOfCredit",
+      "label": {
+        "@language": "en",
+        "@value": "Letter of credit"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:TimeTerm",
+      "label": {
+        "@language": "en",
+        "@value": "Time term"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Term"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:legacySystem",
+      "label": {
+        "@language": "en",
+        "@value": "legacy system"
+      },
+      "rdfs:domain": {
+        "id": "hcta:LegacyRecord"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A provision realises a canonical concept."
+      },
+      "id": "hcta:realises",
+      "label": {
+        "@language": "en",
+        "@value": "realises"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:CanonicalConcept"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "allowedTransition": [
+        "hcta:Triggered",
+        "hcta:Waived"
+      ],
+      "id": "hcta:Pending",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Pending"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:ClaimsProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Claims process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:detachmentReason",
+      "label": {
+        "@language": "en",
+        "@value": "detachment reason"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractAttachment"
+      },
+      "rdfs:range": {
+        "id": "hcta:DetachmentReason"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:shipowner",
+      "label": {
+        "@language": "en",
+        "@value": "shipowner"
+      },
+      "rdfs:domain": {
+        "id": "hcta:CharterParty"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Transfers a cargo between entities of the same group. Basis for transfer pricing."
+      },
+      "id": "hcta:IntercompanyContract",
+      "label": {
+        "@language": "en",
+        "@value": "Intercompany contract"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:raisedAt",
+      "label": {
+        "@language": "en",
+        "@value": "raised at"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Diagnostic"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:OilContent",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Oil content"
+      },
+      "type": "QualityParameter"
+    },
+    {
+      "id": "hcta:Performed",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Performed and settled"
+      },
+      "type": "DetachmentReason"
+    },
+    {
+      "id": "hcta:CalendarDays",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Calendar days"
+      },
+      "type": "CountingRule"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Licence under which the text is held in the library."
+      },
+      "id": "hcta:licence",
+      "label": {
+        "@language": "en",
+        "@value": "licence"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Edition"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:takesChargeOf",
+      "label": {
+        "@language": "en",
+        "@value": "takes charge of"
+      },
+      "owl:inverseOf": {
+        "id": "hcta:handledBy"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ProcessHolon"
+      },
+      "rdfs:range": {
+        "id": "hcta:Obligation"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:InspectionProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Inspection process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A provision that says which party bears a category of cost under a contract. The cost allocation pass compares them across all contracts of a cargo."
+      },
+      "id": "hcta:CostAllocation",
+      "label": {
+        "@language": "en",
+        "@value": "Cost allocation"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Obligation"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:NoticeOfAppropriation",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Notice of appropriation"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:incoterm",
+      "label": {
+        "@language": "en",
+        "@value": "Incoterm"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Contract"
+      },
+      "rdfs:range": {
+        "id": "hcta:IncotermRule"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:transferPoint",
+      "label": {
+        "@language": "en",
+        "@value": "transfer point"
+      },
+      "rdfs:domain": {
+        "id": "hcta:RiskTransfer"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Result of the dated linker: a contract incorporates a reference text, resolved to one edition at one date, at one level of precedence."
+      },
+      "id": "hcta:Incorporation",
+      "label": {
+        "@language": "en",
+        "@value": "Incorporation"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:VesselNominated",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Vessel nominated"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:FOB",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "FOB - Free On Board"
+      },
+      "type": "IncotermRule"
+    },
+    {
+      "id": "hcta:NORTenderedDischarge",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "NOR tendered at discharge port"
+      },
+      "type": "EventType"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Stable identifier, kept across versions of the holon."
+      },
+      "id": "hcta:holonId",
+      "label": {
+        "@language": "en",
+        "@value": "holon identifier"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": [
+        "owl:DatatypeProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "The event type a deadline is counted from (for example B/L date, NOR tendered, completion of discharge)."
+      },
+      "id": "hcta:anchorEvent",
+      "label": {
+        "@language": "en",
+        "@value": "anchor event"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Deadline"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A unit that is both a whole and a part. Every holon has a stable identity, a lifecycle, declared interfaces and provenance."
+      },
+      "id": "hcta:Holon",
+      "label": {
+        "@language": "en",
+        "@value": "Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A price defined by a market reference, a premium and a pricing period, for example CBOT soybean futures plus a premium."
+      },
+      "id": "hcta:PriceFormula",
+      "label": {
+        "@language": "en",
+        "@value": "Price formula"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:MoneyTerm"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:StandardForm",
+      "label": {
+        "@language": "en",
+        "@value": "Standard contract form"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:VesselFixed",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Vessel fixed (charter party)"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:Superintendence",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Superintendence and inspection"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:message",
+      "label": {
+        "@language": "en",
+        "@value": "message"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Diagnostic"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:Fulfilled",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Fulfilled"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:MoneyTerm",
+      "label": {
+        "@language": "en",
+        "@value": "Money term"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Term"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:eventType",
+      "label": {
+        "@language": "en",
+        "@value": "event type"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Links provisions or contracts that are meant to mirror each other along the chain (for example purchase and sale laytime)."
+      },
+      "id": "hcta:backToBackWith",
+      "label": {
+        "@language": "en",
+        "@value": "back-to-back with"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "hcta:refersTo"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:SymmetricProperty"
+      ]
+    },
+    {
+      "id": "hcta:severity",
+      "label": {
+        "@language": "en",
+        "@value": "severity"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Diagnostic"
+      },
+      "rdfs:range": {
+        "id": "hcta:Severity"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:effectiveUntil",
+      "label": {
+        "@language": "en",
+        "@value": "effective until"
+      },
+      "rdfs:range": {
+        "id": "xsd:date"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:seller",
+      "label": {
+        "@language": "en",
+        "@value": "seller"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Contract"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:TradeTermRules",
+      "label": {
+        "@language": "en",
+        "@value": "Trade term rules (Incoterms)"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "GAFTA, FOSFA, ANEC, ICC, BIMCO, a legislature."
+      },
+      "id": "hcta:IssuingBody",
+      "label": {
+        "@language": "en",
+        "@value": "Issuing body"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Warning",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Warning"
+      },
+      "type": "Severity"
+    },
+    {
+      "id": "hcta:FinalityPoint",
+      "label": {
+        "@language": "en",
+        "@value": "Finality point"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:charterer",
+      "label": {
+        "@language": "en",
+        "@value": "charterer"
+      },
+      "rdfs:domain": {
+        "id": "hcta:CharterParty"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:ForceMajeureEvent",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Force majeure event"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:ReconciliationDifference",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Legacy record differs from compiled contract"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:definedIn",
+      "label": {
+        "@language": "en",
+        "@value": "defined in"
+      },
+      "rdfs:domain": {
+        "id": "hcta:StandardConcept"
+      },
+      "rdfs:range": {
+        "id": "hcta:Edition"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:CountingRule",
+      "label": {
+        "@language": "en",
+        "@value": "Counting rule"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:InspectionMandate",
+      "label": {
+        "@language": "en",
+        "@value": "Inspection mandate"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:inDocument",
+      "label": {
+        "@language": "en",
+        "@value": "in document"
+      },
+      "rdfs:domain": {
+        "id": "hcta:SourceSpan"
+      },
+      "rdfs:range": {
+        "id": "_:nf0e5ce79ce284052919b30dc8a8e6e22b1"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "_:nf0e5ce79ce284052919b30dc8a8e6e22b1",
+      "owl:unionOf": {
+        "@list": [
+          {
+            "id": "hcta:SourceDocument"
+          },
+          {
+            "id": "hcta:Edition"
+          }
+        ]
+      }
+    },
+    {
+      "id": "hcta:concernsCargo",
+      "label": {
+        "@language": "en",
+        "@value": "concerns cargo"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "hcta:Cargo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:forCargo",
+      "label": {
+        "@language": "en",
+        "@value": "for cargo"
+      },
+      "rdfs:range": {
+        "id": "hcta:Cargo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:pnlState",
+      "label": {
+        "@language": "en",
+        "@value": "P&L state"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLEvaluation"
+      },
+      "rdfs:range": {
+        "id": "hcta:PnLState"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:WashoutClause",
+      "label": {
+        "@language": "en",
+        "@value": "Washout or circle clause"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:DealAgreed",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Deal agreed (recap)"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:debtor",
+      "label": {
+        "@language": "en",
+        "@value": "debtor"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "skos:exactMatch, skos:closeMatch, skos:broadMatch or skos:narrowMatch."
+      },
+      "id": "hcta:matchKind",
+      "label": {
+        "@language": "en",
+        "@value": "match kind"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ConceptMapping"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:legacyKey",
+      "label": {
+        "@language": "en",
+        "@value": "legacy key"
+      },
+      "rdfs:domain": {
+        "id": "hcta:LegacyRecord"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:DocumentsPresented",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Documents presented"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:holonVersion",
+      "label": {
+        "@language": "en",
+        "@value": "holon version"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "xsd:nonNegativeInteger"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Normalised description of what must, may or must not be done."
+      },
+      "id": "hcta:action",
+      "label": {
+        "@language": "en",
+        "@value": "action"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:limitValue",
+      "label": {
+        "@language": "en",
+        "@value": "limit value"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QualityTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:decimal"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An establishment of a legal entity. Whether it has separate legal personality changes the nature of intercompany contracts."
+      },
+      "id": "hcta:Branch",
+      "label": {
+        "@language": "en",
+        "@value": "Branch"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Error",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Error"
+      },
+      "type": "Severity"
+    },
+    {
+      "id": "hcta:carriedBy",
+      "label": {
+        "@language": "en",
+        "@value": "carried by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Cargo"
+      },
+      "rdfs:range": {
+        "id": "hcta:Vessel"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:hedgeQuantity",
+      "label": {
+        "@language": "en",
+        "@value": "hedge quantity"
+      },
+      "rdfs:domain": {
+        "id": "hcta:HedgePosition"
+      },
+      "rdfs:range": {
+        "id": "hcta:QuantityTerm"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A concept as defined by one standard form edition."
+      },
+      "id": "hcta:StandardConcept",
+      "label": {
+        "@language": "en",
+        "@value": "Standard concept"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:CoverageGap",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Force majeure, prohibition or default coverage gap"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:CharterParty",
+      "label": {
+        "@language": "en",
+        "@value": "Charter party"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Declared input interface: event types the holon reacts to."
+      },
+      "id": "hcta:listensTo",
+      "label": {
+        "@language": "en",
+        "@value": "listens to"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A right to choose: tolerance, destination, pricing period, nomination. Decision points for the scenario engine."
+      },
+      "id": "hcta:ContractOption",
+      "label": {
+        "@language": "en",
+        "@value": "Contract option"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Right"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Unit code, for example t (metric tonne)."
+      },
+      "id": "hcta:unit",
+      "label": {
+        "@language": "en",
+        "@value": "unit"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "max, min or basis."
+      },
+      "id": "hcta:limitKind",
+      "label": {
+        "@language": "en",
+        "@value": "limit kind"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QualityTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:endOffset",
+      "label": {
+        "@language": "en",
+        "@value": "end offset"
+      },
+      "rdfs:domain": {
+        "id": "hcta:SourceSpan"
+      },
+      "rdfs:range": {
+        "id": "xsd:nonNegativeInteger"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:IncotermRule",
+      "label": {
+        "@language": "en",
+        "@value": "Incoterm rule"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:DiagnosticKind",
+      "label": {
+        "@language": "en",
+        "@value": "Diagnostic kind"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:demurrageRate",
+      "label": {
+        "@language": "en",
+        "@value": "demurrage rate"
+      },
+      "rdfs:domain": {
+        "id": "hcta:LaytimeProvision"
+      },
+      "rdfs:range": {
+        "id": "hcta:MoneyTerm"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:DetachmentReason",
+      "label": {
+        "@language": "en",
+        "@value": "Detachment reason"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:validatedBy",
+      "label": {
+        "@language": "en",
+        "@value": "validated by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:AIProposal"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:LCOpened",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Letter of credit opened"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:Forecast",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Forecast"
+      },
+      "type": "FactStatus"
+    },
+    {
+      "id": "hcta:compilerVersion",
+      "label": {
+        "@language": "en",
+        "@value": "compiler version"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Compilation"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:clauseNumber",
+      "label": {
+        "@language": "en",
+        "@value": "clause number"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Clause"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:countingRule",
+      "label": {
+        "@language": "en",
+        "@value": "counting rule"
+      },
+      "rdfs:range": {
+        "id": "hcta:CountingRule"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Prohibition",
+      "label": {
+        "@language": "en",
+        "@value": "Prohibition"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "The event type whose occurrence activates the provision."
+      },
+      "id": "hcta:triggeredBy",
+      "label": {
+        "@language": "en",
+        "@value": "triggered by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:EventType"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "States that a contract governs a cargo during an interval. Contracts attach and detach over time; a washed-out sale is detached, never deleted."
+      },
+      "id": "hcta:ContractAttachment",
+      "label": {
+        "@language": "en",
+        "@value": "Contract attachment"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:creditor",
+      "label": {
+        "@language": "en",
+        "@value": "creditor"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A provision that takes precedence over another, typically special conditions over a standard form."
+      },
+      "id": "hcta:overrides",
+      "label": {
+        "@language": "en",
+        "@value": "overrides"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "hcta:refersTo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:hedgeInstrument",
+      "label": {
+        "@language": "en",
+        "@value": "hedge instrument"
+      },
+      "rdfs:domain": {
+        "id": "hcta:HedgePosition"
+      },
+      "rdfs:range": {
+        "id": "hcta:MarketReference"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A typed value inside a provision. Terms are not holons; they carry calculation semantics."
+      },
+      "id": "hcta:Term",
+      "label": {
+        "@language": "en",
+        "@value": "Term"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Soybeans",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Soybeans"
+      },
+      "type": "Commodity"
+    },
+    {
+      "id": "hcta:ClaimNotified",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Claim notified"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:LetterOfCreditProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Letter of credit process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Current state, derived from the event store."
+      },
+      "id": "hcta:state",
+      "label": {
+        "@language": "en",
+        "@value": "state"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "hcta:LifecycleState"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A futures, FX or freight position linked to the exposures of a cargo."
+      },
+      "id": "hcta:HedgePosition",
+      "label": {
+        "@language": "en",
+        "@value": "Hedge position"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:amount",
+      "label": {
+        "@language": "en",
+        "@value": "amount"
+      },
+      "rdfs:domain": {
+        "id": "hcta:MoneyTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:decimal"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:FinalityMismatch",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Weight or quality finality mismatch"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A business role with a goal: trader, trade execution, chartering, risk, back office, finance, legal."
+      },
+      "id": "hcta:Persona",
+      "label": {
+        "@language": "en",
+        "@value": "Persona"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A date or time range, for example a shipment period or a laycan."
+      },
+      "id": "hcta:Period",
+      "label": {
+        "@language": "en",
+        "@value": "Period"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:TimeTerm"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:diagnosticKind",
+      "label": {
+        "@language": "en",
+        "@value": "diagnostic kind"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Diagnostic"
+      },
+      "rdfs:range": {
+        "id": "hcta:DiagnosticKind"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:DocumentaryCreditRules",
+      "label": {
+        "@language": "en",
+        "@value": "Documentary credit rules (UCP)"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:offset",
+      "label": {
+        "@language": "en",
+        "@value": "offset"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Deadline"
+      },
+      "rdfs:range": {
+        "id": "hcta:Duration"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:QuantityTerm",
+      "label": {
+        "@language": "en",
+        "@value": "Quantity term"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Term"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Severity",
+      "label": {
+        "@language": "en",
+        "@value": "Severity"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:exerciseDeadline",
+      "label": {
+        "@language": "en",
+        "@value": "exercise deadline"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractOption"
+      },
+      "rdfs:range": {
+        "id": "hcta:Deadline"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:CargoInsurance",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Cargo insurance"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:Info",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Info"
+      },
+      "type": "Severity"
+    },
+    {
+      "id": "hcta:ArbitrationClause",
+      "label": {
+        "@language": "en",
+        "@value": "Arbitration clause"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "allowedTransition": "hcta:Settled",
+      "id": "hcta:ContractWashedOutState",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Washed out"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "ISO 3166 country code of incorporation or establishment."
+      },
+      "id": "hcta:jurisdiction",
+      "label": {
+        "@language": "en",
+        "@value": "jurisdiction"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Party"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "goal": "Documents right first time",
+      "id": "hcta:BackOffice",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Back office"
+      },
+      "type": "Persona"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Deadline after which a claim or an arbitration can no longer be brought."
+      },
+      "id": "hcta:TimeBar",
+      "label": {
+        "@language": "en",
+        "@value": "Time bar"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:PrecedenceConflict",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Precedence conflict"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "When the system learned the fact."
+      },
+      "id": "hcta:transactionTime",
+      "label": {
+        "@language": "en",
+        "@value": "transaction time"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": [
+        "owl:DatatypeProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:CFR",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "CFR - Cost and Freight"
+      },
+      "type": "IncotermRule"
+    },
+    {
+      "id": "hcta:responsibleRole",
+      "label": {
+        "@language": "en",
+        "@value": "responsible role"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ProcessHolon"
+      },
+      "rdfs:range": {
+        "id": "hcta:Persona"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Waived",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Waived"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "The immediate parent in the holarchy. Use this for assertions; partOf is inferred."
+      },
+      "id": "hcta:directlyPartOf",
+      "label": {
+        "@language": "en",
+        "@value": "directly part of"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "hcta:partOf"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Protein",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Protein"
+      },
+      "type": "QualityParameter"
+    },
+    {
+      "id": "hcta:Cancelled",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Cancelled"
+      },
+      "type": "DetachmentReason"
+    },
+    {
+      "id": "hcta:branchOf",
+      "label": {
+        "@language": "en",
+        "@value": "branch of"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Branch"
+      },
+      "rdfs:range": {
+        "id": "hcta:LegalEntity"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:tolerancePercent",
+      "label": {
+        "@language": "en",
+        "@value": "tolerance percent"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QuantityTerm"
+      },
+      "rdfs:range": {
+        "id": "xsd:decimal"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Forecast, actual or final. A forecast is superseded by an actual, never overwritten."
+      },
+      "id": "hcta:factStatus",
+      "label": {
+        "@language": "en",
+        "@value": "fact status"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "hcta:FactStatus"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:DischargeCompleted",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Discharge completed"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:premium",
+      "label": {
+        "@language": "en",
+        "@value": "premium"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PriceFormula"
+      },
+      "rdfs:range": {
+        "id": "hcta:MoneyTerm"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An operational workflow that takes charge of obligations: nomination, LC, inspection, invoicing, claims."
+      },
+      "id": "hcta:ProcessHolon",
+      "label": {
+        "@language": "en",
+        "@value": "Process holon"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:LivePnL",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Live"
+      },
+      "type": "PnLState"
+    },
+    {
+      "id": "hcta:ArbitrationRules",
+      "label": {
+        "@language": "en",
+        "@value": "Arbitration rules"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:NoticeOfReadiness",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Notice of readiness"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:Defaulted",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Closed out on default"
+      },
+      "type": "DetachmentReason"
+    },
+    {
+      "id": "hcta:usesDefinition",
+      "label": {
+        "@language": "en",
+        "@value": "uses definition"
+      },
+      "rdfs:range": {
+        "id": "hcta:Definition"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "hcta:refersTo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:FinalAtDischarge",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final at discharge"
+      },
+      "type": "FinalityPoint"
+    },
+    {
+      "id": "hcta:ForeignMatter",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Foreign matter"
+      },
+      "type": "QualityParameter"
+    },
+    {
+      "id": "hcta:PortCharges",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Port charges"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Entity whose P&L carries the line."
+      },
+      "id": "hcta:bookedTo",
+      "label": {
+        "@language": "en",
+        "@value": "booked to"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLLine"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Despatch",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Despatch"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:Vessel",
+      "label": {
+        "@language": "en",
+        "@value": "Vessel"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Breached",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Breached"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:ObligationBreached",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Obligation breached"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:PnLState",
+      "label": {
+        "@language": "en",
+        "@value": "P&L state"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Current intended discharge port; its history is kept through events."
+      },
+      "id": "hcta:dischargePort",
+      "label": {
+        "@language": "en",
+        "@value": "discharge port"
+      },
+      "rdfs:range": {
+        "id": "hcta:Port"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:goal",
+      "label": {
+        "@language": "en",
+        "@value": "goal"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Persona"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:PhytosanitaryCertificate",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Phytosanitary certificate"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Transaction time at which the evaluation was made."
+      },
+      "id": "hcta:asKnownAt",
+      "label": {
+        "@language": "en",
+        "@value": "as known at"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLEvaluation"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "goal": "Deliver by the contract",
+      "id": "hcta:TradeExecution",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Trade execution"
+      },
+      "type": "Persona"
+    },
+    {
+      "id": "hcta:resolutionDate",
+      "label": {
+        "@language": "en",
+        "@value": "resolution date"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Incorporation"
+      },
+      "rdfs:range": {
+        "id": "xsd:date"
+      },
+      "type": [
+        "owl:DatatypeProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:LoadingCompleted",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Loading completed"
+      },
+      "type": "EventType"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Unit of reference in a contract or standard form (an article, a numbered clause)."
+      },
+      "id": "hcta:Clause",
+      "label": {
+        "@language": "en",
+        "@value": "Clause"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Port",
+      "label": {
+        "@language": "en",
+        "@value": "Port"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:QualityParameter",
+      "label": {
+        "@language": "en",
+        "@value": "Quality parameter"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Sampling",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Sampling and analysis"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Date used by default to resolve incorporated reference texts (invariant I6)."
+      },
+      "id": "hcta:signedOn",
+      "label": {
+        "@language": "en",
+        "@value": "signed on"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Contract"
+      },
+      "rdfs:range": {
+        "id": "xsd:date"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:Commodity",
+      "label": {
+        "@language": "en",
+        "@value": "Commodity"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:EstimatedPnL",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Estimated"
+      },
+      "type": "PnLState"
+    },
+    {
+      "id": "hcta:quantityValue",
+      "label": {
+        "@language": "en",
+        "@value": "quantity value"
+      },
+      "rdfs:range": {
+        "id": "xsd:decimal"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Where weight or quality figures are final: at loading or at discharge."
+      },
+      "id": "hcta:finalAt",
+      "label": {
+        "@language": "en",
+        "@value": "final at"
+      },
+      "rdfs:range": {
+        "id": "hcta:FinalityPoint"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Export or import prohibition clause of a standard form (distinct from the deontic hcta:Prohibition)."
+      },
+      "id": "hcta:ProhibitionClause",
+      "label": {
+        "@language": "en",
+        "@value": "Prohibition clause"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A pointer to a record in a legacy system. Mapped to holons, never used as meaning (invariant I5)."
+      },
+      "id": "hcta:LegacyRecord",
+      "label": {
+        "@language": "en",
+        "@value": "Legacy record"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:buyer",
+      "label": {
+        "@language": "en",
+        "@value": "buyer"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Contract"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:TimeBarGap",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Time-bar chain gap"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:drivenBy",
+      "label": {
+        "@language": "en",
+        "@value": "driven by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLLine"
+      },
+      "rdfs:range": {
+        "id": "hcta:Event"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:ContractWashedOut",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Contract washed out"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:FinalAtLoading",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final at loading"
+      },
+      "type": "FinalityPoint"
+    },
+    {
+      "id": "hcta:attachedContract",
+      "label": {
+        "@language": "en",
+        "@value": "attached contract"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractAttachment"
+      },
+      "rdfs:range": {
+        "id": "hcta:Contract"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:LifecycleState",
+      "label": {
+        "@language": "en",
+        "@value": "Lifecycle state"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:WorkingDays",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Working days"
+      },
+      "type": "CountingRule"
+    },
+    {
+      "id": "hcta:RunningHours",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Running hours"
+      },
+      "type": "CountingRule"
+    },
+    {
+      "id": "hcta:UnresolvedReference",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Unresolved reference"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An immutable input: recap, contract, amendment, certificate, B/L, email."
+      },
+      "id": "hcta:SourceDocument",
+      "label": {
+        "@language": "en",
+        "@value": "Source document"
+      },
+      "rdfs:subClassOf": {
+        "id": "prov:Entity"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "The exact words a holon or term was compiled from."
+      },
+      "id": "hcta:SourceSpan",
+      "label": {
+        "@language": "en",
+        "@value": "Source span"
+      },
+      "rdfs:subClassOf": {
+        "id": "prov:Entity"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "For a provision: the incorporation (level of the precedence stack) where its meaning was found."
+      },
+      "id": "hcta:resolvedAtLevel",
+      "label": {
+        "@language": "en",
+        "@value": "resolved at level"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:Incorporation"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:GoverningLaw",
+      "label": {
+        "@language": "en",
+        "@value": "Governing law"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:issuingBody",
+      "label": {
+        "@language": "en",
+        "@value": "issuing body"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ReferenceText"
+      },
+      "rdfs:range": {
+        "id": "hcta:IssuingBody"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:hasTerm",
+      "label": {
+        "@language": "en",
+        "@value": "has term"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Provision"
+      },
+      "rdfs:range": {
+        "id": "hcta:Term"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Freight",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Freight"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:hedges",
+      "label": {
+        "@language": "en",
+        "@value": "hedges"
+      },
+      "rdfs:domain": {
+        "id": "hcta:HedgePosition"
+      },
+      "rdfs:range": {
+        "id": "hcta:Cargo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "The party at whose option the tolerance is exercised."
+      },
+      "id": "hcta:toleranceOption",
+      "label": {
+        "@language": "en",
+        "@value": "tolerance option holder"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QuantityTerm"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:LaytimeMismatch",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Laytime mismatch along the chain"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A text that contracts incorporate by reference: a standard form, rules, Incoterms, UCP, a law."
+      },
+      "id": "hcta:ReferenceText",
+      "label": {
+        "@language": "en",
+        "@value": "Reference text"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:LaytimeProvision",
+      "label": {
+        "@language": "en",
+        "@value": "Laytime provision"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:startOffset",
+      "label": {
+        "@language": "en",
+        "@value": "start offset"
+      },
+      "rdfs:domain": {
+        "id": "hcta:SourceSpan"
+      },
+      "rdfs:range": {
+        "id": "xsd:nonNegativeInteger"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:attachedFrom",
+      "label": {
+        "@language": "en",
+        "@value": "attached from"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractAttachment"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "When the fact is true in the world."
+      },
+      "id": "hcta:validTime",
+      "label": {
+        "@language": "en",
+        "@value": "valid time"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": [
+        "owl:DatatypeProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:ExportProhibition",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Export prohibition"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:DamagedKernels",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Damaged kernels"
+      },
+      "type": "QualityParameter"
+    },
+    {
+      "allowedTransition": [
+        "hcta:Fulfilled",
+        "hcta:Breached",
+        "hcta:Waived"
+      ],
+      "id": "hcta:Triggered",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Triggered"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "allowedTransition": [
+        "hcta:Settled",
+        "hcta:ContractWashedOutState"
+      ],
+      "id": "hcta:Performing",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Performing"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:CostCategory",
+      "label": {
+        "@language": "en",
+        "@value": "Cost category"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Actual",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Actual"
+      },
+      "type": "FactStatus"
+    },
+    {
+      "id": "hcta:NominationProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Nomination process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:DefaultSettlement",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Default settlement"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:loadPort",
+      "label": {
+        "@language": "en",
+        "@value": "load port"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Cargo"
+      },
+      "rdfs:range": {
+        "id": "hcta:Port"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:editionOf",
+      "label": {
+        "@language": "en",
+        "@value": "edition of"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Edition"
+      },
+      "rdfs:range": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "goal": "Enforceable, consistent contracts",
+      "id": "hcta:Legal",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Legal"
+      },
+      "type": "Persona"
+    },
+    {
+      "id": "hcta:Laytime",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Laytime"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:RiskTransferPoint",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Risk transfer point"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An obligation with no handledBy is an orphan obligation."
+      },
+      "id": "hcta:handledBy",
+      "label": {
+        "@language": "en",
+        "@value": "handled by"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "goal": "True P&L, cash and audit",
+      "id": "hcta:Finance",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Finance"
+      },
+      "type": "Persona"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A finding raised by the compiler, a static pass, reconciliation or the runtime. Ambiguity is reported, never resolved silently."
+      },
+      "id": "hcta:Diagnostic",
+      "label": {
+        "@language": "en",
+        "@value": "Diagnostic"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:InsurancePolicy",
+      "label": {
+        "@language": "en",
+        "@value": "Cargo insurance"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Containment in the holarchy. Transitive: a provision that is part of a clause is part of the contract and of the cargo."
+      },
+      "id": "hcta:partOf",
+      "label": {
+        "@language": "en",
+        "@value": "part of"
+      },
+      "owl:inverseOf": {
+        "id": "hcta:hasPart"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Holon"
+      },
+      "rdfs:range": {
+        "id": "hcta:Holon"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:TransitiveProperty"
+      ]
+    },
+    {
+      "id": "hcta:periodEnd",
+      "label": {
+        "@language": "en",
+        "@value": "period end"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Period"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An immutable fact in the event store. Every event has a valid time and a transaction time (invariant I3)."
+      },
+      "id": "hcta:Event",
+      "label": {
+        "@language": "en",
+        "@value": "Event"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Weighing",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Weighing"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:SoybeanMeal",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Soybean meal"
+      },
+      "type": "Commodity"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "One deterministic run of the compiler. Same inputs and reference editions give the same output."
+      },
+      "id": "hcta:Compilation",
+      "label": {
+        "@language": "en",
+        "@value": "Compilation"
+      },
+      "rdfs:subClassOf": {
+        "id": "prov:Activity"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:about",
+      "label": {
+        "@language": "en",
+        "@value": "about"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Diagnostic"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "An immutable version of a reference text. A new edition is a release of the library, never an edit (invariant I6)."
+      },
+      "id": "hcta:Edition",
+      "label": {
+        "@language": "en",
+        "@value": "Edition"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Moisture",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Moisture"
+      },
+      "type": "QualityParameter"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Consequence of a breach: damages, discount, demurrage, default price."
+      },
+      "id": "hcta:Sanction",
+      "label": {
+        "@language": "en",
+        "@value": "Sanction"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A length of time with a counting rule, for example laytime or a notice period."
+      },
+      "id": "hcta:Duration",
+      "label": {
+        "@language": "en",
+        "@value": "Duration"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:TimeTerm"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:InvoiceIssued",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Invoice issued"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:toCanonicalConcept",
+      "label": {
+        "@language": "en",
+        "@value": "to canonical concept"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ConceptMapping"
+      },
+      "rdfs:range": {
+        "id": "hcta:CanonicalConcept"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Final",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final"
+      },
+      "type": "FactStatus"
+    },
+    {
+      "id": "hcta:NORTenderedLoad",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "NOR tendered at load port"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:QualityTerm",
+      "label": {
+        "@language": "en",
+        "@value": "Quality term"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Term"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:semanticDifference",
+      "label": {
+        "@language": "en",
+        "@value": "semantic difference"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ConceptMapping"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:FactStatus",
+      "label": {
+        "@language": "en",
+        "@value": "Fact status"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:EventType",
+      "label": {
+        "@language": "en",
+        "@value": "Event type"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:hedgedExposure",
+      "label": {
+        "@language": "en",
+        "@value": "hedged exposure"
+      },
+      "rdfs:domain": {
+        "id": "hcta:HedgePosition"
+      },
+      "rdfs:range": {
+        "id": "hcta:PriceFormula"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:proposedBy",
+      "label": {
+        "@language": "en",
+        "@value": "proposed by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:AIProposal"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "prov:wasAttributedTo"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:mapsTo",
+      "label": {
+        "@language": "en",
+        "@value": "maps to"
+      },
+      "rdfs:domain": {
+        "id": "hcta:LegacyRecord"
+      },
+      "rdfs:range": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Demurrage",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Demurrage"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:WashedOut",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Washed out"
+      },
+      "type": "DetachmentReason"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Maps a standard concept to a canonical concept and declares the semantic difference, if any."
+      },
+      "id": "hcta:ConceptMapping",
+      "label": {
+        "@language": "en",
+        "@value": "Concept mapping"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "One evaluation of the cargo P&L function at a given knowledge time. Estimated, live and final are the same function over inputs of different status."
+      },
+      "id": "hcta:PnLEvaluation",
+      "label": {
+        "@language": "en",
+        "@value": "P&L evaluation"
+      },
+      "rdfs:subClassOf": {
+        "id": "prov:Activity"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Reuses PROV-O for provenance, OWL-Time for temporal entities and SKOS for concept mapping. The domain model is the source of meaning; legacy systems are mapped to it, never the reverse."
+      },
+      "dcterms:created": {
+        "@value": "2026-11-23",
+        "type": "xsd:date"
+      },
+      "dcterms:description": {
+        "@language": "en",
+        "@value": "Core ontology for compiling physical commodity trading contracts into typed, linked holons attached to a unique cargo, and for computing P&L from them."
+      },
+      "dcterms:title": {
+        "@language": "en",
+        "@value": "Holonic Commodity Trading Architecture (HCTA) ontology"
+      },
+      "id": "https://example.org/hcta",
+      "owl:versionInfo": "0.1.0",
+      "type": "owl:Ontology"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Generic typed dependency between holons or from a holon to a reference text. May be cyclic."
+      },
+      "id": "hcta:refersTo",
+      "label": {
+        "@language": "en",
+        "@value": "refers to"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:detachedAt",
+      "label": {
+        "@language": "en",
+        "@value": "detached at"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractAttachment"
+      },
+      "rdfs:range": {
+        "id": "xsd:dateTime"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:ArbitrationForum",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Arbitration forum"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:qualityParameter",
+      "label": {
+        "@language": "en",
+        "@value": "quality parameter"
+      },
+      "rdfs:domain": {
+        "id": "hcta:QualityTerm"
+      },
+      "rdfs:range": {
+        "id": "hcta:QualityParameter"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:PurchaseContract",
+      "label": {
+        "@language": "en",
+        "@value": "Purchase contract"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A concept of the canonical model that several standards express in their own words."
+      },
+      "id": "hcta:CanonicalConcept",
+      "label": {
+        "@language": "en",
+        "@value": "Canonical concept"
+      },
+      "rdfs:subClassOf": {
+        "id": "skos:Concept"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A mapping proposed by an AI model. It never becomes part of the model until validated (invariant I4)."
+      },
+      "id": "hcta:AIProposal",
+      "label": {
+        "@language": "en",
+        "@value": "AI proposal"
+      },
+      "rdfs:subClassOf": {
+        "id": "prov:Entity"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:costCategory",
+      "label": {
+        "@language": "en",
+        "@value": "cost category"
+      },
+      "rdfs:domain": {
+        "id": "hcta:CostAllocation"
+      },
+      "rdfs:range": {
+        "id": "hcta:CostCategory"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:compiledFrom",
+      "label": {
+        "@language": "en",
+        "@value": "compiled from"
+      },
+      "rdfs:range": {
+        "id": "hcta:SourceSpan"
+      },
+      "rdfs:subPropertyOf": {
+        "id": "prov:wasDerivedFrom"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:confidence",
+      "label": {
+        "@language": "en",
+        "@value": "confidence"
+      },
+      "rdfs:domain": {
+        "id": "hcta:AIProposal"
+      },
+      "rdfs:range": {
+        "id": "xsd:decimal"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:SaleContract",
+      "label": {
+        "@language": "en",
+        "@value": "Sale contract"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:QualityFinality",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Quality finality"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:sameGroupAs",
+      "label": {
+        "@language": "en",
+        "@value": "same group as"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Party"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:SymmetricProperty",
+        "owl:TransitiveProperty"
+      ]
+    },
+    {
+      "id": "hcta:quotedText",
+      "label": {
+        "@language": "en",
+        "@value": "quoted text"
+      },
+      "rdfs:domain": {
+        "id": "hcta:SourceSpan"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:Settled",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Settled"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:LaytimeStarted",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Laytime started"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:pricingPeriod",
+      "label": {
+        "@language": "en",
+        "@value": "pricing period"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PriceFormula"
+      },
+      "rdfs:range": {
+        "id": "hcta:TimeTerm"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:attachedTo",
+      "label": {
+        "@language": "en",
+        "@value": "attached to"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractAttachment"
+      },
+      "rdfs:range": {
+        "id": "hcta:Cargo"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:hasPart",
+      "label": {
+        "@language": "en",
+        "@value": "has part"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:OrphanCost",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Cost allocated to nobody"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "allowedTransition": "hcta:Signed",
+      "id": "hcta:Draft",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Draft"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "From one lifecycle state to another."
+      },
+      "id": "hcta:allowedTransition",
+      "label": {
+        "@language": "en",
+        "@value": "allowed transition"
+      },
+      "rdfs:domain": {
+        "id": "hcta:LifecycleState"
+      },
+      "rdfs:range": {
+        "id": "hcta:LifecycleState"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:referencedText",
+      "label": {
+        "@language": "en",
+        "@value": "referenced text"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Incorporation"
+      },
+      "rdfs:range": {
+        "id": "hcta:ReferenceText"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A point in time computed from an anchor event plus a duration."
+      },
+      "id": "hcta:Deadline",
+      "label": {
+        "@language": "en",
+        "@value": "Deadline"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:TimeTerm"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Definition",
+      "label": {
+        "@language": "en",
+        "@value": "Definition"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:ResaleFixed",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Resale fixed"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:Party",
+      "label": {
+        "@language": "en",
+        "@value": "Party"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:DefaultClause",
+      "label": {
+        "@language": "en",
+        "@value": "Default clause"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:LCCharges",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Letter of credit charges"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:fromStandardConcept",
+      "label": {
+        "@language": "en",
+        "@value": "from standard concept"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ConceptMapping"
+      },
+      "rdfs:range": {
+        "id": "hcta:StandardConcept"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:marketReference",
+      "label": {
+        "@language": "en",
+        "@value": "market reference"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PriceFormula"
+      },
+      "rdfs:range": {
+        "id": "hcta:MarketReference"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "ISO 4217 code."
+      },
+      "id": "hcta:currency",
+      "label": {
+        "@language": "en",
+        "@value": "currency"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:LegalEntity",
+      "label": {
+        "@language": "en",
+        "@value": "Legal entity"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:MarketReference",
+      "label": {
+        "@language": "en",
+        "@value": "Market reference"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Right",
+      "label": {
+        "@language": "en",
+        "@value": "Right"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:Fumigation",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Fumigation"
+      },
+      "type": "CostCategory"
+    },
+    {
+      "id": "hcta:CIF",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "CIF - Cost, Insurance and Freight"
+      },
+      "type": "IncotermRule"
+    },
+    {
+      "id": "hcta:optionHolder",
+      "label": {
+        "@language": "en",
+        "@value": "option holder"
+      },
+      "rdfs:domain": {
+        "id": "hcta:ContractOption"
+      },
+      "rdfs:range": {
+        "id": "hcta:Party"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:BLIssued",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Bill of lading issued"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:WeightFinality",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Weight finality"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:Condition",
+      "label": {
+        "@language": "en",
+        "@value": "Condition"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Point at which risk of loss passes from seller to buyer."
+      },
+      "id": "hcta:RiskTransfer",
+      "label": {
+        "@language": "en",
+        "@value": "Risk transfer"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:TypeError",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Type error"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:effectiveFrom",
+      "label": {
+        "@language": "en",
+        "@value": "effective from"
+      },
+      "rdfs:range": {
+        "id": "xsd:date"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Hash of the immutable content (for example SHA-256)."
+      },
+      "id": "hcta:contentHash",
+      "label": {
+        "@language": "en",
+        "@value": "content hash"
+      },
+      "rdfs:range": {
+        "id": "xsd:string"
+      },
+      "type": "owl:DatatypeProperty"
+    },
+    {
+      "id": "hcta:ForumMismatch",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Forum or governing law mismatch"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:WeatherWorkingDaysSHEX",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Weather working days, Sundays and holidays excepted (SHEX)"
+      },
+      "type": "CountingRule"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A debtor must perform an action for a creditor, usually by a deadline, once a trigger occurs."
+      },
+      "id": "hcta:Obligation",
+      "label": {
+        "@language": "en",
+        "@value": "Obligation"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:incorporates",
+      "label": {
+        "@language": "en",
+        "@value": "incorporates"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Contract"
+      },
+      "rdfs:range": {
+        "id": "hcta:Incorporation"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "goal": "Freight and laytime under control",
+      "id": "hcta:Chartering",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Chartering"
+      },
+      "type": "Persona"
+    },
+    {
+      "allowedTransition": [
+        "hcta:Performing",
+        "hcta:ContractWashedOutState"
+      ],
+      "id": "hcta:Signed",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Signed"
+      },
+      "type": "LifecycleState"
+    },
+    {
+      "id": "hcta:hasLine",
+      "label": {
+        "@language": "en",
+        "@value": "has line"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLEvaluation"
+      },
+      "rdfs:range": {
+        "id": "hcta:PnLLine"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:ShipmentPeriod",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Shipment period"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:DoubleCostAllocation",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Cost allocated twice"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:ClaimTimeBar",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Claim time bar"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "1 = highest. Default stack: 1 recap and special conditions, 2 standard form, 3 trade term rules, 4 arbitration rules, 5 governing law."
+      },
+      "id": "hcta:precedenceRank",
+      "label": {
+        "@language": "en",
+        "@value": "precedence rank"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Incorporation"
+      },
+      "rdfs:range": {
+        "id": "xsd:positiveInteger"
+      },
+      "type": [
+        "owl:DatatypeProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "Root holon. A unique physical quantity of a commodity that moves once, from one origin to one destination. Every other holon attaches to a cargo (invariant I1)."
+      },
+      "id": "hcta:Cargo",
+      "label": {
+        "@language": "en",
+        "@value": "Cargo"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "comment": {
+        "@language": "en",
+        "@value": "A contract holon: the recap or contract text plus everything it incorporates, resolved by date."
+      },
+      "id": "hcta:Contract",
+      "label": {
+        "@language": "en",
+        "@value": "Contract"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Holon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:InspectionReported",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final weight and quality reported"
+      },
+      "type": "EventType"
+    },
+    {
+      "id": "hcta:CharterPartyForm",
+      "label": {
+        "@language": "en",
+        "@value": "Charter party form"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:StandardForm"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:resolvedEdition",
+      "label": {
+        "@language": "en",
+        "@value": "resolved edition"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Incorporation"
+      },
+      "rdfs:range": {
+        "id": "hcta:Edition"
+      },
+      "type": [
+        "owl:ObjectProperty",
+        "owl:FunctionalProperty"
+      ]
+    },
+    {
+      "id": "hcta:lineAmount",
+      "label": {
+        "@language": "en",
+        "@value": "line amount"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLLine"
+      },
+      "rdfs:range": {
+        "id": "hcta:MoneyTerm"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:QuantityTolerance",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Quantity tolerance"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "goal": "Exposure within limits",
+      "id": "hcta:Risk",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Risk"
+      },
+      "type": "Persona"
+    },
+    {
+      "id": "hcta:explainedBy",
+      "label": {
+        "@language": "en",
+        "@value": "explained by"
+      },
+      "rdfs:domain": {
+        "id": "hcta:PnLLine"
+      },
+      "rdfs:range": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:Laycan",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Laycan"
+      },
+      "type": "CanonicalConcept"
+    },
+    {
+      "id": "hcta:OrphanObligation",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Obligation handled by no process"
+      },
+      "type": "DiagnosticKind"
+    },
+    {
+      "id": "hcta:InvoicingProcess",
+      "label": {
+        "@language": "en",
+        "@value": "Invoicing process"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:ProcessHolon"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:concernsContract",
+      "label": {
+        "@language": "en",
+        "@value": "concerns contract"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Event"
+      },
+      "rdfs:range": {
+        "id": "hcta:Contract"
+      },
+      "type": "owl:ObjectProperty"
+    },
+    {
+      "id": "hcta:ForceMajeure",
+      "label": {
+        "@language": "en",
+        "@value": "Force majeure"
+      },
+      "rdfs:subClassOf": {
+        "id": "hcta:Provision"
+      },
+      "type": "owl:Class"
+    },
+    {
+      "id": "hcta:commodity",
+      "label": {
+        "@language": "en",
+        "@value": "commodity"
+      },
+      "rdfs:domain": {
+        "id": "hcta:Cargo"
+      },
+      "rdfs:range": {
+        "id": "hcta:Commodity"
+      },
+      "type": "owl:ObjectProperty"
+    }
+  ]
+}

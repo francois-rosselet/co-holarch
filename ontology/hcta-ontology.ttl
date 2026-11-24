@@ -1,0 +1,906 @@
+@prefix hcta:    <https://example.org/hcta#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix time:    <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#  Holonic Commodity Trading Architecture (HCTA) - core ontology
+#  Version 0.1.0 - logical foundation, deliberately incomplete in its details.
+#  Replace the namespace https://example.org/hcta# with your own before use.
+#
+#  Modules (sections below):
+#    0. Ontology header
+#    1. Holon and holarchy
+#    2. Cargo, contracts, clauses, provisions
+#    3. Parties and legal entities
+#    4. Reference library and dated linking
+#    5. Typed terms (time, quantity, money, quality)
+#    6. Events and bitemporality
+#    7. Lifecycle, interfaces and process holons
+#    8. Cost allocation and risk transfer
+#    9. Provenance and diagnostics
+#   10. P&L, options and hedges
+#   11. Cross-standard concept mapping
+#   12. Controlled vocabularies (individuals)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 0. Ontology header
+# -----------------------------------------------------------------------------
+
+<https://example.org/hcta> a owl:Ontology ;
+    dcterms:title "Holonic Commodity Trading Architecture (HCTA) ontology"@en ;
+    dcterms:description "Core ontology for compiling physical commodity trading contracts into typed, linked holons attached to a unique cargo, and for computing P&L from them."@en ;
+    owl:versionInfo "0.1.0" ;
+    dcterms:created "2026-11-23"^^xsd:date ;
+    rdfs:comment "Reuses PROV-O for provenance, OWL-Time for temporal entities and SKOS for concept mapping. The domain model is the source of meaning; legacy systems are mapped to it, never the reverse."@en .
+
+# -----------------------------------------------------------------------------
+# 1. Holon and holarchy
+# -----------------------------------------------------------------------------
+
+hcta:Holon a owl:Class ;
+    rdfs:label "Holon"@en ;
+    rdfs:comment "A unit that is both a whole and a part. Every holon has a stable identity, a lifecycle, declared interfaces and provenance."@en .
+
+hcta:partOf a owl:ObjectProperty , owl:TransitiveProperty ;
+    rdfs:label "part of"@en ;
+    rdfs:comment "Containment in the holarchy. Transitive: a provision that is part of a clause is part of the contract and of the cargo."@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range hcta:Holon ;
+    owl:inverseOf hcta:hasPart .
+
+hcta:hasPart a owl:ObjectProperty ;
+    rdfs:label "has part"@en .
+
+hcta:directlyPartOf a owl:ObjectProperty ;
+    rdfs:subPropertyOf hcta:partOf ;
+    rdfs:label "directly part of"@en ;
+    rdfs:comment "The immediate parent in the holarchy. Use this for assertions; partOf is inferred."@en .
+
+hcta:holonId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "holon identifier"@en ;
+    rdfs:comment "Stable identifier, kept across versions of the holon."@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range xsd:string .
+
+hcta:holonVersion a owl:DatatypeProperty ;
+    rdfs:label "holon version"@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range xsd:nonNegativeInteger .
+
+# Reference graph (dependencies are a graph, containment is a tree)
+
+hcta:refersTo a owl:ObjectProperty ;
+    rdfs:label "refers to"@en ;
+    rdfs:comment "Generic typed dependency between holons or from a holon to a reference text. May be cyclic."@en .
+
+hcta:usesDefinition a owl:ObjectProperty ;
+    rdfs:subPropertyOf hcta:refersTo ;
+    rdfs:label "uses definition"@en ;
+    rdfs:range hcta:Definition .
+
+hcta:overrides a owl:ObjectProperty ;
+    rdfs:subPropertyOf hcta:refersTo ;
+    rdfs:label "overrides"@en ;
+    rdfs:comment "A provision that takes precedence over another, typically special conditions over a standard form."@en .
+
+hcta:backToBackWith a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:subPropertyOf hcta:refersTo ;
+    rdfs:label "back-to-back with"@en ;
+    rdfs:comment "Links provisions or contracts that are meant to mirror each other along the chain (for example purchase and sale laytime)."@en .
+
+# -----------------------------------------------------------------------------
+# 2. Cargo, contracts, clauses, provisions
+# -----------------------------------------------------------------------------
+
+hcta:Cargo a owl:Class ;
+    rdfs:subClassOf hcta:Holon ;
+    rdfs:label "Cargo"@en ;
+    rdfs:comment "Root holon. A unique physical quantity of a commodity that moves once, from one origin to one destination. Every other holon attaches to a cargo (invariant I1)."@en .
+
+hcta:commodity a owl:ObjectProperty ;
+    rdfs:label "commodity"@en ;
+    rdfs:domain hcta:Cargo ;
+    rdfs:range hcta:Commodity .
+
+hcta:Commodity a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Commodity"@en .
+
+hcta:loadPort a owl:ObjectProperty ;
+    rdfs:label "load port"@en ;
+    rdfs:domain hcta:Cargo ;
+    rdfs:range hcta:Port .
+
+hcta:dischargePort a owl:ObjectProperty ;
+    rdfs:label "discharge port"@en ;
+    rdfs:comment "Current intended discharge port; its history is kept through events."@en ;
+    rdfs:range hcta:Port .
+
+hcta:Port a owl:Class ;
+    rdfs:label "Port"@en .
+
+hcta:Vessel a owl:Class ;
+    rdfs:label "Vessel"@en .
+
+hcta:carriedBy a owl:ObjectProperty ;
+    rdfs:label "carried by"@en ;
+    rdfs:domain hcta:Cargo ;
+    rdfs:range hcta:Vessel .
+
+# Contracts
+
+hcta:Contract a owl:Class ;
+    rdfs:subClassOf hcta:Holon ;
+    rdfs:label "Contract"@en ;
+    rdfs:comment "A contract holon: the recap or contract text plus everything it incorporates, resolved by date."@en .
+
+hcta:PurchaseContract a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Purchase contract"@en .
+hcta:SaleContract a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Sale contract"@en .
+hcta:IntercompanyContract a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Intercompany contract"@en ;
+    rdfs:comment "Transfers a cargo between entities of the same group. Basis for transfer pricing."@en .
+hcta:CharterParty a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Charter party"@en .
+hcta:LetterOfCredit a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Letter of credit"@en .
+hcta:InspectionMandate a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Inspection mandate"@en .
+hcta:InsurancePolicy a owl:Class ; rdfs:subClassOf hcta:Contract ; rdfs:label "Cargo insurance"@en .
+
+hcta:incoterm a owl:ObjectProperty ;
+    rdfs:label "Incoterm"@en ;
+    rdfs:domain hcta:Contract ;
+    rdfs:range hcta:IncotermRule .
+
+hcta:IncotermRule a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Incoterm rule"@en .
+
+hcta:signedOn a owl:DatatypeProperty ;
+    rdfs:label "signed on"@en ;
+    rdfs:comment "Date used by default to resolve incorporated reference texts (invariant I6)."@en ;
+    rdfs:domain hcta:Contract ;
+    rdfs:range xsd:date .
+
+# Temporal attachment of contracts to a cargo (reified, because it has its own time)
+
+hcta:ContractAttachment a owl:Class ;
+    rdfs:label "Contract attachment"@en ;
+    rdfs:comment "States that a contract governs a cargo during an interval. Contracts attach and detach over time; a washed-out sale is detached, never deleted."@en .
+
+hcta:attachedContract a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "attached contract"@en ;
+    rdfs:domain hcta:ContractAttachment ;
+    rdfs:range hcta:Contract .
+
+hcta:attachedTo a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "attached to"@en ;
+    rdfs:domain hcta:ContractAttachment ;
+    rdfs:range hcta:Cargo .
+
+hcta:attachedFrom a owl:DatatypeProperty ;
+    rdfs:label "attached from"@en ;
+    rdfs:domain hcta:ContractAttachment ;
+    rdfs:range xsd:dateTime .
+
+hcta:detachedAt a owl:DatatypeProperty ;
+    rdfs:label "detached at"@en ;
+    rdfs:domain hcta:ContractAttachment ;
+    rdfs:range xsd:dateTime .
+
+hcta:detachmentReason a owl:ObjectProperty ;
+    rdfs:label "detachment reason"@en ;
+    rdfs:domain hcta:ContractAttachment ;
+    rdfs:range hcta:DetachmentReason .
+
+hcta:DetachmentReason a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Detachment reason"@en .
+
+# Clauses and provisions
+
+hcta:Clause a owl:Class ;
+    rdfs:subClassOf hcta:Holon ;
+    rdfs:label "Clause"@en ;
+    rdfs:comment "Unit of reference in a contract or standard form (an article, a numbered clause)."@en .
+
+hcta:clauseNumber a owl:DatatypeProperty ;
+    rdfs:label "clause number"@en ;
+    rdfs:domain hcta:Clause ;
+    rdfs:range xsd:string .
+
+hcta:Provision a owl:Class ;
+    rdfs:subClassOf hcta:Holon ;
+    rdfs:label "Provision"@en ;
+    rdfs:comment "Atomic holon: the smallest unit with autonomous normative meaning. It can be referenced, contested and evaluated on its own."@en .
+
+hcta:Obligation a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Obligation"@en ;
+    rdfs:comment "A debtor must perform an action for a creditor, usually by a deadline, once a trigger occurs."@en .
+hcta:Right a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Right"@en .
+hcta:Prohibition a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Prohibition"@en .
+hcta:Condition a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Condition"@en .
+hcta:Definition a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Definition"@en .
+hcta:Sanction a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Sanction"@en ;
+    rdfs:comment "Consequence of a breach: damages, discount, demurrage, default price."@en .
+
+hcta:debtor a owl:ObjectProperty ;
+    rdfs:label "debtor"@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range hcta:Party .
+
+hcta:creditor a owl:ObjectProperty ;
+    rdfs:label "creditor"@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range hcta:Party .
+
+hcta:action a owl:DatatypeProperty ;
+    rdfs:label "action"@en ;
+    rdfs:comment "Normalised description of what must, may or must not be done."@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range xsd:string .
+
+hcta:triggeredBy a owl:ObjectProperty ;
+    rdfs:label "triggered by"@en ;
+    rdfs:comment "The event type whose occurrence activates the provision."@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range hcta:EventType .
+
+hcta:hasTerm a owl:ObjectProperty ;
+    rdfs:label "has term"@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range hcta:Term .
+
+# -----------------------------------------------------------------------------
+# 3. Parties and legal entities
+# -----------------------------------------------------------------------------
+
+hcta:Party a owl:Class ;
+    rdfs:label "Party"@en .
+
+hcta:LegalEntity a owl:Class ;
+    rdfs:subClassOf hcta:Party ;
+    rdfs:label "Legal entity"@en .
+
+hcta:Branch a owl:Class ;
+    rdfs:subClassOf hcta:Party ;
+    rdfs:label "Branch"@en ;
+    rdfs:comment "An establishment of a legal entity. Whether it has separate legal personality changes the nature of intercompany contracts."@en .
+
+hcta:branchOf a owl:ObjectProperty ;
+    rdfs:label "branch of"@en ;
+    rdfs:domain hcta:Branch ;
+    rdfs:range hcta:LegalEntity .
+
+hcta:hasSeparateLegalPersonality a owl:DatatypeProperty ;
+    rdfs:label "has separate legal personality"@en ;
+    rdfs:domain hcta:Party ;
+    rdfs:range xsd:boolean .
+
+hcta:sameGroupAs a owl:ObjectProperty , owl:SymmetricProperty , owl:TransitiveProperty ;
+    rdfs:label "same group as"@en ;
+    rdfs:domain hcta:Party ;
+    rdfs:range hcta:Party .
+
+hcta:jurisdiction a owl:DatatypeProperty ;
+    rdfs:label "jurisdiction"@en ;
+    rdfs:comment "ISO 3166 country code of incorporation or establishment."@en ;
+    rdfs:domain hcta:Party ;
+    rdfs:range xsd:string .
+
+hcta:seller a owl:ObjectProperty ; rdfs:label "seller"@en ; rdfs:domain hcta:Contract ; rdfs:range hcta:Party .
+hcta:buyer a owl:ObjectProperty ; rdfs:label "buyer"@en ; rdfs:domain hcta:Contract ; rdfs:range hcta:Party .
+hcta:shipowner a owl:ObjectProperty ; rdfs:label "shipowner"@en ; rdfs:domain hcta:CharterParty ; rdfs:range hcta:Party .
+hcta:charterer a owl:ObjectProperty ; rdfs:label "charterer"@en ; rdfs:domain hcta:CharterParty ; rdfs:range hcta:Party .
+
+# -----------------------------------------------------------------------------
+# 4. Reference library and dated linking
+# -----------------------------------------------------------------------------
+
+hcta:ReferenceText a owl:Class ;
+    rdfs:label "Reference text"@en ;
+    rdfs:comment "A text that contracts incorporate by reference: a standard form, rules, Incoterms, UCP, a law."@en .
+
+hcta:StandardForm a owl:Class ; rdfs:subClassOf hcta:ReferenceText ; rdfs:label "Standard contract form"@en .
+hcta:ArbitrationRules a owl:Class ; rdfs:subClassOf hcta:ReferenceText ; rdfs:label "Arbitration rules"@en .
+hcta:TradeTermRules a owl:Class ; rdfs:subClassOf hcta:ReferenceText ; rdfs:label "Trade term rules (Incoterms)"@en .
+hcta:DocumentaryCreditRules a owl:Class ; rdfs:subClassOf hcta:ReferenceText ; rdfs:label "Documentary credit rules (UCP)"@en .
+hcta:CharterPartyForm a owl:Class ; rdfs:subClassOf hcta:StandardForm ; rdfs:label "Charter party form"@en .
+hcta:GoverningLaw a owl:Class ; rdfs:subClassOf hcta:ReferenceText ; rdfs:label "Governing law"@en .
+
+hcta:issuingBody a owl:ObjectProperty ;
+    rdfs:label "issuing body"@en ;
+    rdfs:domain hcta:ReferenceText ;
+    rdfs:range hcta:IssuingBody .
+
+hcta:IssuingBody a owl:Class ;
+    rdfs:label "Issuing body"@en ;
+    rdfs:comment "GAFTA, FOSFA, ANEC, ICC, BIMCO, a legislature."@en .
+
+hcta:Edition a owl:Class ;
+    rdfs:label "Edition"@en ;
+    rdfs:comment "An immutable version of a reference text. A new edition is a release of the library, never an edit (invariant I6)."@en .
+
+hcta:editionOf a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "edition of"@en ;
+    rdfs:domain hcta:Edition ;
+    rdfs:range hcta:ReferenceText .
+
+hcta:effectiveFrom a owl:DatatypeProperty ;
+    rdfs:label "effective from"@en ;
+    rdfs:range xsd:date .
+
+hcta:effectiveUntil a owl:DatatypeProperty ;
+    rdfs:label "effective until"@en ;
+    rdfs:range xsd:date .
+
+hcta:licence a owl:DatatypeProperty ;
+    rdfs:label "licence"@en ;
+    rdfs:comment "Licence under which the text is held in the library."@en ;
+    rdfs:domain hcta:Edition ;
+    rdfs:range xsd:string .
+
+hcta:contentHash a owl:DatatypeProperty ;
+    rdfs:label "content hash"@en ;
+    rdfs:comment "Hash of the immutable content (for example SHA-256)."@en ;
+    rdfs:range xsd:string .
+
+hcta:Incorporation a owl:Class ;
+    rdfs:label "Incorporation"@en ;
+    rdfs:comment "Result of the dated linker: a contract incorporates a reference text, resolved to one edition at one date, at one level of precedence."@en .
+
+hcta:incorporates a owl:ObjectProperty ;
+    rdfs:label "incorporates"@en ;
+    rdfs:domain hcta:Contract ;
+    rdfs:range hcta:Incorporation .
+
+hcta:referencedText a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "referenced text"@en ;
+    rdfs:domain hcta:Incorporation ;
+    rdfs:range hcta:ReferenceText .
+
+hcta:resolvedEdition a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "resolved edition"@en ;
+    rdfs:domain hcta:Incorporation ;
+    rdfs:range hcta:Edition .
+
+hcta:resolutionDate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "resolution date"@en ;
+    rdfs:domain hcta:Incorporation ;
+    rdfs:range xsd:date .
+
+hcta:precedenceRank a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "precedence rank"@en ;
+    rdfs:comment "1 = highest. Default stack: 1 recap and special conditions, 2 standard form, 3 trade term rules, 4 arbitration rules, 5 governing law."@en ;
+    rdfs:domain hcta:Incorporation ;
+    rdfs:range xsd:positiveInteger .
+
+hcta:resolvedAtLevel a owl:ObjectProperty ;
+    rdfs:label "resolved at level"@en ;
+    rdfs:comment "For a provision: the incorporation (level of the precedence stack) where its meaning was found."@en ;
+    rdfs:domain hcta:Provision ;
+    rdfs:range hcta:Incorporation .
+
+# -----------------------------------------------------------------------------
+# 5. Typed terms
+# -----------------------------------------------------------------------------
+
+hcta:Term a owl:Class ;
+    rdfs:label "Term"@en ;
+    rdfs:comment "A typed value inside a provision. Terms are not holons; they carry calculation semantics."@en .
+
+hcta:TimeTerm a owl:Class ; rdfs:subClassOf hcta:Term ; rdfs:label "Time term"@en .
+hcta:QuantityTerm a owl:Class ; rdfs:subClassOf hcta:Term ; rdfs:label "Quantity term"@en .
+hcta:MoneyTerm a owl:Class ; rdfs:subClassOf hcta:Term ; rdfs:label "Money term"@en .
+hcta:QualityTerm a owl:Class ; rdfs:subClassOf hcta:Term ; rdfs:label "Quality term"@en .
+
+# Time terms
+
+hcta:Period a owl:Class ; rdfs:subClassOf hcta:TimeTerm ;
+    rdfs:label "Period"@en ;
+    rdfs:comment "A date or time range, for example a shipment period or a laycan."@en .
+
+hcta:Duration a owl:Class ; rdfs:subClassOf hcta:TimeTerm ;
+    rdfs:label "Duration"@en ;
+    rdfs:comment "A length of time with a counting rule, for example laytime or a notice period."@en .
+
+hcta:Deadline a owl:Class ; rdfs:subClassOf hcta:TimeTerm ;
+    rdfs:label "Deadline"@en ;
+    rdfs:comment "A point in time computed from an anchor event plus a duration."@en .
+
+hcta:periodStart a owl:DatatypeProperty ; rdfs:label "period start"@en ; rdfs:domain hcta:Period ; rdfs:range xsd:dateTime .
+hcta:periodEnd a owl:DatatypeProperty ; rdfs:label "period end"@en ; rdfs:domain hcta:Period ; rdfs:range xsd:dateTime .
+
+hcta:durationValue a owl:DatatypeProperty ; rdfs:label "duration value"@en ; rdfs:range xsd:duration .
+hcta:countingRule a owl:ObjectProperty ; rdfs:label "counting rule"@en ; rdfs:range hcta:CountingRule .
+hcta:CountingRule a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Counting rule"@en .
+
+hcta:anchorEvent a owl:ObjectProperty ;
+    rdfs:label "anchor event"@en ;
+    rdfs:comment "The event type a deadline is counted from (for example B/L date, NOR tendered, completion of discharge)."@en ;
+    rdfs:domain hcta:Deadline ;
+    rdfs:range hcta:EventType .
+
+hcta:offset a owl:ObjectProperty ;
+    rdfs:label "offset"@en ;
+    rdfs:domain hcta:Deadline ;
+    rdfs:range hcta:Duration .
+
+# Quantity terms
+
+hcta:quantityValue a owl:DatatypeProperty ; rdfs:label "quantity value"@en ; rdfs:range xsd:decimal .
+hcta:unit a owl:DatatypeProperty ; rdfs:label "unit"@en ; rdfs:comment "Unit code, for example t (metric tonne)."@en ; rdfs:range xsd:string .
+hcta:tolerancePercent a owl:DatatypeProperty ; rdfs:label "tolerance percent"@en ; rdfs:domain hcta:QuantityTerm ; rdfs:range xsd:decimal .
+hcta:toleranceOption a owl:ObjectProperty ;
+    rdfs:label "tolerance option holder"@en ;
+    rdfs:comment "The party at whose option the tolerance is exercised."@en ;
+    rdfs:domain hcta:QuantityTerm ;
+    rdfs:range hcta:Party .
+
+# Money terms
+
+hcta:amount a owl:DatatypeProperty ; rdfs:label "amount"@en ; rdfs:domain hcta:MoneyTerm ; rdfs:range xsd:decimal .
+hcta:currency a owl:DatatypeProperty ; rdfs:label "currency"@en ; rdfs:comment "ISO 4217 code."@en ; rdfs:range xsd:string .
+hcta:perUnit a owl:DatatypeProperty ; rdfs:label "per unit"@en ; rdfs:comment "Unit the amount applies to, for example t or day."@en ; rdfs:domain hcta:MoneyTerm ; rdfs:range xsd:string .
+
+hcta:PriceFormula a owl:Class ; rdfs:subClassOf hcta:MoneyTerm ;
+    rdfs:label "Price formula"@en ;
+    rdfs:comment "A price defined by a market reference, a premium and a pricing period, for example CBOT soybean futures plus a premium."@en .
+
+hcta:marketReference a owl:ObjectProperty ; rdfs:label "market reference"@en ; rdfs:domain hcta:PriceFormula ; rdfs:range hcta:MarketReference .
+hcta:MarketReference a owl:Class ; rdfs:label "Market reference"@en .
+hcta:premium a owl:ObjectProperty ; rdfs:label "premium"@en ; rdfs:domain hcta:PriceFormula ; rdfs:range hcta:MoneyTerm .
+hcta:pricingPeriod a owl:ObjectProperty ; rdfs:label "pricing period"@en ; rdfs:domain hcta:PriceFormula ; rdfs:range hcta:TimeTerm .
+
+# Quality terms
+
+hcta:qualityParameter a owl:ObjectProperty ; rdfs:label "quality parameter"@en ; rdfs:domain hcta:QualityTerm ; rdfs:range hcta:QualityParameter .
+hcta:QualityParameter a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Quality parameter"@en .
+hcta:limitValue a owl:DatatypeProperty ; rdfs:label "limit value"@en ; rdfs:domain hcta:QualityTerm ; rdfs:range xsd:decimal .
+hcta:limitKind a owl:DatatypeProperty ; rdfs:label "limit kind"@en ; rdfs:comment "max, min or basis."@en ; rdfs:domain hcta:QualityTerm ; rdfs:range xsd:string .
+hcta:discountScale a owl:DatatypeProperty ; rdfs:label "discount scale"@en ; rdfs:comment "Normalised expression of the price adjustment per unit of deviation."@en ; rdfs:domain hcta:QualityTerm ; rdfs:range xsd:string .
+hcta:finalAt a owl:ObjectProperty ;
+    rdfs:label "final at"@en ;
+    rdfs:comment "Where weight or quality figures are final: at loading or at discharge."@en ;
+    rdfs:range hcta:FinalityPoint .
+hcta:FinalityPoint a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Finality point"@en .
+
+# -----------------------------------------------------------------------------
+# 6. Events and bitemporality
+# -----------------------------------------------------------------------------
+
+hcta:Event a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:comment "An immutable fact in the event store. Every event has a valid time and a transaction time (invariant I3)."@en .
+
+hcta:EventType a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Event type"@en .
+
+hcta:eventType a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "event type"@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range hcta:EventType .
+
+hcta:concernsCargo a owl:ObjectProperty ;
+    rdfs:label "concerns cargo"@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range hcta:Cargo .
+
+hcta:concernsContract a owl:ObjectProperty ;
+    rdfs:label "concerns contract"@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range hcta:Contract .
+
+hcta:validTime a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "valid time"@en ;
+    rdfs:comment "When the fact is true in the world."@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range xsd:dateTime .
+
+hcta:transactionTime a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:label "transaction time"@en ;
+    rdfs:comment "When the system learned the fact."@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range xsd:dateTime .
+
+hcta:factStatus a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "fact status"@en ;
+    rdfs:comment "Forecast, actual or final. A forecast is superseded by an actual, never overwritten."@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range hcta:FactStatus .
+
+hcta:FactStatus a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Fact status"@en .
+
+hcta:supersedes a owl:ObjectProperty ;
+    rdfs:label "supersedes"@en ;
+    rdfs:domain hcta:Event ;
+    rdfs:range hcta:Event .
+
+# -----------------------------------------------------------------------------
+# 7. Lifecycle, interfaces and process holons
+# -----------------------------------------------------------------------------
+
+hcta:LifecycleState a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Lifecycle state"@en .
+
+hcta:state a owl:ObjectProperty ;
+    rdfs:label "state"@en ;
+    rdfs:comment "Current state, derived from the event store."@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range hcta:LifecycleState .
+
+hcta:allowedTransition a owl:ObjectProperty ;
+    rdfs:label "allowed transition"@en ;
+    rdfs:comment "From one lifecycle state to another."@en ;
+    rdfs:domain hcta:LifecycleState ;
+    rdfs:range hcta:LifecycleState .
+
+hcta:listensTo a owl:ObjectProperty ;
+    rdfs:label "listens to"@en ;
+    rdfs:comment "Declared input interface: event types the holon reacts to."@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range hcta:EventType .
+
+hcta:emits a owl:ObjectProperty ;
+    rdfs:label "emits"@en ;
+    rdfs:comment "Declared output interface: event types the holon can produce."@en ;
+    rdfs:domain hcta:Holon ;
+    rdfs:range hcta:EventType .
+
+hcta:ProcessHolon a owl:Class ;
+    rdfs:subClassOf hcta:Holon ;
+    rdfs:label "Process holon"@en ;
+    rdfs:comment "An operational workflow that takes charge of obligations: nomination, LC, inspection, invoicing, claims."@en .
+
+hcta:NominationProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Nomination process"@en .
+hcta:LetterOfCreditProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Letter of credit process"@en .
+hcta:InspectionProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Inspection process"@en .
+hcta:LaytimeProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Laytime and demurrage process"@en .
+hcta:InvoicingProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Invoicing process"@en .
+hcta:ClaimsProcess a owl:Class ; rdfs:subClassOf hcta:ProcessHolon ; rdfs:label "Claims process"@en .
+
+hcta:takesChargeOf a owl:ObjectProperty ;
+    rdfs:label "takes charge of"@en ;
+    rdfs:domain hcta:ProcessHolon ;
+    rdfs:range hcta:Obligation ;
+    owl:inverseOf hcta:handledBy .
+
+hcta:handledBy a owl:ObjectProperty ;
+    rdfs:label "handled by"@en ;
+    rdfs:comment "An obligation with no handledBy is an orphan obligation."@en .
+
+hcta:responsibleRole a owl:ObjectProperty ;
+    rdfs:label "responsible role"@en ;
+    rdfs:domain hcta:ProcessHolon ;
+    rdfs:range hcta:Persona .
+
+hcta:Persona a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Persona"@en ;
+    rdfs:comment "A business role with a goal: trader, trade execution, chartering, risk, back office, finance, legal."@en .
+
+hcta:goal a owl:DatatypeProperty ;
+    rdfs:label "goal"@en ;
+    rdfs:domain hcta:Persona ;
+    rdfs:range xsd:string .
+
+# -----------------------------------------------------------------------------
+# 8. Cost allocation and risk transfer
+# -----------------------------------------------------------------------------
+
+hcta:CostCategory a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Cost category"@en .
+
+hcta:CostAllocation a owl:Class ;
+    rdfs:subClassOf hcta:Obligation ;
+    rdfs:label "Cost allocation"@en ;
+    rdfs:comment "A provision that says which party bears a category of cost under a contract. The cost allocation pass compares them across all contracts of a cargo."@en .
+
+hcta:costCategory a owl:ObjectProperty ;
+    rdfs:label "cost category"@en ;
+    rdfs:domain hcta:CostAllocation ;
+    rdfs:range hcta:CostCategory .
+
+hcta:RiskTransfer a owl:Class ;
+    rdfs:subClassOf hcta:Provision ;
+    rdfs:label "Risk transfer"@en ;
+    rdfs:comment "Point at which risk of loss passes from seller to buyer."@en .
+
+hcta:transferPoint a owl:ObjectProperty ;
+    rdfs:label "transfer point"@en ;
+    rdfs:domain hcta:RiskTransfer ;
+    rdfs:range hcta:EventType .
+
+hcta:TimeBar a owl:Class ;
+    rdfs:subClassOf hcta:Provision ;
+    rdfs:label "Time bar"@en ;
+    rdfs:comment "Deadline after which a claim or an arbitration can no longer be brought."@en .
+
+hcta:LaytimeProvision a owl:Class ;
+    rdfs:subClassOf hcta:Provision ;
+    rdfs:label "Laytime provision"@en .
+
+hcta:demurrageRate a owl:ObjectProperty ;
+    rdfs:label "demurrage rate"@en ;
+    rdfs:domain hcta:LaytimeProvision ;
+    rdfs:range hcta:MoneyTerm .
+
+hcta:ForceMajeure a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Force majeure"@en .
+hcta:ProhibitionClause a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Prohibition clause"@en ;
+    rdfs:comment "Export or import prohibition clause of a standard form (distinct from the deontic hcta:Prohibition)."@en .
+hcta:DefaultClause a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Default clause"@en .
+hcta:ArbitrationClause a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Arbitration clause"@en .
+hcta:WashoutClause a owl:Class ; rdfs:subClassOf hcta:Provision ; rdfs:label "Washout or circle clause"@en .
+
+# -----------------------------------------------------------------------------
+# 9. Provenance and diagnostics
+# -----------------------------------------------------------------------------
+
+hcta:SourceDocument a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Source document"@en ;
+    rdfs:comment "An immutable input: recap, contract, amendment, certificate, B/L, email."@en .
+
+hcta:SourceSpan a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Source span"@en ;
+    rdfs:comment "The exact words a holon or term was compiled from."@en .
+
+hcta:inDocument a owl:ObjectProperty ;
+    rdfs:label "in document"@en ;
+    rdfs:domain hcta:SourceSpan ;
+    rdfs:range [ owl:unionOf ( hcta:SourceDocument hcta:Edition ) ] .
+
+hcta:startOffset a owl:DatatypeProperty ; rdfs:label "start offset"@en ; rdfs:domain hcta:SourceSpan ; rdfs:range xsd:nonNegativeInteger .
+hcta:endOffset a owl:DatatypeProperty ; rdfs:label "end offset"@en ; rdfs:domain hcta:SourceSpan ; rdfs:range xsd:nonNegativeInteger .
+hcta:quotedText a owl:DatatypeProperty ; rdfs:label "quoted text"@en ; rdfs:domain hcta:SourceSpan ; rdfs:range xsd:string .
+
+hcta:compiledFrom a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasDerivedFrom ;
+    rdfs:label "compiled from"@en ;
+    rdfs:range hcta:SourceSpan .
+
+hcta:Compilation a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Compilation"@en ;
+    rdfs:comment "One deterministic run of the compiler. Same inputs and reference editions give the same output."@en .
+
+hcta:compilerVersion a owl:DatatypeProperty ; rdfs:label "compiler version"@en ; rdfs:domain hcta:Compilation ; rdfs:range xsd:string .
+
+hcta:AIProposal a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "AI proposal"@en ;
+    rdfs:comment "A mapping proposed by an AI model. It never becomes part of the model until validated (invariant I4)."@en .
+
+hcta:proposedBy a owl:ObjectProperty ; rdfs:subPropertyOf prov:wasAttributedTo ; rdfs:label "proposed by"@en ; rdfs:domain hcta:AIProposal .
+hcta:confidence a owl:DatatypeProperty ; rdfs:label "confidence"@en ; rdfs:domain hcta:AIProposal ; rdfs:range xsd:decimal .
+hcta:validatedBy a owl:ObjectProperty ; rdfs:label "validated by"@en ; rdfs:domain hcta:AIProposal .
+
+hcta:Diagnostic a owl:Class ;
+    rdfs:label "Diagnostic"@en ;
+    rdfs:comment "A finding raised by the compiler, a static pass, reconciliation or the runtime. Ambiguity is reported, never resolved silently."@en .
+
+hcta:severity a owl:ObjectProperty ; rdfs:label "severity"@en ; rdfs:domain hcta:Diagnostic ; rdfs:range hcta:Severity .
+hcta:Severity a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Severity"@en .
+hcta:diagnosticKind a owl:ObjectProperty ; rdfs:label "diagnostic kind"@en ; rdfs:domain hcta:Diagnostic ; rdfs:range hcta:DiagnosticKind .
+hcta:DiagnosticKind a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "Diagnostic kind"@en .
+hcta:about a owl:ObjectProperty ; rdfs:label "about"@en ; rdfs:domain hcta:Diagnostic .
+hcta:message a owl:DatatypeProperty ; rdfs:label "message"@en ; rdfs:domain hcta:Diagnostic ; rdfs:range xsd:string .
+hcta:raisedAt a owl:DatatypeProperty ; rdfs:label "raised at"@en ; rdfs:domain hcta:Diagnostic ; rdfs:range xsd:dateTime .
+
+# -----------------------------------------------------------------------------
+# 10. P&L, options and hedges
+# -----------------------------------------------------------------------------
+
+hcta:PnLEvaluation a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "P&L evaluation"@en ;
+    rdfs:comment "One evaluation of the cargo P&L function at a given knowledge time. Estimated, live and final are the same function over inputs of different status."@en .
+
+hcta:forCargo a owl:ObjectProperty ; rdfs:label "for cargo"@en ; rdfs:range hcta:Cargo .
+hcta:pnlState a owl:ObjectProperty ; rdfs:label "P&L state"@en ; rdfs:domain hcta:PnLEvaluation ; rdfs:range hcta:PnLState .
+hcta:PnLState a owl:Class ; rdfs:subClassOf skos:Concept ; rdfs:label "P&L state"@en .
+hcta:asKnownAt a owl:DatatypeProperty ; rdfs:label "as known at"@en ; rdfs:comment "Transaction time at which the evaluation was made."@en ; rdfs:domain hcta:PnLEvaluation ; rdfs:range xsd:dateTime .
+
+hcta:PnLLine a owl:Class ;
+    rdfs:label "P&L line"@en ;
+    rdfs:comment "One cash flow or valuation item, explained by the provision and the event that produced it."@en .
+
+hcta:hasLine a owl:ObjectProperty ; rdfs:label "has line"@en ; rdfs:domain hcta:PnLEvaluation ; rdfs:range hcta:PnLLine .
+hcta:lineAmount a owl:ObjectProperty ; rdfs:label "line amount"@en ; rdfs:domain hcta:PnLLine ; rdfs:range hcta:MoneyTerm .
+hcta:explainedBy a owl:ObjectProperty ; rdfs:label "explained by"@en ; rdfs:domain hcta:PnLLine ; rdfs:range hcta:Provision .
+hcta:drivenBy a owl:ObjectProperty ; rdfs:label "driven by"@en ; rdfs:domain hcta:PnLLine ; rdfs:range hcta:Event .
+hcta:bookedTo a owl:ObjectProperty ; rdfs:label "booked to"@en ; rdfs:comment "Entity whose P&L carries the line."@en ; rdfs:domain hcta:PnLLine ; rdfs:range hcta:Party .
+
+hcta:ContractOption a owl:Class ;
+    rdfs:subClassOf hcta:Right ;
+    rdfs:label "Contract option"@en ;
+    rdfs:comment "A right to choose: tolerance, destination, pricing period, nomination. Decision points for the scenario engine."@en .
+
+hcta:optionHolder a owl:ObjectProperty ; rdfs:label "option holder"@en ; rdfs:domain hcta:ContractOption ; rdfs:range hcta:Party .
+hcta:exerciseDeadline a owl:ObjectProperty ; rdfs:label "exercise deadline"@en ; rdfs:domain hcta:ContractOption ; rdfs:range hcta:Deadline .
+
+hcta:HedgePosition a owl:Class ;
+    rdfs:label "Hedge position"@en ;
+    rdfs:comment "A futures, FX or freight position linked to the exposures of a cargo."@en .
+
+hcta:hedges a owl:ObjectProperty ; rdfs:label "hedges"@en ; rdfs:domain hcta:HedgePosition ; rdfs:range hcta:Cargo .
+hcta:hedgedExposure a owl:ObjectProperty ; rdfs:label "hedged exposure"@en ; rdfs:domain hcta:HedgePosition ; rdfs:range hcta:PriceFormula .
+hcta:hedgeInstrument a owl:ObjectProperty ; rdfs:label "hedge instrument"@en ; rdfs:domain hcta:HedgePosition ; rdfs:range hcta:MarketReference .
+hcta:hedgeQuantity a owl:ObjectProperty ; rdfs:label "hedge quantity"@en ; rdfs:domain hcta:HedgePosition ; rdfs:range hcta:QuantityTerm .
+
+# -----------------------------------------------------------------------------
+# 11. Cross-standard concept mapping
+# -----------------------------------------------------------------------------
+
+hcta:CanonicalConcept a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Canonical concept"@en ;
+    rdfs:comment "A concept of the canonical model that several standards express in their own words."@en .
+
+hcta:StandardConcept a owl:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label "Standard concept"@en ;
+    rdfs:comment "A concept as defined by one standard form edition."@en .
+
+hcta:definedIn a owl:ObjectProperty ; rdfs:label "defined in"@en ; rdfs:domain hcta:StandardConcept ; rdfs:range hcta:Edition .
+
+hcta:ConceptMapping a owl:Class ;
+    rdfs:label "Concept mapping"@en ;
+    rdfs:comment "Maps a standard concept to a canonical concept and declares the semantic difference, if any."@en .
+
+hcta:fromStandardConcept a owl:ObjectProperty ; rdfs:label "from standard concept"@en ; rdfs:domain hcta:ConceptMapping ; rdfs:range hcta:StandardConcept .
+hcta:toCanonicalConcept a owl:ObjectProperty ; rdfs:label "to canonical concept"@en ; rdfs:domain hcta:ConceptMapping ; rdfs:range hcta:CanonicalConcept .
+hcta:matchKind a owl:ObjectProperty ; rdfs:label "match kind"@en ; rdfs:comment "skos:exactMatch, skos:closeMatch, skos:broadMatch or skos:narrowMatch."@en ; rdfs:domain hcta:ConceptMapping .
+hcta:semanticDifference a owl:DatatypeProperty ; rdfs:label "semantic difference"@en ; rdfs:domain hcta:ConceptMapping ; rdfs:range xsd:string .
+hcta:realises a owl:ObjectProperty ; rdfs:label "realises"@en ; rdfs:comment "A provision realises a canonical concept."@en ; rdfs:domain hcta:Provision ; rdfs:range hcta:CanonicalConcept .
+
+# Legacy mapping (anti-corruption layer)
+
+hcta:LegacyRecord a owl:Class ;
+    rdfs:label "Legacy record"@en ;
+    rdfs:comment "A pointer to a record in a legacy system. Mapped to holons, never used as meaning (invariant I5)."@en .
+
+hcta:legacySystem a owl:DatatypeProperty ; rdfs:label "legacy system"@en ; rdfs:domain hcta:LegacyRecord ; rdfs:range xsd:string .
+hcta:legacyKey a owl:DatatypeProperty ; rdfs:label "legacy key"@en ; rdfs:domain hcta:LegacyRecord ; rdfs:range xsd:string .
+hcta:mapsTo a owl:ObjectProperty ; rdfs:label "maps to"@en ; rdfs:domain hcta:LegacyRecord ; rdfs:range hcta:Holon .
+
+# -----------------------------------------------------------------------------
+# 12. Controlled vocabularies (individuals)
+# -----------------------------------------------------------------------------
+
+# Commodities
+hcta:Soybeans a hcta:Commodity ; skos:prefLabel "Soybeans"@en .
+hcta:SoybeanMeal a hcta:Commodity ; skos:prefLabel "Soybean meal"@en .
+
+# Incoterms 2020 (subset)
+hcta:FOB a hcta:IncotermRule ; skos:prefLabel "FOB - Free On Board"@en .
+hcta:CFR a hcta:IncotermRule ; skos:prefLabel "CFR - Cost and Freight"@en .
+hcta:CIF a hcta:IncotermRule ; skos:prefLabel "CIF - Cost, Insurance and Freight"@en .
+
+# Detachment reasons
+hcta:Performed a hcta:DetachmentReason ; skos:prefLabel "Performed and settled"@en .
+hcta:WashedOut a hcta:DetachmentReason ; skos:prefLabel "Washed out"@en .
+hcta:Cancelled a hcta:DetachmentReason ; skos:prefLabel "Cancelled"@en .
+hcta:Defaulted a hcta:DetachmentReason ; skos:prefLabel "Closed out on default"@en .
+
+# Event types (physical timeline and contract events)
+hcta:DealAgreed a hcta:EventType ; skos:prefLabel "Deal agreed (recap)"@en .
+hcta:VesselNominated a hcta:EventType ; skos:prefLabel "Vessel nominated"@en .
+hcta:VesselFixed a hcta:EventType ; skos:prefLabel "Vessel fixed (charter party)"@en .
+hcta:LCOpened a hcta:EventType ; skos:prefLabel "Letter of credit opened"@en .
+hcta:NORTenderedLoad a hcta:EventType ; skos:prefLabel "NOR tendered at load port"@en .
+hcta:LoadingCompleted a hcta:EventType ; skos:prefLabel "Loading completed"@en .
+hcta:BLIssued a hcta:EventType ; skos:prefLabel "Bill of lading issued"@en .
+hcta:DocumentsPresented a hcta:EventType ; skos:prefLabel "Documents presented"@en .
+hcta:ContractWashedOut a hcta:EventType ; skos:prefLabel "Contract washed out"@en .
+hcta:ResaleFixed a hcta:EventType ; skos:prefLabel "Resale fixed"@en .
+hcta:NORTenderedDischarge a hcta:EventType ; skos:prefLabel "NOR tendered at discharge port"@en .
+hcta:DischargeCompleted a hcta:EventType ; skos:prefLabel "Discharge completed"@en .
+hcta:InspectionReported a hcta:EventType ; skos:prefLabel "Final weight and quality reported"@en .
+hcta:InvoiceIssued a hcta:EventType ; skos:prefLabel "Invoice issued"@en .
+hcta:ClaimNotified a hcta:EventType ; skos:prefLabel "Claim notified"@en .
+hcta:LaytimeStarted a hcta:EventType ; skos:prefLabel "Laytime started"@en .
+hcta:DeadlineDue a hcta:EventType ; skos:prefLabel "Deadline due"@en .
+hcta:ObligationBreached a hcta:EventType ; skos:prefLabel "Obligation breached"@en .
+
+# Fact status
+hcta:Forecast a hcta:FactStatus ; skos:prefLabel "Forecast"@en .
+hcta:Actual a hcta:FactStatus ; skos:prefLabel "Actual"@en .
+hcta:Final a hcta:FactStatus ; skos:prefLabel "Final"@en .
+
+# Obligation lifecycle
+hcta:Pending a hcta:LifecycleState ; skos:prefLabel "Pending"@en ; hcta:allowedTransition hcta:Triggered , hcta:Waived .
+hcta:Triggered a hcta:LifecycleState ; skos:prefLabel "Triggered"@en ; hcta:allowedTransition hcta:Fulfilled , hcta:Breached , hcta:Waived .
+hcta:Fulfilled a hcta:LifecycleState ; skos:prefLabel "Fulfilled"@en .
+hcta:Breached a hcta:LifecycleState ; skos:prefLabel "Breached"@en .
+hcta:Waived a hcta:LifecycleState ; skos:prefLabel "Waived"@en .
+
+# Contract lifecycle
+hcta:Draft a hcta:LifecycleState ; skos:prefLabel "Draft"@en ; hcta:allowedTransition hcta:Signed .
+hcta:Signed a hcta:LifecycleState ; skos:prefLabel "Signed"@en ; hcta:allowedTransition hcta:Performing , hcta:ContractWashedOutState .
+hcta:Performing a hcta:LifecycleState ; skos:prefLabel "Performing"@en ; hcta:allowedTransition hcta:Settled , hcta:ContractWashedOutState .
+hcta:ContractWashedOutState a hcta:LifecycleState ; skos:prefLabel "Washed out"@en ; hcta:allowedTransition hcta:Settled .
+hcta:Settled a hcta:LifecycleState ; skos:prefLabel "Settled"@en .
+
+# Counting rules
+hcta:CalendarDays a hcta:CountingRule ; skos:prefLabel "Calendar days"@en .
+hcta:WorkingDays a hcta:CountingRule ; skos:prefLabel "Working days"@en .
+hcta:WeatherWorkingDaysSHEX a hcta:CountingRule ; skos:prefLabel "Weather working days, Sundays and holidays excepted (SHEX)"@en .
+hcta:RunningHours a hcta:CountingRule ; skos:prefLabel "Running hours"@en .
+
+# Finality points
+hcta:FinalAtLoading a hcta:FinalityPoint ; skos:prefLabel "Final at loading"@en .
+hcta:FinalAtDischarge a hcta:FinalityPoint ; skos:prefLabel "Final at discharge"@en .
+
+# Quality parameters
+hcta:Moisture a hcta:QualityParameter ; skos:prefLabel "Moisture"@en .
+hcta:ForeignMatter a hcta:QualityParameter ; skos:prefLabel "Foreign matter"@en .
+hcta:Protein a hcta:QualityParameter ; skos:prefLabel "Protein"@en .
+hcta:OilContent a hcta:QualityParameter ; skos:prefLabel "Oil content"@en .
+hcta:DamagedKernels a hcta:QualityParameter ; skos:prefLabel "Damaged kernels"@en .
+
+# Cost categories
+hcta:Freight a hcta:CostCategory ; skos:prefLabel "Freight"@en .
+hcta:CargoInsurance a hcta:CostCategory ; skos:prefLabel "Cargo insurance"@en .
+hcta:Superintendence a hcta:CostCategory ; skos:prefLabel "Superintendence and inspection"@en .
+hcta:Sampling a hcta:CostCategory ; skos:prefLabel "Sampling and analysis"@en .
+hcta:Weighing a hcta:CostCategory ; skos:prefLabel "Weighing"@en .
+hcta:Fumigation a hcta:CostCategory ; skos:prefLabel "Fumigation"@en .
+hcta:PhytosanitaryCertificate a hcta:CostCategory ; skos:prefLabel "Phytosanitary certificate"@en .
+hcta:PortCharges a hcta:CostCategory ; skos:prefLabel "Port charges"@en .
+hcta:LCCharges a hcta:CostCategory ; skos:prefLabel "Letter of credit charges"@en .
+hcta:Demurrage a hcta:CostCategory ; skos:prefLabel "Demurrage"@en .
+hcta:Despatch a hcta:CostCategory ; skos:prefLabel "Despatch"@en .
+
+# Personas
+hcta:Trader a hcta:Persona ; skos:prefLabel "Trader"@en ; hcta:goal "Margin and optionality" .
+hcta:TradeExecution a hcta:Persona ; skos:prefLabel "Trade execution"@en ; hcta:goal "Deliver by the contract" .
+hcta:Chartering a hcta:Persona ; skos:prefLabel "Chartering"@en ; hcta:goal "Freight and laytime under control" .
+hcta:Risk a hcta:Persona ; skos:prefLabel "Risk"@en ; hcta:goal "Exposure within limits" .
+hcta:BackOffice a hcta:Persona ; skos:prefLabel "Back office"@en ; hcta:goal "Documents right first time" .
+hcta:Finance a hcta:Persona ; skos:prefLabel "Finance"@en ; hcta:goal "True P&L, cash and audit" .
+hcta:Legal a hcta:Persona ; skos:prefLabel "Legal"@en ; hcta:goal "Enforceable, consistent contracts" .
+
+# P&L states
+hcta:EstimatedPnL a hcta:PnLState ; skos:prefLabel "Estimated"@en .
+hcta:LivePnL a hcta:PnLState ; skos:prefLabel "Live"@en .
+hcta:FinalPnL a hcta:PnLState ; skos:prefLabel "Final"@en .
+
+# Severities
+hcta:Error a hcta:Severity ; skos:prefLabel "Error"@en .
+hcta:Warning a hcta:Severity ; skos:prefLabel "Warning"@en .
+hcta:Info a hcta:Severity ; skos:prefLabel "Info"@en .
+
+# Diagnostic kinds
+hcta:UnresolvedReference a hcta:DiagnosticKind ; skos:prefLabel "Unresolved reference"@en .
+hcta:Ambiguity a hcta:DiagnosticKind ; skos:prefLabel "Ambiguity"@en .
+hcta:PrecedenceConflict a hcta:DiagnosticKind ; skos:prefLabel "Precedence conflict"@en .
+hcta:TypeError a hcta:DiagnosticKind ; skos:prefLabel "Type error"@en .
+hcta:DoubleCostAllocation a hcta:DiagnosticKind ; skos:prefLabel "Cost allocated twice"@en .
+hcta:OrphanCost a hcta:DiagnosticKind ; skos:prefLabel "Cost allocated to nobody"@en .
+hcta:FinalityMismatch a hcta:DiagnosticKind ; skos:prefLabel "Weight or quality finality mismatch"@en .
+hcta:LaytimeMismatch a hcta:DiagnosticKind ; skos:prefLabel "Laytime mismatch along the chain"@en .
+hcta:TimeBarGap a hcta:DiagnosticKind ; skos:prefLabel "Time-bar chain gap"@en .
+hcta:CoverageGap a hcta:DiagnosticKind ; skos:prefLabel "Force majeure, prohibition or default coverage gap"@en .
+hcta:ForumMismatch a hcta:DiagnosticKind ; skos:prefLabel "Forum or governing law mismatch"@en .
+hcta:OrphanObligation a hcta:DiagnosticKind ; skos:prefLabel "Obligation handled by no process"@en .
+hcta:ReconciliationDifference a hcta:DiagnosticKind ; skos:prefLabel "Legacy record differs from compiled contract"@en .
+
+# Canonical concepts (seed)
+hcta:ShipmentPeriod a hcta:CanonicalConcept ; skos:prefLabel "Shipment period"@en .
+hcta:Laycan a hcta:CanonicalConcept ; skos:prefLabel "Laycan"@en .
+hcta:NoticeOfAppropriation a hcta:CanonicalConcept ; skos:prefLabel "Notice of appropriation"@en .
+hcta:NoticeOfReadiness a hcta:CanonicalConcept ; skos:prefLabel "Notice of readiness"@en .
+hcta:Laytime a hcta:CanonicalConcept ; skos:prefLabel "Laytime"@en .
+hcta:WeightFinality a hcta:CanonicalConcept ; skos:prefLabel "Weight finality"@en .
+hcta:QualityFinality a hcta:CanonicalConcept ; skos:prefLabel "Quality finality"@en .
+hcta:QuantityTolerance a hcta:CanonicalConcept ; skos:prefLabel "Quantity tolerance"@en .
+hcta:ExportProhibition a hcta:CanonicalConcept ; skos:prefLabel "Export prohibition"@en .
+hcta:ForceMajeureEvent a hcta:CanonicalConcept ; skos:prefLabel "Force majeure event"@en .
+hcta:DefaultSettlement a hcta:CanonicalConcept ; skos:prefLabel "Default settlement"@en .
+hcta:ClaimTimeBar a hcta:CanonicalConcept ; skos:prefLabel "Claim time bar"@en .
+hcta:ArbitrationForum a hcta:CanonicalConcept ; skos:prefLabel "Arbitration forum"@en .
+hcta:CostBearer a hcta:CanonicalConcept ; skos:prefLabel "Cost bearer"@en .
+hcta:RiskTransferPoint a hcta:CanonicalConcept ; skos:prefLabel "Risk transfer point"@en .

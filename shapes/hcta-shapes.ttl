@@ -1,0 +1,273 @@
+@prefix hcta:    <https://example.org/hcta#> .
+@prefix hctash:  <https://example.org/hcta/shapes#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#  HCTA SHACL shapes - the architecture invariants as executable rules
+#  Version 0.1.0. Validate data graphs together with hcta-ontology.ttl
+#  (RDFS inference on, so subclasses are targeted).
+#
+#  I1 The cargo is the root identity            -> ContractShape, EventShape
+#  I2 One canonical model                        -> organisational (not SHACL)
+#  I3 Provenance, valid time and known time      -> ProvisionShape, EventShape
+#  I4 AI proposes, deterministic layers validate -> UnvalidatedAIShape
+#  I5 Legacy only through the anti-corruption layer -> LegacyRecordShape
+#  I6 Reference texts versioned, resolved by date   -> IncorporationShape
+# =============================================================================
+
+hctash: a owl:Ontology ;
+    dcterms:title "HCTA SHACL shapes"@en ;
+    owl:imports <https://example.org/hcta> ;
+    sh:declare [
+        sh:prefix "hcta" ;
+        sh:namespace "https://example.org/hcta#"^^xsd:anyURI
+    ] , [
+        sh:prefix "prov" ;
+        sh:namespace "http://www.w3.org/ns/prov#"^^xsd:anyURI
+    ] .
+
+# --- Holons -------------------------------------------------------------------
+
+hctash:HolonShape a sh:NodeShape ;
+    sh:targetClass hcta:Holon ;
+    rdfs:comment "Every holon has exactly one stable identifier."@en ;
+    sh:property [
+        sh:path hcta:holonId ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "A holon must have exactly one holonId."@en
+    ] .
+
+hctash:CargoShape a sh:NodeShape ;
+    sh:targetClass hcta:Cargo ;
+    sh:property [
+        sh:path hcta:commodity ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:message "A cargo must name exactly one commodity."@en
+    ] ;
+    sh:property [
+        sh:path hcta:directlyPartOf ;
+        sh:maxCount 0 ;
+        sh:message "A cargo is the root of the holarchy and cannot be part of another holon (I1)."@en
+    ] .
+
+# --- I1: contracts attach to a cargo -----------------------------------------
+
+hctash:ContractShape a sh:NodeShape ;
+    sh:targetClass hcta:Contract ;
+    rdfs:comment "I1: every contract is attached to at least one cargo, through a ContractAttachment."@en ;
+    sh:property [
+        sh:path [ sh:inversePath hcta:attachedContract ] ;
+        sh:minCount 1 ;
+        sh:class hcta:ContractAttachment ;
+        sh:message "I1 violated: contract is not attached to any cargo."@en
+    ] ;
+    sh:property [
+        sh:path hcta:signedOn ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date
+    ] .
+
+hctash:ContractAttachmentShape a sh:NodeShape ;
+    sh:targetClass hcta:ContractAttachment ;
+    sh:property [ sh:path hcta:attachedContract ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Contract ] ;
+    sh:property [ sh:path hcta:attachedTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Cargo ] ;
+    sh:property [ sh:path hcta:attachedFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+    sh:property [
+        sh:path hcta:detachedAt ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime
+    ] ;
+    sh:sparql [
+        sh:message "A detached contract must state why it was detached."@en ;
+        sh:prefixes hctash: ;
+        sh:select """
+            SELECT $this WHERE {
+                $this hcta:detachedAt ?d .
+                FILTER NOT EXISTS { $this hcta:detachmentReason ?r }
+            }"""
+    ] ;
+    sh:sparql [
+        sh:message "A contract cannot be detached before it was attached."@en ;
+        sh:prefixes hctash: ;
+        sh:select """
+            SELECT $this WHERE {
+                $this hcta:attachedFrom ?f ; hcta:detachedAt ?d .
+                FILTER (?d < ?f)
+            }"""
+    ] .
+
+# --- I3: provenance on provisions ---------------------------------------------
+
+hctash:ProvisionShape a sh:NodeShape ;
+    sh:targetClass hcta:Provision ;
+    rdfs:comment "I3: every provision is compiled from source words and sits in the holarchy."@en ;
+    sh:property [
+        sh:path hcta:compiledFrom ;
+        sh:minCount 1 ;
+        sh:class hcta:SourceSpan ;
+        sh:message "I3 violated: provision has no source span."@en
+    ] ;
+    sh:property [
+        sh:path hcta:directlyPartOf ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:message "A provision must have exactly one direct parent (clause or contract)."@en
+    ] .
+
+hctash:ObligationShape a sh:NodeShape ;
+    sh:targetClass hcta:Obligation ;
+    sh:property [ sh:path hcta:debtor ; sh:minCount 1 ; sh:class hcta:Party ; sh:message "An obligation needs a debtor."@en ] ;
+    sh:property [ sh:path hcta:creditor ; sh:minCount 1 ; sh:class hcta:Party ; sh:message "An obligation needs a creditor."@en ] ;
+    sh:property [ sh:path hcta:triggeredBy ; sh:minCount 1 ; sh:class hcta:EventType ; sh:message "An obligation needs a trigger event type."@en ] ;
+    sh:property [
+        sh:path [ sh:alternativePath ( hcta:handledBy [ sh:inversePath hcta:takesChargeOf ] ) ] ;
+        sh:minCount 1 ;
+        sh:severity sh:Warning ;
+        sh:message "Orphan obligation: no process holon takes charge of it."@en
+    ] .
+
+hctash:SourceSpanShape a sh:NodeShape ;
+    sh:targetClass hcta:SourceSpan ;
+    sh:property [ sh:path hcta:inDocument ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path hcta:quotedText ; sh:minCount 1 ; sh:datatype xsd:string ] .
+
+# --- I1 and I3: events --------------------------------------------------------
+
+hctash:EventShape a sh:NodeShape ;
+    sh:targetClass hcta:Event ;
+    rdfs:comment "I1 and I3: every event concerns a cargo and carries valid time, transaction time and status."@en ;
+    sh:property [ sh:path hcta:eventType ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:EventType ] ;
+    sh:property [ sh:path hcta:concernsCargo ; sh:minCount 1 ; sh:class hcta:Cargo ; sh:message "I1 violated: event concerns no cargo."@en ] ;
+    sh:property [ sh:path hcta:validTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ; sh:message "I3 violated: event has no valid time."@en ] ;
+    sh:property [ sh:path hcta:transactionTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ; sh:message "I3 violated: event has no transaction time."@en ] ;
+    sh:property [ sh:path hcta:factStatus ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:FactStatus ] .
+
+# --- I4: AI proposes, deterministic layers validate --------------------------
+
+hctash:UnvalidatedAIShape a sh:NodeShape ;
+    sh:targetClass hcta:Holon ;
+    rdfs:comment "I4: no holon may derive from an AI proposal that has not been validated."@en ;
+    sh:sparql [
+        sh:message "I4 violated: holon derives from an AI proposal that was never validated."@en ;
+        sh:prefixes hctash: ;
+        sh:select """
+            SELECT $this ?value WHERE {
+                $this prov:wasDerivedFrom ?value .
+                ?value a hcta:AIProposal .
+                FILTER NOT EXISTS { ?value hcta:validatedBy ?v }
+            }"""
+    ] .
+
+hctash:AIProposalShape a sh:NodeShape ;
+    sh:targetClass hcta:AIProposal ;
+    sh:property [ sh:path hcta:confidence ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
+    sh:property [ sh:path hcta:compiledFrom ; sh:minCount 1 ; sh:message "An AI proposal must point to the source words it reads."@en ] .
+
+# --- I5: legacy only through the anti-corruption layer -----------------------
+
+hctash:LegacyRecordShape a sh:NodeShape ;
+    sh:targetClass hcta:LegacyRecord ;
+    rdfs:comment "I5: a legacy record is only a pointer mapped to a holon."@en ;
+    sh:property [ sh:path hcta:legacySystem ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path hcta:legacyKey ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path hcta:mapsTo ; sh:minCount 1 ; sh:class hcta:Holon ; sh:message "I5: a legacy record must map to a holon."@en ] .
+
+hctash:NoLegacyKeyOnHolonShape a sh:NodeShape ;
+    sh:targetClass hcta:Holon ;
+    sh:property [
+        sh:path hcta:legacyKey ;
+        sh:maxCount 0 ;
+        sh:message "I5 violated: legacy keys belong on LegacyRecord, never on a holon."@en
+    ] .
+
+# --- I6: reference texts resolved by date ------------------------------------
+
+hctash:IncorporationShape a sh:NodeShape ;
+    sh:targetClass hcta:Incorporation ;
+    rdfs:comment "I6: every incorporation is resolved to one edition, in force at the resolution date."@en ;
+    sh:property [ sh:path hcta:referencedText ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:ReferenceText ] ;
+    sh:property [ sh:path hcta:resolvedEdition ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Edition ; sh:message "I6 violated: incorporation not resolved to an edition."@en ] ;
+    sh:property [ sh:path hcta:resolutionDate ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path hcta:precedenceRank ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:positiveInteger ] ;
+    sh:sparql [
+        sh:message "I6 violated: resolved edition is not an edition of the referenced text."@en ;
+        sh:prefixes hctash: ;
+        sh:select """
+            SELECT $this WHERE {
+                $this hcta:referencedText ?t ; hcta:resolvedEdition ?e .
+                FILTER NOT EXISTS { ?e hcta:editionOf ?t }
+            }"""
+    ] ;
+    sh:sparql [
+        sh:message "I6 violated: resolved edition was not in force at the resolution date."@en ;
+        sh:prefixes hctash: ;
+        sh:select """
+            SELECT $this WHERE {
+                $this hcta:resolvedEdition ?e ; hcta:resolutionDate ?d .
+                ?e hcta:effectiveFrom ?from .
+                OPTIONAL { ?e hcta:effectiveUntil ?until }
+                FILTER ( ?d < ?from || ( BOUND(?until) && ?d > ?until ) )
+            }"""
+    ] .
+
+hctash:EditionShape a sh:NodeShape ;
+    sh:targetClass hcta:Edition ;
+    sh:property [ sh:path hcta:editionOf ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path hcta:effectiveFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path hcta:contentHash ; sh:minCount 1 ; sh:message "An edition must be immutable and hashed."@en ] .
+
+# --- Typed terms --------------------------------------------------------------
+
+hctash:QuantityTermShape a sh:NodeShape ;
+    sh:targetClass hcta:QuantityTerm ;
+    sh:property [ sh:path hcta:quantityValue ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path hcta:unit ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path hcta:tolerancePercent ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 100 ] .
+
+hctash:ToleranceNeedsHolderShape a sh:NodeShape ;
+    sh:targetSubjectsOf hcta:tolerancePercent ;
+    sh:property [ sh:path hcta:toleranceOption ; sh:minCount 1 ; sh:maxCount 1 ; sh:message "A tolerance must say at whose option it is exercised."@en ] .
+
+hctash:MoneyTermShape a sh:NodeShape ;
+    sh:targetClass hcta:MoneyTerm ;
+    sh:property [ sh:path hcta:currency ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[A-Z]{3}$" ; sh:message "Currency must be an ISO 4217 code."@en ] .
+
+hctash:PeriodShape a sh:NodeShape ;
+    sh:targetClass hcta:Period ;
+    sh:property [
+        sh:path hcta:periodStart ;
+        sh:minCount 1 ; sh:maxCount 1 ;
+        sh:lessThanOrEquals hcta:periodEnd ;
+        sh:message "A period must start before it ends."@en
+    ] ;
+    sh:property [ sh:path hcta:periodEnd ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+# --- P&L ----------------------------------------------------------------------
+
+hctash:PnLLineShape a sh:NodeShape ;
+    sh:targetClass hcta:PnLLine ;
+    rdfs:comment "Every P&L line is explained by a provision and booked to an entity."@en ;
+    sh:property [ sh:path hcta:lineAmount ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:MoneyTerm ] ;
+    sh:property [ sh:path hcta:explainedBy ; sh:minCount 1 ; sh:class hcta:Provision ; sh:message "A P&L line must be explained by a provision."@en ] ;
+    sh:property [ sh:path hcta:bookedTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Party ] .
+
+hctash:PnLEvaluationShape a sh:NodeShape ;
+    sh:targetClass hcta:PnLEvaluation ;
+    sh:property [ sh:path hcta:forCargo ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Cargo ] ;
+    sh:property [ sh:path hcta:pnlState ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:PnLState ] ;
+    sh:property [ sh:path hcta:asKnownAt ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] .
+
+# --- Diagnostics --------------------------------------------------------------
+
+hctash:DiagnosticShape a sh:NodeShape ;
+    sh:targetClass hcta:Diagnostic ;
+    sh:property [ sh:path hcta:severity ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:Severity ] ;
+    sh:property [ sh:path hcta:diagnosticKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:class hcta:DiagnosticKind ] ;
+    sh:property [ sh:path hcta:about ; sh:minCount 1 ] ;
+    sh:property [ sh:path hcta:message ; sh:minCount 1 ] .

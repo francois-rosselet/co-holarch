@@ -1,0 +1,478 @@
+@prefix hcta:    <https://example.org/hcta#> .
+@prefix ex:      <https://example.org/hcta/example/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# =============================================================================
+#  HCTA example data: the reference soybean chain of the white paper.
+#  ALL NAMES, FIGURES, DATES, EDITIONS AND HASHES ARE FICTITIOUS AND ILLUSTRATIVE.
+#
+#  Purchase  ANEC  FOB Brazil   supplier      -> origin entity
+#  Intercompany                 origin entity -> branch
+#  Sale A    GAFTA CIF          branch        -> buyer A   (washed out in transit)
+#  Sale B    FOSFA CFR          branch        -> buyer B   (fixed in transit)
+#  Charter party                branch        <-> shipowner
+#
+#  Validated against hcta-shapes.ttl, this graph raises exactly one warning
+#  on purpose: an orphan obligation (sale B quality claim notice).
+# =============================================================================
+
+ex: dcterms:title "HCTA example: soybean chain with resale in transit"@en .
+
+# -----------------------------------------------------------------------------
+# Parties
+# -----------------------------------------------------------------------------
+
+ex:ExampleGroup a hcta:LegalEntity ;
+    rdfs:label "Example Trading Group SA" ; hcta:jurisdiction "CH" ; hcta:hasSeparateLegalPersonality true .
+
+ex:OriginBR a hcta:LegalEntity ;
+    rdfs:label "Example Trading Brasil Ltda (origin entity)" ; hcta:jurisdiction "BR" ;
+    hcta:hasSeparateLegalPersonality true ; hcta:sameGroupAs ex:ExampleGroup .
+
+ex:BranchGVA a hcta:Branch ;
+    rdfs:label "Example Trading Group SA, Geneva branch" ; hcta:jurisdiction "CH" ;
+    hcta:branchOf ex:ExampleGroup ; hcta:hasSeparateLegalPersonality false ; hcta:sameGroupAs ex:ExampleGroup .
+
+ex:Supplier a hcta:LegalEntity ; rdfs:label "Example Grains Exportadora Ltda" ; hcta:jurisdiction "BR" .
+ex:BuyerA a hcta:LegalEntity ; rdfs:label "Example Crushing A" ; hcta:jurisdiction "NL" .
+ex:BuyerB a hcta:LegalEntity ; rdfs:label "Example Crushing B" ; hcta:jurisdiction "ES" .
+ex:Owner a hcta:LegalEntity ; rdfs:label "Example Shipping Co" ; hcta:jurisdiction "GR" .
+
+# -----------------------------------------------------------------------------
+# Reference library (illustrative editions)
+# -----------------------------------------------------------------------------
+
+ex:ANEC a hcta:IssuingBody ; rdfs:label "ANEC" .
+ex:GAFTA a hcta:IssuingBody ; rdfs:label "GAFTA" .
+ex:FOSFA a hcta:IssuingBody ; rdfs:label "FOSFA" .
+ex:ICC a hcta:IssuingBody ; rdfs:label "ICC" .
+
+ex:ANEC-FOB-Form a hcta:StandardForm ; rdfs:label "ANEC standard form, FOB Brazil (illustrative)" ; hcta:issuingBody ex:ANEC .
+ex:GAFTA-CIF-Form a hcta:StandardForm ; rdfs:label "GAFTA standard form, CIF (illustrative)" ; hcta:issuingBody ex:GAFTA .
+ex:FOSFA-CFR-Form a hcta:StandardForm ; rdfs:label "FOSFA standard form, CFR (illustrative)" ; hcta:issuingBody ex:FOSFA .
+ex:Incoterms a hcta:TradeTermRules ; rdfs:label "Incoterms" ; hcta:issuingBody ex:ICC .
+ex:CP-Form a hcta:CharterPartyForm ; rdfs:label "Grain voyage charter party form (illustrative)" .
+ex:EnglishLaw a hcta:GoverningLaw ; rdfs:label "Law of England and Wales" .
+ex:BrazilianLaw a hcta:GoverningLaw ; rdfs:label "Law of Brazil" .
+
+ex:ANEC-FOB-Form-E1 a hcta:Edition ; hcta:editionOf ex:ANEC-FOB-Form ;
+    hcta:effectiveFrom "2024-01-01"^^xsd:date ; hcta:contentHash "sha256:example-anec-e1" ; hcta:licence "client-provided" .
+ex:GAFTA-CIF-Form-E1 a hcta:Edition ; hcta:editionOf ex:GAFTA-CIF-Form ;
+    hcta:effectiveFrom "2023-01-01"^^xsd:date ; hcta:contentHash "sha256:example-gafta-e1" ; hcta:licence "client-provided" .
+ex:FOSFA-CFR-Form-E1 a hcta:Edition ; hcta:editionOf ex:FOSFA-CFR-Form ;
+    hcta:effectiveFrom "2023-06-01"^^xsd:date ; hcta:contentHash "sha256:example-fosfa-e1" ; hcta:licence "client-provided" .
+ex:Incoterms2020 a hcta:Edition ; hcta:editionOf ex:Incoterms ;
+    hcta:effectiveFrom "2020-01-01"^^xsd:date ; hcta:contentHash "sha256:example-incoterms-2020" ; hcta:licence "client-provided" .
+ex:CP-Form-E1 a hcta:Edition ; hcta:editionOf ex:CP-Form ;
+    hcta:effectiveFrom "2022-01-01"^^xsd:date ; hcta:contentHash "sha256:example-cp-e1" ; hcta:licence "client-provided" .
+ex:EnglishLaw-Current a hcta:Edition ; hcta:editionOf ex:EnglishLaw ;
+    hcta:effectiveFrom "2000-01-01"^^xsd:date ; hcta:contentHash "sha256:example-english-law-snapshot" .
+ex:BrazilianLaw-Current a hcta:Edition ; hcta:editionOf ex:BrazilianLaw ;
+    hcta:effectiveFrom "2000-01-01"^^xsd:date ; hcta:contentHash "sha256:example-brazilian-law-snapshot" .
+
+# -----------------------------------------------------------------------------
+# Source documents
+# -----------------------------------------------------------------------------
+
+ex:Doc-PurchaseRecap a hcta:SourceDocument ; rdfs:label "Purchase recap, 2 Feb 2026" ; hcta:contentHash "sha256:example-doc-1" .
+ex:Doc-SaleARecap a hcta:SourceDocument ; rdfs:label "Sale A recap, 3 Feb 2026" ; hcta:contentHash "sha256:example-doc-2" .
+ex:Doc-SaleBRecap a hcta:SourceDocument ; rdfs:label "Sale B recap, 2 Apr 2026" ; hcta:contentHash "sha256:example-doc-3" .
+ex:Doc-CPFixture a hcta:SourceDocument ; rdfs:label "Charter party fixture recap, 20 Feb 2026" ; hcta:contentHash "sha256:example-doc-4" .
+ex:Doc-Intercompany a hcta:SourceDocument ; rdfs:label "Intercompany agreement" ; hcta:contentHash "sha256:example-doc-5" .
+
+# -----------------------------------------------------------------------------
+# Cargo and attachments
+# -----------------------------------------------------------------------------
+
+ex:Cargo-0001 a hcta:Cargo ;
+    hcta:holonId "CARGO-2026-0001" ;
+    rdfs:label "Soybeans, Brazil to Europe, 60,000 t" ;
+    hcta:commodity hcta:Soybeans ;
+    hcta:loadPort ex:PortSantos ;
+    hcta:dischargePort ex:PortTarragona ;
+    hcta:carriedBy ex:MV-Example ;
+    hcta:state hcta:Performing .
+
+ex:PortSantos a hcta:Port ; rdfs:label "Santos, BR" .
+ex:PortRotterdam a hcta:Port ; rdfs:label "Rotterdam, NL" .
+ex:PortTarragona a hcta:Port ; rdfs:label "Tarragona, ES" .
+ex:MV-Example a hcta:Vessel ; rdfs:label "MV Example Star" .
+
+ex:Att-Purchase a hcta:ContractAttachment ; hcta:attachedContract ex:Purchase ; hcta:attachedTo ex:Cargo-0001 ;
+    hcta:attachedFrom "2026-02-02T10:00:00Z"^^xsd:dateTime .
+ex:Att-Intercompany a hcta:ContractAttachment ; hcta:attachedContract ex:Intercompany ; hcta:attachedTo ex:Cargo-0001 ;
+    hcta:attachedFrom "2026-02-02T12:00:00Z"^^xsd:dateTime .
+ex:Att-SaleA a hcta:ContractAttachment ; hcta:attachedContract ex:SaleA ; hcta:attachedTo ex:Cargo-0001 ;
+    hcta:attachedFrom "2026-02-03T09:00:00Z"^^xsd:dateTime ;
+    hcta:detachedAt "2026-04-02T15:00:00Z"^^xsd:dateTime ; hcta:detachmentReason hcta:WashedOut .
+ex:Att-CP a hcta:ContractAttachment ; hcta:attachedContract ex:CharterParty ; hcta:attachedTo ex:Cargo-0001 ;
+    hcta:attachedFrom "2026-02-20T14:00:00Z"^^xsd:dateTime .
+ex:Att-SaleB a hcta:ContractAttachment ; hcta:attachedContract ex:SaleB ; hcta:attachedTo ex:Cargo-0001 ;
+    hcta:attachedFrom "2026-04-02T15:00:00Z"^^xsd:dateTime .
+
+# -----------------------------------------------------------------------------
+# Contracts and incorporations (dated linker output)
+# -----------------------------------------------------------------------------
+
+ex:Purchase a hcta:PurchaseContract ;
+    hcta:holonId "CTR-PUR-0001" ; rdfs:label "Purchase, ANEC FOB Santos" ;
+    hcta:seller ex:Supplier ; hcta:buyer ex:OriginBR ; hcta:incoterm hcta:FOB ;
+    hcta:signedOn "2026-02-02"^^xsd:date ; hcta:state hcta:Performing ;
+    hcta:incorporates ex:Inc-Pur-ANEC , ex:Inc-Pur-Incoterms , ex:Inc-Pur-Law .
+
+ex:Inc-Pur-ANEC a hcta:Incorporation ; hcta:referencedText ex:ANEC-FOB-Form ; hcta:resolvedEdition ex:ANEC-FOB-Form-E1 ;
+    hcta:resolutionDate "2026-02-02"^^xsd:date ; hcta:precedenceRank "2"^^xsd:positiveInteger .
+ex:Inc-Pur-Incoterms a hcta:Incorporation ; hcta:referencedText ex:Incoterms ; hcta:resolvedEdition ex:Incoterms2020 ;
+    hcta:resolutionDate "2026-02-02"^^xsd:date ; hcta:precedenceRank "3"^^xsd:positiveInteger .
+ex:Inc-Pur-Law a hcta:Incorporation ; hcta:referencedText ex:BrazilianLaw ; hcta:resolvedEdition ex:BrazilianLaw-Current ;
+    hcta:resolutionDate "2026-02-02"^^xsd:date ; hcta:precedenceRank "5"^^xsd:positiveInteger .
+
+ex:Intercompany a hcta:IntercompanyContract ;
+    hcta:holonId "CTR-ICO-0001" ; rdfs:label "Intercompany, origin entity to Geneva branch" ;
+    hcta:seller ex:OriginBR ; hcta:buyer ex:BranchGVA ; hcta:incoterm hcta:FOB ;
+    hcta:signedOn "2026-02-02"^^xsd:date ; hcta:state hcta:Performing .
+
+ex:SaleA a hcta:SaleContract ;
+    hcta:holonId "CTR-SAL-0001" ; rdfs:label "Sale A, GAFTA CIF Rotterdam (washed out)" ;
+    hcta:seller ex:BranchGVA ; hcta:buyer ex:BuyerA ; hcta:incoterm hcta:CIF ;
+    hcta:signedOn "2026-02-03"^^xsd:date ; hcta:state hcta:ContractWashedOutState ;
+    hcta:incorporates ex:Inc-SaA-GAFTA , ex:Inc-SaA-Incoterms , ex:Inc-SaA-Law .
+
+ex:Inc-SaA-GAFTA a hcta:Incorporation ; hcta:referencedText ex:GAFTA-CIF-Form ; hcta:resolvedEdition ex:GAFTA-CIF-Form-E1 ;
+    hcta:resolutionDate "2026-02-03"^^xsd:date ; hcta:precedenceRank "2"^^xsd:positiveInteger .
+ex:Inc-SaA-Incoterms a hcta:Incorporation ; hcta:referencedText ex:Incoterms ; hcta:resolvedEdition ex:Incoterms2020 ;
+    hcta:resolutionDate "2026-02-03"^^xsd:date ; hcta:precedenceRank "3"^^xsd:positiveInteger .
+ex:Inc-SaA-Law a hcta:Incorporation ; hcta:referencedText ex:EnglishLaw ; hcta:resolvedEdition ex:EnglishLaw-Current ;
+    hcta:resolutionDate "2026-02-03"^^xsd:date ; hcta:precedenceRank "5"^^xsd:positiveInteger .
+
+ex:SaleB a hcta:SaleContract ;
+    hcta:holonId "CTR-SAL-0002" ; rdfs:label "Sale B, FOSFA CFR Tarragona" ;
+    hcta:seller ex:BranchGVA ; hcta:buyer ex:BuyerB ; hcta:incoterm hcta:CFR ;
+    hcta:signedOn "2026-04-02"^^xsd:date ; hcta:state hcta:Performing ;
+    hcta:incorporates ex:Inc-SaB-FOSFA , ex:Inc-SaB-Incoterms , ex:Inc-SaB-Law .
+
+ex:Inc-SaB-FOSFA a hcta:Incorporation ; hcta:referencedText ex:FOSFA-CFR-Form ; hcta:resolvedEdition ex:FOSFA-CFR-Form-E1 ;
+    hcta:resolutionDate "2026-04-02"^^xsd:date ; hcta:precedenceRank "2"^^xsd:positiveInteger .
+ex:Inc-SaB-Incoterms a hcta:Incorporation ; hcta:referencedText ex:Incoterms ; hcta:resolvedEdition ex:Incoterms2020 ;
+    hcta:resolutionDate "2026-04-02"^^xsd:date ; hcta:precedenceRank "3"^^xsd:positiveInteger .
+ex:Inc-SaB-Law a hcta:Incorporation ; hcta:referencedText ex:EnglishLaw ; hcta:resolvedEdition ex:EnglishLaw-Current ;
+    hcta:resolutionDate "2026-04-02"^^xsd:date ; hcta:precedenceRank "5"^^xsd:positiveInteger .
+
+ex:CharterParty a hcta:CharterParty ;
+    hcta:holonId "CTR-CP-0001" ; rdfs:label "Voyage charter party, Santos to Europe" ;
+    hcta:charterer ex:BranchGVA ; hcta:shipowner ex:Owner ;
+    hcta:signedOn "2026-02-20"^^xsd:date ; hcta:state hcta:Performing ;
+    hcta:incorporates ex:Inc-CP-Form .
+
+ex:Inc-CP-Form a hcta:Incorporation ; hcta:referencedText ex:CP-Form ; hcta:resolvedEdition ex:CP-Form-E1 ;
+    hcta:resolutionDate "2026-02-20"^^xsd:date ; hcta:precedenceRank "2"^^xsd:positiveInteger .
+
+# -----------------------------------------------------------------------------
+# Clauses
+# -----------------------------------------------------------------------------
+
+ex:Cl-Pur-Quantity a hcta:Clause ; hcta:holonId "CL-PUR-QTY" ; hcta:clauseNumber "2" ; hcta:directlyPartOf ex:Purchase .
+ex:Cl-Pur-Weight a hcta:Clause ; hcta:holonId "CL-PUR-WGT" ; hcta:clauseNumber "6" ; hcta:directlyPartOf ex:Purchase .
+ex:Cl-Pur-Costs a hcta:Clause ; hcta:holonId "CL-PUR-CST" ; hcta:clauseNumber "9" ; hcta:directlyPartOf ex:Purchase .
+ex:Cl-Pur-Price a hcta:Clause ; hcta:holonId "CL-PUR-PRC" ; hcta:clauseNumber "3" ; hcta:directlyPartOf ex:Purchase .
+ex:Cl-CP-Laytime a hcta:Clause ; hcta:holonId "CL-CP-LAY" ; hcta:clauseNumber "12" ; hcta:directlyPartOf ex:CharterParty .
+ex:Cl-SaB-Weight a hcta:Clause ; hcta:holonId "CL-SAB-WGT" ; hcta:clauseNumber "8" ; hcta:directlyPartOf ex:SaleB .
+ex:Cl-SaB-Laytime a hcta:Clause ; hcta:holonId "CL-SAB-LAY" ; hcta:clauseNumber "10" ; hcta:directlyPartOf ex:SaleB .
+ex:Cl-SaB-Costs a hcta:Clause ; hcta:holonId "CL-SAB-CST" ; hcta:clauseNumber "11" ; hcta:directlyPartOf ex:SaleB .
+ex:Cl-SaB-Claims a hcta:Clause ; hcta:holonId "CL-SAB-CLM" ; hcta:clauseNumber "15" ; hcta:directlyPartOf ex:SaleB .
+ex:Cl-SaB-Payment a hcta:Clause ; hcta:holonId "CL-SAB-PAY" ; hcta:clauseNumber "5" ; hcta:directlyPartOf ex:SaleB .
+ex:Cl-SaA-Washout a hcta:Clause ; hcta:holonId "CL-SAA-WSH" ; hcta:clauseNumber "20" ; hcta:directlyPartOf ex:SaleA .
+
+# -----------------------------------------------------------------------------
+# Source spans (fictitious quotes)
+# -----------------------------------------------------------------------------
+
+ex:Span-Pur-Qty a hcta:SourceSpan ; hcta:inDocument ex:Doc-PurchaseRecap ; hcta:startOffset 120 ; hcta:endOffset 188 ;
+    hcta:quotedText "60,000 mt 10 pct more or less at Seller's option" .
+ex:Span-Pur-Weight a hcta:SourceSpan ; hcta:inDocument ex:Doc-PurchaseRecap ; hcta:startOffset 410 ; hcta:endOffset 452 ;
+    hcta:quotedText "Weight and quality final at loading" .
+ex:Span-Pur-Super a hcta:SourceSpan ; hcta:inDocument ex:Doc-PurchaseRecap ; hcta:startOffset 600 ; hcta:endOffset 660 ;
+    hcta:quotedText "Superintendence at loadport for Buyer's account" .
+ex:Span-Pur-Price a hcta:SourceSpan ; hcta:inDocument ex:Doc-PurchaseRecap ; hcta:startOffset 200 ; hcta:endOffset 290 ;
+    hcta:quotedText "CBOT May futures plus 85 cents per bushel, priced before B/L date" .
+ex:Span-CP-Laytime a hcta:SourceSpan ; hcta:inDocument ex:Doc-CPFixture ; hcta:startOffset 300 ; hcta:endOffset 380 ;
+    hcta:quotedText "Discharge 8,000 mt per WWD SHEX, demurrage USD 18,000 per day" .
+ex:Span-SaB-Weight a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleBRecap ; hcta:startOffset 350 ; hcta:endOffset 395 ;
+    hcta:quotedText "Weight final at discharge" .
+ex:Span-SaB-Laytime a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleBRecap ; hcta:startOffset 420 ; hcta:endOffset 500 ;
+    hcta:quotedText "Discharge 10,000 mt per WWD SHEX, demurrage USD 14,000 per day" .
+ex:Span-SaB-Super a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleBRecap ; hcta:startOffset 520 ; hcta:endOffset 580 ;
+    hcta:quotedText "Loadport superintendence for Seller's account" .
+ex:Span-SaB-Claim a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleBRecap ; hcta:startOffset 700 ; hcta:endOffset 760 ;
+    hcta:quotedText "Quality claims to be notified within 21 days of completion of discharge" .
+ex:Span-SaB-Pay a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleBRecap ; hcta:startOffset 250 ; hcta:endOffset 320 ;
+    hcta:quotedText "Payment by irrevocable LC against shipping documents" .
+ex:Span-SaA-Washout a hcta:SourceSpan ; hcta:inDocument ex:Doc-SaleARecap ; hcta:startOffset 800 ; hcta:endOffset 860 ;
+    hcta:quotedText "Contract may be washed out by mutual agreement at settlement price" .
+ex:Span-Pur-Deliver a hcta:SourceSpan ; hcta:inDocument ex:Doc-PurchaseRecap ; hcta:startOffset 90 ; hcta:endOffset 118 ;
+    hcta:quotedText "Shipment 1-31 March 2026 FOB Santos" .
+
+# -----------------------------------------------------------------------------
+# Provisions and typed terms
+# -----------------------------------------------------------------------------
+
+# Purchase: delivery obligation with quantity tolerance at seller's option
+ex:P-Pur-Deliver a hcta:Obligation ;
+    hcta:holonId "PRV-PUR-DLV" ; hcta:directlyPartOf ex:Cl-Pur-Quantity ;
+    hcta:compiledFrom ex:Span-Pur-Qty , ex:Span-Pur-Deliver ;
+    hcta:debtor ex:Supplier ; hcta:creditor ex:OriginBR ;
+    hcta:action "Deliver the contract quantity free on board the nominated vessel within the shipment period" ;
+    hcta:triggeredBy hcta:VesselNominated ;
+    hcta:hasTerm ex:T-Pur-Qty , ex:T-Pur-ShipmentPeriod ;
+    hcta:resolvedAtLevel ex:Inc-Pur-ANEC ;
+    hcta:realises hcta:QuantityTolerance ;
+    hcta:state hcta:Fulfilled .
+
+ex:T-Pur-Qty a hcta:QuantityTerm ;
+    hcta:quantityValue 60000.0 ; hcta:unit "t" ; hcta:tolerancePercent 10.0 ; hcta:toleranceOption ex:Supplier .
+
+ex:T-Pur-ShipmentPeriod a hcta:Period ;
+    hcta:periodStart "2026-03-01T00:00:00Z"^^xsd:dateTime ; hcta:periodEnd "2026-03-31T23:59:59Z"^^xsd:dateTime .
+
+# Purchase: price formula (CBOT plus premium)
+ex:P-Pur-Price a hcta:Obligation ;
+    hcta:holonId "PRV-PUR-PRC" ; hcta:directlyPartOf ex:Cl-Pur-Price ;
+    hcta:compiledFrom ex:Span-Pur-Price ;
+    hcta:debtor ex:OriginBR ; hcta:creditor ex:Supplier ;
+    hcta:action "Pay the contract price" ;
+    hcta:triggeredBy hcta:DocumentsPresented ;
+    hcta:hasTerm ex:T-Pur-Price ;
+    hcta:state hcta:Triggered .
+
+ex:T-Pur-Price a hcta:PriceFormula ;
+    hcta:marketReference ex:CBOT-Soybeans-May26 ;
+    hcta:premium ex:T-Pur-Premium ;
+    hcta:currency "USD" ; hcta:perUnit "bu" .
+ex:T-Pur-Premium a hcta:MoneyTerm ; hcta:amount 0.85 ; hcta:currency "USD" ; hcta:perUnit "bu" .
+ex:CBOT-Soybeans-May26 a hcta:MarketReference ; rdfs:label "CBOT soybean futures, May 2026" .
+
+# Purchase: weight and quality final at loading
+ex:P-Pur-WeightFinality a hcta:Condition ;
+    hcta:holonId "PRV-PUR-WGT" ; hcta:directlyPartOf ex:Cl-Pur-Weight ;
+    hcta:compiledFrom ex:Span-Pur-Weight ;
+    hcta:finalAt hcta:FinalAtLoading ;
+    hcta:realises hcta:WeightFinality ;
+    hcta:backToBackWith ex:P-SaB-WeightFinality .
+
+# Purchase: load-port superintendence borne by the buyer (origin entity)
+ex:P-Pur-Superintendence a hcta:CostAllocation ;
+    hcta:holonId "PRV-PUR-SUP" ; hcta:directlyPartOf ex:Cl-Pur-Costs ;
+    hcta:compiledFrom ex:Span-Pur-Super ;
+    hcta:costCategory hcta:Superintendence ;
+    hcta:debtor ex:OriginBR ; hcta:creditor ex:Supplier ;
+    hcta:action "Bear load-port superintendence costs" ;
+    hcta:triggeredBy hcta:LoadingCompleted ;
+    hcta:realises hcta:CostBearer ;
+    hcta:state hcta:Fulfilled .
+
+# Charter party: discharge laytime and demurrage
+ex:P-CP-Laytime a hcta:LaytimeProvision ;
+    hcta:holonId "PRV-CP-LAY" ; hcta:directlyPartOf ex:Cl-CP-Laytime ;
+    hcta:compiledFrom ex:Span-CP-Laytime ;
+    hcta:hasTerm ex:T-CP-DischargeRate ;
+    hcta:demurrageRate ex:T-CP-Demurrage ;
+    hcta:realises hcta:Laytime ;
+    hcta:backToBackWith ex:P-SaB-Laytime .
+ex:T-CP-DischargeRate a hcta:QuantityTerm ; hcta:quantityValue 8000.0 ; hcta:unit "t/day" .
+ex:T-CP-Demurrage a hcta:MoneyTerm ; hcta:amount 18000.0 ; hcta:currency "USD" ; hcta:perUnit "day" .
+
+# Sale B: weight final at discharge
+ex:P-SaB-WeightFinality a hcta:Condition ;
+    hcta:holonId "PRV-SAB-WGT" ; hcta:directlyPartOf ex:Cl-SaB-Weight ;
+    hcta:compiledFrom ex:Span-SaB-Weight ;
+    hcta:finalAt hcta:FinalAtDischarge ;
+    hcta:realises hcta:WeightFinality .
+
+# Sale B: discharge laytime and demurrage
+ex:P-SaB-Laytime a hcta:LaytimeProvision ;
+    hcta:holonId "PRV-SAB-LAY" ; hcta:directlyPartOf ex:Cl-SaB-Laytime ;
+    hcta:compiledFrom ex:Span-SaB-Laytime ;
+    hcta:hasTerm ex:T-SaB-DischargeRate ;
+    hcta:demurrageRate ex:T-SaB-Demurrage ;
+    hcta:realises hcta:Laytime ;
+    prov:wasDerivedFrom ex:AI-Prop-SaB-Laytime .
+ex:T-SaB-DischargeRate a hcta:QuantityTerm ; hcta:quantityValue 10000.0 ; hcta:unit "t/day" .
+ex:T-SaB-Demurrage a hcta:MoneyTerm ; hcta:amount 14000.0 ; hcta:currency "USD" ; hcta:perUnit "day" .
+
+# Sale B: load-port superintendence borne by the seller (branch)
+ex:P-SaB-Superintendence a hcta:CostAllocation ;
+    hcta:holonId "PRV-SAB-SUP" ; hcta:directlyPartOf ex:Cl-SaB-Costs ;
+    hcta:compiledFrom ex:Span-SaB-Super ;
+    hcta:costCategory hcta:Superintendence ;
+    hcta:debtor ex:BranchGVA ; hcta:creditor ex:BuyerB ;
+    hcta:action "Bear load-port superintendence costs" ;
+    hcta:triggeredBy hcta:LoadingCompleted ;
+    hcta:realises hcta:CostBearer ;
+    hcta:state hcta:Triggered .
+
+# Sale B: buyer pays by letter of credit
+ex:P-SaB-Payment a hcta:Obligation ;
+    hcta:holonId "PRV-SAB-PAY" ; hcta:directlyPartOf ex:Cl-SaB-Payment ;
+    hcta:compiledFrom ex:Span-SaB-Pay ;
+    hcta:debtor ex:BuyerB ; hcta:creditor ex:BranchGVA ;
+    hcta:action "Pay by irrevocable letter of credit against shipping documents" ;
+    hcta:triggeredBy hcta:DocumentsPresented ;
+    hcta:state hcta:Pending .
+
+# Sale B: quality claim notice (deliberately orphan: no process handles it)
+ex:P-SaB-ClaimNotice a hcta:Obligation ;
+    hcta:holonId "PRV-SAB-CLM" ; hcta:directlyPartOf ex:Cl-SaB-Claims ;
+    hcta:compiledFrom ex:Span-SaB-Claim ;
+    hcta:debtor ex:BuyerB ; hcta:creditor ex:BranchGVA ;
+    hcta:action "Notify any quality claim within the time bar" ;
+    hcta:triggeredBy hcta:DischargeCompleted ;
+    hcta:hasTerm ex:T-SaB-ClaimDeadline ;
+    hcta:realises hcta:ClaimTimeBar ;
+    hcta:state hcta:Pending .
+
+ex:T-SaB-ClaimDeadline a hcta:Deadline ;
+    hcta:anchorEvent hcta:DischargeCompleted ;
+    hcta:offset ex:T-21Days .
+ex:T-21Days a hcta:Duration ; hcta:durationValue "P21D"^^xsd:duration ; hcta:countingRule hcta:CalendarDays .
+
+# Sale A: washout
+ex:P-SaA-Washout a hcta:WashoutClause ;
+    hcta:holonId "PRV-SAA-WSH" ; hcta:directlyPartOf ex:Cl-SaA-Washout ;
+    hcta:compiledFrom ex:Span-SaA-Washout .
+
+# -----------------------------------------------------------------------------
+# AI proposal (validated) and legacy mapping
+# -----------------------------------------------------------------------------
+
+ex:AI-Prop-SaB-Laytime a hcta:AIProposal ;
+    hcta:compiledFrom ex:Span-SaB-Laytime ;
+    hcta:proposedBy ex:IntakeModel ;
+    hcta:confidence 0.93 ;
+    hcta:validatedBy ex:ChecksFrontEndFOSFA .
+ex:IntakeModel a prov:SoftwareAgent ; rdfs:label "AI intake model (illustrative)" .
+ex:ChecksFrontEndFOSFA a prov:SoftwareAgent ; rdfs:label "FOSFA front-end type and consistency checks" .
+
+ex:Legacy-CTRM-SaleB a hcta:LegacyRecord ;
+    hcta:legacySystem "CTRM" ; hcta:legacyKey "TRD-778812" ; hcta:mapsTo ex:SaleB .
+ex:Legacy-Excel-Laytime a hcta:LegacyRecord ;
+    hcta:legacySystem "Excel: laytime_Q2_2026.xlsx" ; hcta:legacyKey "Sheet1!B4" ; hcta:mapsTo ex:P-CP-Laytime .
+
+# -----------------------------------------------------------------------------
+# Process holons
+# -----------------------------------------------------------------------------
+
+ex:Proc-Nomination a hcta:NominationProcess ;
+    hcta:holonId "PROC-NOM-0001" ; hcta:responsibleRole hcta:TradeExecution ;
+    hcta:takesChargeOf ex:P-Pur-Deliver ;
+    hcta:listensTo hcta:VesselFixed ; hcta:emits hcta:VesselNominated .
+
+ex:Proc-Invoicing a hcta:InvoicingProcess ;
+    hcta:holonId "PROC-INV-0001" ; hcta:responsibleRole hcta:BackOffice ;
+    hcta:takesChargeOf ex:P-Pur-Price , ex:P-Pur-Superintendence , ex:P-SaB-Superintendence ;
+    hcta:listensTo hcta:BLIssued , hcta:InspectionReported ; hcta:emits hcta:InvoiceIssued .
+
+ex:Proc-LC a hcta:LetterOfCreditProcess ;
+    hcta:holonId "PROC-LC-0001" ; hcta:responsibleRole hcta:BackOffice ;
+    hcta:takesChargeOf ex:P-SaB-Payment ;
+    hcta:listensTo hcta:BLIssued ; hcta:emits hcta:DocumentsPresented .
+
+ex:Proc-Laytime a hcta:LaytimeProcess ;
+    hcta:holonId "PROC-LAY-0001" ; hcta:responsibleRole hcta:Chartering ;
+    hcta:listensTo hcta:NORTenderedDischarge , hcta:DischargeCompleted ; hcta:emits hcta:LaytimeStarted .
+
+# -----------------------------------------------------------------------------
+# Events (bitemporal)
+# -----------------------------------------------------------------------------
+
+ex:Ev-Deal a hcta:Event ; hcta:eventType hcta:DealAgreed ; hcta:concernsCargo ex:Cargo-0001 ; hcta:concernsContract ex:Purchase ;
+    hcta:validTime "2026-02-02T10:00:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-02-02T10:05:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Actual .
+
+ex:Ev-BL a hcta:Event ; hcta:eventType hcta:BLIssued ; hcta:concernsCargo ex:Cargo-0001 ; hcta:concernsContract ex:Purchase ;
+    hcta:validTime "2026-03-18T16:00:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-03-19T08:30:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Actual .
+
+ex:Ev-WashoutA a hcta:Event ; hcta:eventType hcta:ContractWashedOut ; hcta:concernsCargo ex:Cargo-0001 ; hcta:concernsContract ex:SaleA ;
+    hcta:validTime "2026-04-02T15:00:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-04-02T15:10:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Actual .
+
+ex:Ev-ResaleB a hcta:Event ; hcta:eventType hcta:ResaleFixed ; hcta:concernsCargo ex:Cargo-0001 ; hcta:concernsContract ex:SaleB ;
+    hcta:validTime "2026-04-02T15:00:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-04-02T15:10:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Actual .
+
+ex:Ev-NORDischarge-Fc a hcta:Event ; hcta:eventType hcta:NORTenderedDischarge ; hcta:concernsCargo ex:Cargo-0001 ;
+    hcta:validTime "2026-04-14T06:00:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-04-02T15:30:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Forecast .
+
+ex:Ev-NORDischarge a hcta:Event ; hcta:eventType hcta:NORTenderedDischarge ; hcta:concernsCargo ex:Cargo-0001 ;
+    hcta:concernsContract ex:SaleB , ex:CharterParty ;
+    hcta:validTime "2026-04-16T09:30:00Z"^^xsd:dateTime ; hcta:transactionTime "2026-04-16T09:45:00Z"^^xsd:dateTime ; hcta:factStatus hcta:Actual ;
+    hcta:supersedes ex:Ev-NORDischarge-Fc .
+
+# -----------------------------------------------------------------------------
+# Diagnostics raised by static passes
+# -----------------------------------------------------------------------------
+
+ex:Diag-Super a hcta:Diagnostic ;
+    hcta:severity hcta:Warning ; hcta:diagnosticKind hcta:DoubleCostAllocation ;
+    hcta:about ex:P-Pur-Superintendence , ex:P-SaB-Superintendence ;
+    hcta:message "Load-port superintendence is borne by the origin entity under the purchase and by the branch under sale B: the group may pay it twice." ;
+    hcta:raisedAt "2026-04-02T15:12:00Z"^^xsd:dateTime .
+
+ex:Diag-Finality a hcta:Diagnostic ;
+    hcta:severity hcta:Warning ; hcta:diagnosticKind hcta:FinalityMismatch ;
+    hcta:about ex:P-Pur-WeightFinality , ex:P-SaB-WeightFinality ;
+    hcta:message "Weight final at loading under the purchase but final at discharge under sale B: the branch carries outturn risk." ;
+    hcta:raisedAt "2026-04-02T15:12:00Z"^^xsd:dateTime .
+
+ex:Diag-Laytime a hcta:Diagnostic ;
+    hcta:severity hcta:Warning ; hcta:diagnosticKind hcta:LaytimeMismatch ;
+    hcta:about ex:P-CP-Laytime , ex:P-SaB-Laytime ;
+    hcta:message "Charter party discharge rate 8,000 t/day at USD 18,000/day demurrage versus sale B 10,000 t/day at USD 14,000/day: demurrage paid to the owner is only partly recoverable." ;
+    hcta:raisedAt "2026-04-02T15:12:00Z"^^xsd:dateTime .
+
+# -----------------------------------------------------------------------------
+# P&L evaluations
+# -----------------------------------------------------------------------------
+
+ex:PnL-Live-0416 a hcta:PnLEvaluation ;
+    hcta:forCargo ex:Cargo-0001 ; hcta:pnlState hcta:LivePnL ;
+    hcta:asKnownAt "2026-04-16T10:00:00Z"^^xsd:dateTime ;
+    hcta:hasLine ex:Line-DemurrageGap , ex:Line-Washout .
+
+ex:Line-DemurrageGap a hcta:PnLLine ;
+    rdfs:label "Unrecoverable discharge demurrage (accrual)" ;
+    hcta:lineAmount ex:Amt-DemGap ; hcta:explainedBy ex:P-CP-Laytime , ex:P-SaB-Laytime ;
+    hcta:drivenBy ex:Ev-NORDischarge ; hcta:bookedTo ex:BranchGVA .
+ex:Amt-DemGap a hcta:MoneyTerm ; hcta:amount -36000.0 ; hcta:currency "USD" .
+
+ex:Line-Washout a hcta:PnLLine ;
+    rdfs:label "Sale A washout settlement" ;
+    hcta:lineAmount ex:Amt-Washout ; hcta:explainedBy ex:P-SaA-Washout ;
+    hcta:drivenBy ex:Ev-WashoutA ; hcta:bookedTo ex:BranchGVA .
+ex:Amt-Washout a hcta:MoneyTerm ; hcta:amount -120000.0 ; hcta:currency "USD" .
+
+# -----------------------------------------------------------------------------
+# Hedge
+# -----------------------------------------------------------------------------
+
+ex:Hedge-0001 a hcta:HedgePosition ;
+    hcta:hedges ex:Cargo-0001 ; hcta:hedgedExposure ex:T-Pur-Price ;
+    hcta:hedgeInstrument ex:CBOT-Soybeans-May26 ; hcta:hedgeQuantity ex:T-HedgeQty .
+ex:T-HedgeQty a hcta:QuantityTerm ; hcta:quantityValue 60000.0 ; hcta:unit "t" .
+
+# -----------------------------------------------------------------------------
+# Cross-standard concept mapping (seed)
+# -----------------------------------------------------------------------------
+
+ex:SC-FOSFA-WeightFinalDischarge a hcta:StandardConcept ;
+    skos:prefLabel "Final at discharge (FOSFA form, illustrative)"@en ; hcta:definedIn ex:FOSFA-CFR-Form-E1 .
+ex:SC-ANEC-WeightFinalLoading a hcta:StandardConcept ;
+    skos:prefLabel "Final at loading (ANEC form, illustrative)"@en ; hcta:definedIn ex:ANEC-FOB-Form-E1 .
+
+ex:Map-FOSFA-WeightFinality a hcta:ConceptMapping ;
+    hcta:fromStandardConcept ex:SC-FOSFA-WeightFinalDischarge ; hcta:toCanonicalConcept hcta:WeightFinality ;
+    hcta:matchKind skos:closeMatch ;
+    hcta:semanticDifference "Illustrative: the standard's own rules on weighing method and tolerance apply on top of the canonical concept." .
+ex:Map-ANEC-WeightFinality a hcta:ConceptMapping ;
+    hcta:fromStandardConcept ex:SC-ANEC-WeightFinalLoading ; hcta:toCanonicalConcept hcta:WeightFinality ;
+    hcta:matchKind skos:closeMatch .

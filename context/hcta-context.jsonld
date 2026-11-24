@@ -1,0 +1,683 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "hcta": "https://example.org/hcta#",
+    "ex": "https://example.org/hcta/example/",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "time": "http://www.w3.org/2006/time#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "hctash": "https://example.org/hcta/shapes#",
+    "id": "@id",
+    "type": "@type",
+    "label": "rdfs:label",
+    "prefLabel": "skos:prefLabel",
+    "comment": "rdfs:comment",
+    "ConceptMapping": "hcta:ConceptMapping",
+    "PnLEvaluation": "hcta:PnLEvaluation",
+    "PnLState": "hcta:PnLState",
+    "Branch": "hcta:Branch",
+    "PurchaseContract": "hcta:PurchaseContract",
+    "CanonicalConcept": "hcta:CanonicalConcept",
+    "PnLLine": "hcta:PnLLine",
+    "AIProposal": "hcta:AIProposal",
+    "Provision": "hcta:Provision",
+    "Clause": "hcta:Clause",
+    "Port": "hcta:Port",
+    "StandardConcept": "hcta:StandardConcept",
+    "LaytimeProcess": "hcta:LaytimeProcess",
+    "CharterParty": "hcta:CharterParty",
+    "QualityParameter": "hcta:QualityParameter",
+    "LetterOfCredit": "hcta:LetterOfCredit",
+    "ContractOption": "hcta:ContractOption",
+    "SaleContract": "hcta:SaleContract",
+    "TimeTerm": "hcta:TimeTerm",
+    "Commodity": "hcta:Commodity",
+    "IncotermRule": "hcta:IncotermRule",
+    "DiagnosticKind": "hcta:DiagnosticKind",
+    "ClaimsProcess": "hcta:ClaimsProcess",
+    "DetachmentReason": "hcta:DetachmentReason",
+    "ProhibitionClause": "hcta:ProhibitionClause",
+    "LegacyRecord": "hcta:LegacyRecord",
+    "IntercompanyContract": "hcta:IntercompanyContract",
+    "LifecycleState": "hcta:LifecycleState",
+    "Prohibition": "hcta:Prohibition",
+    "Deadline": "hcta:Deadline",
+    "Definition": "hcta:Definition",
+    "SourceDocument": "hcta:SourceDocument",
+    "ContractAttachment": "hcta:ContractAttachment",
+    "SourceSpan": "hcta:SourceSpan",
+    "GoverningLaw": "hcta:GoverningLaw",
+    "InspectionProcess": "hcta:InspectionProcess",
+    "Party": "hcta:Party",
+    "Term": "hcta:Term",
+    "CostAllocation": "hcta:CostAllocation",
+    "DefaultClause": "hcta:DefaultClause",
+    "Incorporation": "hcta:Incorporation",
+    "LetterOfCreditProcess": "hcta:LetterOfCreditProcess",
+    "ReferenceText": "hcta:ReferenceText",
+    "LaytimeProvision": "hcta:LaytimeProvision",
+    "HedgePosition": "hcta:HedgePosition",
+    "Persona": "hcta:Persona",
+    "LegalEntity": "hcta:LegalEntity",
+    "Period": "hcta:Period",
+    "MarketReference": "hcta:MarketReference",
+    "Right": "hcta:Right",
+    "CostCategory": "hcta:CostCategory",
+    "DocumentaryCreditRules": "hcta:DocumentaryCreditRules",
+    "Holon": "hcta:Holon",
+    "NominationProcess": "hcta:NominationProcess",
+    "QuantityTerm": "hcta:QuantityTerm",
+    "Severity": "hcta:Severity",
+    "PriceFormula": "hcta:PriceFormula",
+    "StandardForm": "hcta:StandardForm",
+    "Condition": "hcta:Condition",
+    "RiskTransfer": "hcta:RiskTransfer",
+    "ArbitrationClause": "hcta:ArbitrationClause",
+    "TimeBar": "hcta:TimeBar",
+    "Obligation": "hcta:Obligation",
+    "Diagnostic": "hcta:Diagnostic",
+    "InsurancePolicy": "hcta:InsurancePolicy",
+    "MoneyTerm": "hcta:MoneyTerm",
+    "Event": "hcta:Event",
+    "Cargo": "hcta:Cargo",
+    "Contract": "hcta:Contract",
+    "Compilation": "hcta:Compilation",
+    "Edition": "hcta:Edition",
+    "CharterPartyForm": "hcta:CharterPartyForm",
+    "ProcessHolon": "hcta:ProcessHolon",
+    "Sanction": "hcta:Sanction",
+    "TradeTermRules": "hcta:TradeTermRules",
+    "IssuingBody": "hcta:IssuingBody",
+    "Duration": "hcta:Duration",
+    "FinalityPoint": "hcta:FinalityPoint",
+    "ArbitrationRules": "hcta:ArbitrationRules",
+    "QualityTerm": "hcta:QualityTerm",
+    "FactStatus": "hcta:FactStatus",
+    "InvoicingProcess": "hcta:InvoicingProcess",
+    "CountingRule": "hcta:CountingRule",
+    "EventType": "hcta:EventType",
+    "Vessel": "hcta:Vessel",
+    "InspectionMandate": "hcta:InspectionMandate",
+    "ForceMajeure": "hcta:ForceMajeure",
+    "WashoutClause": "hcta:WashoutClause",
+    "debtor": {
+      "@id": "hcta:debtor",
+      "@type": "@id"
+    },
+    "matchKind": {
+      "@id": "hcta:matchKind",
+      "@type": "@id"
+    },
+    "supersedes": {
+      "@id": "hcta:supersedes",
+      "@type": "@id"
+    },
+    "dischargePort": {
+      "@id": "hcta:dischargePort",
+      "@type": "@id"
+    },
+    "refersTo": {
+      "@id": "hcta:refersTo",
+      "@type": "@id"
+    },
+    "qualityParameter": {
+      "@id": "hcta:qualityParameter",
+      "@type": "@id"
+    },
+    "costCategory": {
+      "@id": "hcta:costCategory",
+      "@type": "@id"
+    },
+    "carriedBy": {
+      "@id": "hcta:carriedBy",
+      "@type": "@id"
+    },
+    "hedgeQuantity": {
+      "@id": "hcta:hedgeQuantity",
+      "@type": "@id"
+    },
+    "emits": {
+      "@id": "hcta:emits",
+      "@type": "@id"
+    },
+    "compiledFrom": {
+      "@id": "hcta:compiledFrom",
+      "@type": "@id"
+    },
+    "listensTo": {
+      "@id": "hcta:listensTo",
+      "@type": "@id"
+    },
+    "sameGroupAs": {
+      "@id": "hcta:sameGroupAs",
+      "@type": "@id"
+    },
+    "realises": {
+      "@id": "hcta:realises",
+      "@type": "@id"
+    },
+    "demurrageRate": {
+      "@id": "hcta:demurrageRate",
+      "@type": "@id"
+    },
+    "validatedBy": {
+      "@id": "hcta:validatedBy",
+      "@type": "@id"
+    },
+    "detachmentReason": {
+      "@id": "hcta:detachmentReason",
+      "@type": "@id"
+    },
+    "finalAt": {
+      "@id": "hcta:finalAt",
+      "@type": "@id"
+    },
+    "pricingPeriod": {
+      "@id": "hcta:pricingPeriod",
+      "@type": "@id"
+    },
+    "hasPart": {
+      "@id": "hcta:hasPart",
+      "@type": "@id"
+    },
+    "attachedTo": {
+      "@id": "hcta:attachedTo",
+      "@type": "@id"
+    },
+    "shipowner": {
+      "@id": "hcta:shipowner",
+      "@type": "@id"
+    },
+    "buyer": {
+      "@id": "hcta:buyer",
+      "@type": "@id"
+    },
+    "drivenBy": {
+      "@id": "hcta:drivenBy",
+      "@type": "@id"
+    },
+    "attachedContract": {
+      "@id": "hcta:attachedContract",
+      "@type": "@id"
+    },
+    "countingRule": {
+      "@id": "hcta:countingRule",
+      "@type": "@id"
+    },
+    "allowedTransition": {
+      "@id": "hcta:allowedTransition",
+      "@type": "@id"
+    },
+    "referencedText": {
+      "@id": "hcta:referencedText",
+      "@type": "@id"
+    },
+    "triggeredBy": {
+      "@id": "hcta:triggeredBy",
+      "@type": "@id"
+    },
+    "creditor": {
+      "@id": "hcta:creditor",
+      "@type": "@id"
+    },
+    "hasTerm": {
+      "@id": "hcta:hasTerm",
+      "@type": "@id"
+    },
+    "issuingBody": {
+      "@id": "hcta:issuingBody",
+      "@type": "@id"
+    },
+    "resolvedAtLevel": {
+      "@id": "hcta:resolvedAtLevel",
+      "@type": "@id"
+    },
+    "takesChargeOf": {
+      "@id": "hcta:takesChargeOf",
+      "@type": "@id"
+    },
+    "overrides": {
+      "@id": "hcta:overrides",
+      "@type": "@id"
+    },
+    "hedgeInstrument": {
+      "@id": "hcta:hedgeInstrument",
+      "@type": "@id"
+    },
+    "hedges": {
+      "@id": "hcta:hedges",
+      "@type": "@id"
+    },
+    "incoterm": {
+      "@id": "hcta:incoterm",
+      "@type": "@id"
+    },
+    "transferPoint": {
+      "@id": "hcta:transferPoint",
+      "@type": "@id"
+    },
+    "toleranceOption": {
+      "@id": "hcta:toleranceOption",
+      "@type": "@id"
+    },
+    "state": {
+      "@id": "hcta:state",
+      "@type": "@id"
+    },
+    "fromStandardConcept": {
+      "@id": "hcta:fromStandardConcept",
+      "@type": "@id"
+    },
+    "marketReference": {
+      "@id": "hcta:marketReference",
+      "@type": "@id"
+    },
+    "diagnosticKind": {
+      "@id": "hcta:diagnosticKind",
+      "@type": "@id"
+    },
+    "offset": {
+      "@id": "hcta:offset",
+      "@type": "@id"
+    },
+    "anchorEvent": {
+      "@id": "hcta:anchorEvent",
+      "@type": "@id"
+    },
+    "optionHolder": {
+      "@id": "hcta:optionHolder",
+      "@type": "@id"
+    },
+    "exerciseDeadline": {
+      "@id": "hcta:exerciseDeadline",
+      "@type": "@id"
+    },
+    "loadPort": {
+      "@id": "hcta:loadPort",
+      "@type": "@id"
+    },
+    "editionOf": {
+      "@id": "hcta:editionOf",
+      "@type": "@id"
+    },
+    "handledBy": {
+      "@id": "hcta:handledBy",
+      "@type": "@id"
+    },
+    "incorporates": {
+      "@id": "hcta:incorporates",
+      "@type": "@id"
+    },
+    "hasLine": {
+      "@id": "hcta:hasLine",
+      "@type": "@id"
+    },
+    "partOf": {
+      "@id": "hcta:partOf",
+      "@type": "@id"
+    },
+    "responsibleRole": {
+      "@id": "hcta:responsibleRole",
+      "@type": "@id"
+    },
+    "directlyPartOf": {
+      "@id": "hcta:directlyPartOf",
+      "@type": "@id"
+    },
+    "branchOf": {
+      "@id": "hcta:branchOf",
+      "@type": "@id"
+    },
+    "eventType": {
+      "@id": "hcta:eventType",
+      "@type": "@id"
+    },
+    "factStatus": {
+      "@id": "hcta:factStatus",
+      "@type": "@id"
+    },
+    "about": {
+      "@id": "hcta:about",
+      "@type": "@id"
+    },
+    "premium": {
+      "@id": "hcta:premium",
+      "@type": "@id"
+    },
+    "backToBackWith": {
+      "@id": "hcta:backToBackWith",
+      "@type": "@id"
+    },
+    "severity": {
+      "@id": "hcta:severity",
+      "@type": "@id"
+    },
+    "resolvedEdition": {
+      "@id": "hcta:resolvedEdition",
+      "@type": "@id"
+    },
+    "seller": {
+      "@id": "hcta:seller",
+      "@type": "@id"
+    },
+    "lineAmount": {
+      "@id": "hcta:lineAmount",
+      "@type": "@id"
+    },
+    "charterer": {
+      "@id": "hcta:charterer",
+      "@type": "@id"
+    },
+    "toCanonicalConcept": {
+      "@id": "hcta:toCanonicalConcept",
+      "@type": "@id"
+    },
+    "explainedBy": {
+      "@id": "hcta:explainedBy",
+      "@type": "@id"
+    },
+    "usesDefinition": {
+      "@id": "hcta:usesDefinition",
+      "@type": "@id"
+    },
+    "definedIn": {
+      "@id": "hcta:definedIn",
+      "@type": "@id"
+    },
+    "bookedTo": {
+      "@id": "hcta:bookedTo",
+      "@type": "@id"
+    },
+    "concernsContract": {
+      "@id": "hcta:concernsContract",
+      "@type": "@id"
+    },
+    "hedgedExposure": {
+      "@id": "hcta:hedgedExposure",
+      "@type": "@id"
+    },
+    "proposedBy": {
+      "@id": "hcta:proposedBy",
+      "@type": "@id"
+    },
+    "pnlState": {
+      "@id": "hcta:pnlState",
+      "@type": "@id"
+    },
+    "inDocument": {
+      "@id": "hcta:inDocument",
+      "@type": "@id"
+    },
+    "concernsCargo": {
+      "@id": "hcta:concernsCargo",
+      "@type": "@id"
+    },
+    "forCargo": {
+      "@id": "hcta:forCargo",
+      "@type": "@id"
+    },
+    "commodity": {
+      "@id": "hcta:commodity",
+      "@type": "@id"
+    },
+    "mapsTo": {
+      "@id": "hcta:mapsTo",
+      "@type": "@id"
+    },
+    "currency": {
+      "@id": "hcta:currency"
+    },
+    "periodStart": {
+      "@id": "hcta:periodStart",
+      "@type": "xsd:dateTime"
+    },
+    "perUnit": {
+      "@id": "hcta:perUnit"
+    },
+    "hasSeparateLegalPersonality": {
+      "@id": "hcta:hasSeparateLegalPersonality",
+      "@type": "xsd:boolean"
+    },
+    "tolerancePercent": {
+      "@id": "hcta:tolerancePercent",
+      "@type": "xsd:decimal"
+    },
+    "quotedText": {
+      "@id": "hcta:quotedText"
+    },
+    "legacyKey": {
+      "@id": "hcta:legacyKey"
+    },
+    "holonId": {
+      "@id": "hcta:holonId"
+    },
+    "holonVersion": {
+      "@id": "hcta:holonVersion",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "compilerVersion": {
+      "@id": "hcta:compilerVersion"
+    },
+    "action": {
+      "@id": "hcta:action"
+    },
+    "goal": {
+      "@id": "hcta:goal"
+    },
+    "effectiveUntil": {
+      "@id": "hcta:effectiveUntil",
+      "@type": "xsd:date"
+    },
+    "limitValue": {
+      "@id": "hcta:limitValue",
+      "@type": "xsd:decimal"
+    },
+    "detachedAt": {
+      "@id": "hcta:detachedAt",
+      "@type": "xsd:dateTime"
+    },
+    "asKnownAt": {
+      "@id": "hcta:asKnownAt",
+      "@type": "xsd:dateTime"
+    },
+    "clauseNumber": {
+      "@id": "hcta:clauseNumber"
+    },
+    "raisedAt": {
+      "@id": "hcta:raisedAt",
+      "@type": "xsd:dateTime"
+    },
+    "resolutionDate": {
+      "@id": "hcta:resolutionDate",
+      "@type": "xsd:date"
+    },
+    "licence": {
+      "@id": "hcta:licence"
+    },
+    "durationValue": {
+      "@id": "hcta:durationValue",
+      "@type": "xsd:duration"
+    },
+    "message": {
+      "@id": "hcta:message"
+    },
+    "effectiveFrom": {
+      "@id": "hcta:effectiveFrom",
+      "@type": "xsd:date"
+    },
+    "discountScale": {
+      "@id": "hcta:discountScale"
+    },
+    "semanticDifference": {
+      "@id": "hcta:semanticDifference"
+    },
+    "contentHash": {
+      "@id": "hcta:contentHash"
+    },
+    "jurisdiction": {
+      "@id": "hcta:jurisdiction"
+    },
+    "confidence": {
+      "@id": "hcta:confidence",
+      "@type": "xsd:decimal"
+    },
+    "transactionTime": {
+      "@id": "hcta:transactionTime",
+      "@type": "xsd:dateTime"
+    },
+    "signedOn": {
+      "@id": "hcta:signedOn",
+      "@type": "xsd:date"
+    },
+    "amount": {
+      "@id": "hcta:amount",
+      "@type": "xsd:decimal"
+    },
+    "startOffset": {
+      "@id": "hcta:startOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "unit": {
+      "@id": "hcta:unit"
+    },
+    "limitKind": {
+      "@id": "hcta:limitKind"
+    },
+    "attachedFrom": {
+      "@id": "hcta:attachedFrom",
+      "@type": "xsd:dateTime"
+    },
+    "legacySystem": {
+      "@id": "hcta:legacySystem"
+    },
+    "periodEnd": {
+      "@id": "hcta:periodEnd",
+      "@type": "xsd:dateTime"
+    },
+    "validTime": {
+      "@id": "hcta:validTime",
+      "@type": "xsd:dateTime"
+    },
+    "endOffset": {
+      "@id": "hcta:endOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "quantityValue": {
+      "@id": "hcta:quantityValue",
+      "@type": "xsd:decimal"
+    },
+    "precedenceRank": {
+      "@id": "hcta:precedenceRank",
+      "@type": "xsd:positiveInteger"
+    },
+    "Soybeans": "hcta:Soybeans",
+    "SoybeanMeal": "hcta:SoybeanMeal",
+    "FOB": "hcta:FOB",
+    "CFR": "hcta:CFR",
+    "CIF": "hcta:CIF",
+    "Performed": "hcta:Performed",
+    "WashedOut": "hcta:WashedOut",
+    "Cancelled": "hcta:Cancelled",
+    "Defaulted": "hcta:Defaulted",
+    "DealAgreed": "hcta:DealAgreed",
+    "VesselNominated": "hcta:VesselNominated",
+    "VesselFixed": "hcta:VesselFixed",
+    "LCOpened": "hcta:LCOpened",
+    "NORTenderedLoad": "hcta:NORTenderedLoad",
+    "LoadingCompleted": "hcta:LoadingCompleted",
+    "BLIssued": "hcta:BLIssued",
+    "DocumentsPresented": "hcta:DocumentsPresented",
+    "ContractWashedOut": "hcta:ContractWashedOut",
+    "ResaleFixed": "hcta:ResaleFixed",
+    "NORTenderedDischarge": "hcta:NORTenderedDischarge",
+    "DischargeCompleted": "hcta:DischargeCompleted",
+    "InspectionReported": "hcta:InspectionReported",
+    "InvoiceIssued": "hcta:InvoiceIssued",
+    "ClaimNotified": "hcta:ClaimNotified",
+    "LaytimeStarted": "hcta:LaytimeStarted",
+    "DeadlineDue": "hcta:DeadlineDue",
+    "ObligationBreached": "hcta:ObligationBreached",
+    "Forecast": "hcta:Forecast",
+    "Actual": "hcta:Actual",
+    "Final": "hcta:Final",
+    "Pending": "hcta:Pending",
+    "Triggered": "hcta:Triggered",
+    "Fulfilled": "hcta:Fulfilled",
+    "Breached": "hcta:Breached",
+    "Waived": "hcta:Waived",
+    "Draft": "hcta:Draft",
+    "Signed": "hcta:Signed",
+    "Performing": "hcta:Performing",
+    "ContractWashedOutState": "hcta:ContractWashedOutState",
+    "Settled": "hcta:Settled",
+    "CalendarDays": "hcta:CalendarDays",
+    "WorkingDays": "hcta:WorkingDays",
+    "WeatherWorkingDaysSHEX": "hcta:WeatherWorkingDaysSHEX",
+    "RunningHours": "hcta:RunningHours",
+    "FinalAtLoading": "hcta:FinalAtLoading",
+    "FinalAtDischarge": "hcta:FinalAtDischarge",
+    "Moisture": "hcta:Moisture",
+    "ForeignMatter": "hcta:ForeignMatter",
+    "Protein": "hcta:Protein",
+    "OilContent": "hcta:OilContent",
+    "DamagedKernels": "hcta:DamagedKernels",
+    "Freight": "hcta:Freight",
+    "CargoInsurance": "hcta:CargoInsurance",
+    "Superintendence": "hcta:Superintendence",
+    "Sampling": "hcta:Sampling",
+    "Weighing": "hcta:Weighing",
+    "Fumigation": "hcta:Fumigation",
+    "PhytosanitaryCertificate": "hcta:PhytosanitaryCertificate",
+    "PortCharges": "hcta:PortCharges",
+    "LCCharges": "hcta:LCCharges",
+    "Demurrage": "hcta:Demurrage",
+    "Despatch": "hcta:Despatch",
+    "Trader": "hcta:Trader",
+    "TradeExecution": "hcta:TradeExecution",
+    "Chartering": "hcta:Chartering",
+    "Risk": "hcta:Risk",
+    "BackOffice": "hcta:BackOffice",
+    "Finance": "hcta:Finance",
+    "Legal": "hcta:Legal",
+    "EstimatedPnL": "hcta:EstimatedPnL",
+    "LivePnL": "hcta:LivePnL",
+    "FinalPnL": "hcta:FinalPnL",
+    "Error": "hcta:Error",
+    "Warning": "hcta:Warning",
+    "Info": "hcta:Info",
+    "UnresolvedReference": "hcta:UnresolvedReference",
+    "Ambiguity": "hcta:Ambiguity",
+    "PrecedenceConflict": "hcta:PrecedenceConflict",
+    "TypeError": "hcta:TypeError",
+    "DoubleCostAllocation": "hcta:DoubleCostAllocation",
+    "OrphanCost": "hcta:OrphanCost",
+    "FinalityMismatch": "hcta:FinalityMismatch",
+    "LaytimeMismatch": "hcta:LaytimeMismatch",
+    "TimeBarGap": "hcta:TimeBarGap",
+    "CoverageGap": "hcta:CoverageGap",
+    "ForumMismatch": "hcta:ForumMismatch",
+    "OrphanObligation": "hcta:OrphanObligation",
+    "ReconciliationDifference": "hcta:ReconciliationDifference",
+    "ShipmentPeriod": "hcta:ShipmentPeriod",
+    "Laycan": "hcta:Laycan",
+    "NoticeOfAppropriation": "hcta:NoticeOfAppropriation",
+    "NoticeOfReadiness": "hcta:NoticeOfReadiness",
+    "Laytime": "hcta:Laytime",
+    "WeightFinality": "hcta:WeightFinality",
+    "QualityFinality": "hcta:QualityFinality",
+    "QuantityTolerance": "hcta:QuantityTolerance",
+    "ExportProhibition": "hcta:ExportProhibition",
+    "ForceMajeureEvent": "hcta:ForceMajeureEvent",
+    "DefaultSettlement": "hcta:DefaultSettlement",
+    "ClaimTimeBar": "hcta:ClaimTimeBar",
+    "ArbitrationForum": "hcta:ArbitrationForum",
+    "CostBearer": "hcta:CostBearer",
+    "RiskTransferPoint": "hcta:RiskTransferPoint"
+  }
+}

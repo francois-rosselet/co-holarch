@@ -1,0 +1,1751 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "AIProposal": "hcta:AIProposal",
+    "Actual": "hcta:Actual",
+    "Ambiguity": "hcta:Ambiguity",
+    "ArbitrationClause": "hcta:ArbitrationClause",
+    "ArbitrationForum": "hcta:ArbitrationForum",
+    "ArbitrationRules": "hcta:ArbitrationRules",
+    "BLIssued": "hcta:BLIssued",
+    "BackOffice": "hcta:BackOffice",
+    "Branch": "hcta:Branch",
+    "Breached": "hcta:Breached",
+    "CFR": "hcta:CFR",
+    "CIF": "hcta:CIF",
+    "CalendarDays": "hcta:CalendarDays",
+    "Cancelled": "hcta:Cancelled",
+    "CanonicalConcept": "hcta:CanonicalConcept",
+    "Cargo": "hcta:Cargo",
+    "CargoInsurance": "hcta:CargoInsurance",
+    "CharterParty": "hcta:CharterParty",
+    "CharterPartyForm": "hcta:CharterPartyForm",
+    "Chartering": "hcta:Chartering",
+    "ClaimNotified": "hcta:ClaimNotified",
+    "ClaimTimeBar": "hcta:ClaimTimeBar",
+    "ClaimsProcess": "hcta:ClaimsProcess",
+    "Clause": "hcta:Clause",
+    "Commodity": "hcta:Commodity",
+    "Compilation": "hcta:Compilation",
+    "ConceptMapping": "hcta:ConceptMapping",
+    "Condition": "hcta:Condition",
+    "Contract": "hcta:Contract",
+    "ContractAttachment": "hcta:ContractAttachment",
+    "ContractOption": "hcta:ContractOption",
+    "ContractWashedOut": "hcta:ContractWashedOut",
+    "ContractWashedOutState": "hcta:ContractWashedOutState",
+    "CostAllocation": "hcta:CostAllocation",
+    "CostBearer": "hcta:CostBearer",
+    "CostCategory": "hcta:CostCategory",
+    "CountingRule": "hcta:CountingRule",
+    "CoverageGap": "hcta:CoverageGap",
+    "DamagedKernels": "hcta:DamagedKernels",
+    "Deadline": "hcta:Deadline",
+    "DeadlineDue": "hcta:DeadlineDue",
+    "DealAgreed": "hcta:DealAgreed",
+    "DefaultClause": "hcta:DefaultClause",
+    "DefaultSettlement": "hcta:DefaultSettlement",
+    "Defaulted": "hcta:Defaulted",
+    "Definition": "hcta:Definition",
+    "Demurrage": "hcta:Demurrage",
+    "Despatch": "hcta:Despatch",
+    "DetachmentReason": "hcta:DetachmentReason",
+    "Diagnostic": "hcta:Diagnostic",
+    "DiagnosticKind": "hcta:DiagnosticKind",
+    "DischargeCompleted": "hcta:DischargeCompleted",
+    "DocumentaryCreditRules": "hcta:DocumentaryCreditRules",
+    "DocumentsPresented": "hcta:DocumentsPresented",
+    "DoubleCostAllocation": "hcta:DoubleCostAllocation",
+    "Draft": "hcta:Draft",
+    "Duration": "hcta:Duration",
+    "Edition": "hcta:Edition",
+    "Error": "hcta:Error",
+    "EstimatedPnL": "hcta:EstimatedPnL",
+    "Event": "hcta:Event",
+    "EventType": "hcta:EventType",
+    "ExportProhibition": "hcta:ExportProhibition",
+    "FOB": "hcta:FOB",
+    "FactStatus": "hcta:FactStatus",
+    "Final": "hcta:Final",
+    "FinalAtDischarge": "hcta:FinalAtDischarge",
+    "FinalAtLoading": "hcta:FinalAtLoading",
+    "FinalPnL": "hcta:FinalPnL",
+    "FinalityMismatch": "hcta:FinalityMismatch",
+    "FinalityPoint": "hcta:FinalityPoint",
+    "Finance": "hcta:Finance",
+    "ForceMajeure": "hcta:ForceMajeure",
+    "ForceMajeureEvent": "hcta:ForceMajeureEvent",
+    "Forecast": "hcta:Forecast",
+    "ForeignMatter": "hcta:ForeignMatter",
+    "ForumMismatch": "hcta:ForumMismatch",
+    "Freight": "hcta:Freight",
+    "Fulfilled": "hcta:Fulfilled",
+    "Fumigation": "hcta:Fumigation",
+    "GoverningLaw": "hcta:GoverningLaw",
+    "HedgePosition": "hcta:HedgePosition",
+    "Holon": "hcta:Holon",
+    "Incorporation": "hcta:Incorporation",
+    "IncotermRule": "hcta:IncotermRule",
+    "Info": "hcta:Info",
+    "InspectionMandate": "hcta:InspectionMandate",
+    "InspectionProcess": "hcta:InspectionProcess",
+    "InspectionReported": "hcta:InspectionReported",
+    "InsurancePolicy": "hcta:InsurancePolicy",
+    "IntercompanyContract": "hcta:IntercompanyContract",
+    "InvoiceIssued": "hcta:InvoiceIssued",
+    "InvoicingProcess": "hcta:InvoicingProcess",
+    "IssuingBody": "hcta:IssuingBody",
+    "LCCharges": "hcta:LCCharges",
+    "LCOpened": "hcta:LCOpened",
+    "Laycan": "hcta:Laycan",
+    "Laytime": "hcta:Laytime",
+    "LaytimeMismatch": "hcta:LaytimeMismatch",
+    "LaytimeProcess": "hcta:LaytimeProcess",
+    "LaytimeProvision": "hcta:LaytimeProvision",
+    "LaytimeStarted": "hcta:LaytimeStarted",
+    "LegacyRecord": "hcta:LegacyRecord",
+    "Legal": "hcta:Legal",
+    "LegalEntity": "hcta:LegalEntity",
+    "LetterOfCredit": "hcta:LetterOfCredit",
+    "LetterOfCreditProcess": "hcta:LetterOfCreditProcess",
+    "LifecycleState": "hcta:LifecycleState",
+    "LivePnL": "hcta:LivePnL",
+    "LoadingCompleted": "hcta:LoadingCompleted",
+    "MarketReference": "hcta:MarketReference",
+    "Moisture": "hcta:Moisture",
+    "MoneyTerm": "hcta:MoneyTerm",
+    "NORTenderedDischarge": "hcta:NORTenderedDischarge",
+    "NORTenderedLoad": "hcta:NORTenderedLoad",
+    "NominationProcess": "hcta:NominationProcess",
+    "NoticeOfAppropriation": "hcta:NoticeOfAppropriation",
+    "NoticeOfReadiness": "hcta:NoticeOfReadiness",
+    "Obligation": "hcta:Obligation",
+    "ObligationBreached": "hcta:ObligationBreached",
+    "OilContent": "hcta:OilContent",
+    "OrphanCost": "hcta:OrphanCost",
+    "OrphanObligation": "hcta:OrphanObligation",
+    "Party": "hcta:Party",
+    "Pending": "hcta:Pending",
+    "Performed": "hcta:Performed",
+    "Performing": "hcta:Performing",
+    "Period": "hcta:Period",
+    "Persona": "hcta:Persona",
+    "PhytosanitaryCertificate": "hcta:PhytosanitaryCertificate",
+    "PnLEvaluation": "hcta:PnLEvaluation",
+    "PnLLine": "hcta:PnLLine",
+    "PnLState": "hcta:PnLState",
+    "Port": "hcta:Port",
+    "PortCharges": "hcta:PortCharges",
+    "PrecedenceConflict": "hcta:PrecedenceConflict",
+    "PriceFormula": "hcta:PriceFormula",
+    "ProcessHolon": "hcta:ProcessHolon",
+    "Prohibition": "hcta:Prohibition",
+    "ProhibitionClause": "hcta:ProhibitionClause",
+    "Protein": "hcta:Protein",
+    "Provision": "hcta:Provision",
+    "PurchaseContract": "hcta:PurchaseContract",
+    "QualityFinality": "hcta:QualityFinality",
+    "QualityParameter": "hcta:QualityParameter",
+    "QualityTerm": "hcta:QualityTerm",
+    "QuantityTerm": "hcta:QuantityTerm",
+    "QuantityTolerance": "hcta:QuantityTolerance",
+    "ReconciliationDifference": "hcta:ReconciliationDifference",
+    "ReferenceText": "hcta:ReferenceText",
+    "ResaleFixed": "hcta:ResaleFixed",
+    "Right": "hcta:Right",
+    "Risk": "hcta:Risk",
+    "RiskTransfer": "hcta:RiskTransfer",
+    "RiskTransferPoint": "hcta:RiskTransferPoint",
+    "RunningHours": "hcta:RunningHours",
+    "SaleContract": "hcta:SaleContract",
+    "Sampling": "hcta:Sampling",
+    "Sanction": "hcta:Sanction",
+    "Settled": "hcta:Settled",
+    "Severity": "hcta:Severity",
+    "ShipmentPeriod": "hcta:ShipmentPeriod",
+    "Signed": "hcta:Signed",
+    "SourceDocument": "hcta:SourceDocument",
+    "SourceSpan": "hcta:SourceSpan",
+    "SoybeanMeal": "hcta:SoybeanMeal",
+    "Soybeans": "hcta:Soybeans",
+    "StandardConcept": "hcta:StandardConcept",
+    "StandardForm": "hcta:StandardForm",
+    "Superintendence": "hcta:Superintendence",
+    "Term": "hcta:Term",
+    "TimeBar": "hcta:TimeBar",
+    "TimeBarGap": "hcta:TimeBarGap",
+    "TimeTerm": "hcta:TimeTerm",
+    "TradeExecution": "hcta:TradeExecution",
+    "TradeTermRules": "hcta:TradeTermRules",
+    "Trader": "hcta:Trader",
+    "Triggered": "hcta:Triggered",
+    "TypeError": "hcta:TypeError",
+    "UnresolvedReference": "hcta:UnresolvedReference",
+    "Vessel": "hcta:Vessel",
+    "VesselFixed": "hcta:VesselFixed",
+    "VesselNominated": "hcta:VesselNominated",
+    "Waived": "hcta:Waived",
+    "Warning": "hcta:Warning",
+    "WashedOut": "hcta:WashedOut",
+    "WashoutClause": "hcta:WashoutClause",
+    "WeatherWorkingDaysSHEX": "hcta:WeatherWorkingDaysSHEX",
+    "Weighing": "hcta:Weighing",
+    "WeightFinality": "hcta:WeightFinality",
+    "WorkingDays": "hcta:WorkingDays",
+    "about": {
+      "@id": "hcta:about",
+      "@type": "@id"
+    },
+    "action": {
+      "@id": "hcta:action"
+    },
+    "allowedTransition": {
+      "@id": "hcta:allowedTransition",
+      "@type": "@id"
+    },
+    "amount": {
+      "@id": "hcta:amount",
+      "@type": "xsd:decimal"
+    },
+    "anchorEvent": {
+      "@id": "hcta:anchorEvent",
+      "@type": "@id"
+    },
+    "asKnownAt": {
+      "@id": "hcta:asKnownAt",
+      "@type": "xsd:dateTime"
+    },
+    "attachedContract": {
+      "@id": "hcta:attachedContract",
+      "@type": "@id"
+    },
+    "attachedFrom": {
+      "@id": "hcta:attachedFrom",
+      "@type": "xsd:dateTime"
+    },
+    "attachedTo": {
+      "@id": "hcta:attachedTo",
+      "@type": "@id"
+    },
+    "backToBackWith": {
+      "@id": "hcta:backToBackWith",
+      "@type": "@id"
+    },
+    "bookedTo": {
+      "@id": "hcta:bookedTo",
+      "@type": "@id"
+    },
+    "branchOf": {
+      "@id": "hcta:branchOf",
+      "@type": "@id"
+    },
+    "buyer": {
+      "@id": "hcta:buyer",
+      "@type": "@id"
+    },
+    "carriedBy": {
+      "@id": "hcta:carriedBy",
+      "@type": "@id"
+    },
+    "charterer": {
+      "@id": "hcta:charterer",
+      "@type": "@id"
+    },
+    "clauseNumber": {
+      "@id": "hcta:clauseNumber"
+    },
+    "comment": "rdfs:comment",
+    "commodity": {
+      "@id": "hcta:commodity",
+      "@type": "@id"
+    },
+    "compiledFrom": {
+      "@id": "hcta:compiledFrom",
+      "@type": "@id"
+    },
+    "compilerVersion": {
+      "@id": "hcta:compilerVersion"
+    },
+    "concernsCargo": {
+      "@id": "hcta:concernsCargo",
+      "@type": "@id"
+    },
+    "concernsContract": {
+      "@id": "hcta:concernsContract",
+      "@type": "@id"
+    },
+    "confidence": {
+      "@id": "hcta:confidence",
+      "@type": "xsd:decimal"
+    },
+    "contentHash": {
+      "@id": "hcta:contentHash"
+    },
+    "costCategory": {
+      "@id": "hcta:costCategory",
+      "@type": "@id"
+    },
+    "countingRule": {
+      "@id": "hcta:countingRule",
+      "@type": "@id"
+    },
+    "creditor": {
+      "@id": "hcta:creditor",
+      "@type": "@id"
+    },
+    "currency": {
+      "@id": "hcta:currency"
+    },
+    "dcterms": "http://purl.org/dc/terms/",
+    "debtor": {
+      "@id": "hcta:debtor",
+      "@type": "@id"
+    },
+    "definedIn": {
+      "@id": "hcta:definedIn",
+      "@type": "@id"
+    },
+    "demurrageRate": {
+      "@id": "hcta:demurrageRate",
+      "@type": "@id"
+    },
+    "detachedAt": {
+      "@id": "hcta:detachedAt",
+      "@type": "xsd:dateTime"
+    },
+    "detachmentReason": {
+      "@id": "hcta:detachmentReason",
+      "@type": "@id"
+    },
+    "diagnosticKind": {
+      "@id": "hcta:diagnosticKind",
+      "@type": "@id"
+    },
+    "directlyPartOf": {
+      "@id": "hcta:directlyPartOf",
+      "@type": "@id"
+    },
+    "dischargePort": {
+      "@id": "hcta:dischargePort",
+      "@type": "@id"
+    },
+    "discountScale": {
+      "@id": "hcta:discountScale"
+    },
+    "drivenBy": {
+      "@id": "hcta:drivenBy",
+      "@type": "@id"
+    },
+    "durationValue": {
+      "@id": "hcta:durationValue",
+      "@type": "xsd:duration"
+    },
+    "editionOf": {
+      "@id": "hcta:editionOf",
+      "@type": "@id"
+    },
+    "effectiveFrom": {
+      "@id": "hcta:effectiveFrom",
+      "@type": "xsd:date"
+    },
+    "effectiveUntil": {
+      "@id": "hcta:effectiveUntil",
+      "@type": "xsd:date"
+    },
+    "emits": {
+      "@id": "hcta:emits",
+      "@type": "@id"
+    },
+    "endOffset": {
+      "@id": "hcta:endOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "eventType": {
+      "@id": "hcta:eventType",
+      "@type": "@id"
+    },
+    "ex": "https://example.org/hcta/example/",
+    "exerciseDeadline": {
+      "@id": "hcta:exerciseDeadline",
+      "@type": "@id"
+    },
+    "explainedBy": {
+      "@id": "hcta:explainedBy",
+      "@type": "@id"
+    },
+    "factStatus": {
+      "@id": "hcta:factStatus",
+      "@type": "@id"
+    },
+    "finalAt": {
+      "@id": "hcta:finalAt",
+      "@type": "@id"
+    },
+    "forCargo": {
+      "@id": "hcta:forCargo",
+      "@type": "@id"
+    },
+    "fromStandardConcept": {
+      "@id": "hcta:fromStandardConcept",
+      "@type": "@id"
+    },
+    "goal": {
+      "@id": "hcta:goal"
+    },
+    "handledBy": {
+      "@id": "hcta:handledBy",
+      "@type": "@id"
+    },
+    "hasLine": {
+      "@id": "hcta:hasLine",
+      "@type": "@id"
+    },
+    "hasPart": {
+      "@id": "hcta:hasPart",
+      "@type": "@id"
+    },
+    "hasSeparateLegalPersonality": {
+      "@id": "hcta:hasSeparateLegalPersonality",
+      "@type": "xsd:boolean"
+    },
+    "hasTerm": {
+      "@id": "hcta:hasTerm",
+      "@type": "@id"
+    },
+    "hcta": "https://example.org/hcta#",
+    "hctash": "https://example.org/hcta/shapes#",
+    "hedgeInstrument": {
+      "@id": "hcta:hedgeInstrument",
+      "@type": "@id"
+    },
+    "hedgeQuantity": {
+      "@id": "hcta:hedgeQuantity",
+      "@type": "@id"
+    },
+    "hedgedExposure": {
+      "@id": "hcta:hedgedExposure",
+      "@type": "@id"
+    },
+    "hedges": {
+      "@id": "hcta:hedges",
+      "@type": "@id"
+    },
+    "holonId": {
+      "@id": "hcta:holonId"
+    },
+    "holonVersion": {
+      "@id": "hcta:holonVersion",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "id": "@id",
+    "inDocument": {
+      "@id": "hcta:inDocument",
+      "@type": "@id"
+    },
+    "incorporates": {
+      "@id": "hcta:incorporates",
+      "@type": "@id"
+    },
+    "incoterm": {
+      "@id": "hcta:incoterm",
+      "@type": "@id"
+    },
+    "issuingBody": {
+      "@id": "hcta:issuingBody",
+      "@type": "@id"
+    },
+    "jurisdiction": {
+      "@id": "hcta:jurisdiction"
+    },
+    "label": "rdfs:label",
+    "legacyKey": {
+      "@id": "hcta:legacyKey"
+    },
+    "legacySystem": {
+      "@id": "hcta:legacySystem"
+    },
+    "licence": {
+      "@id": "hcta:licence"
+    },
+    "limitKind": {
+      "@id": "hcta:limitKind"
+    },
+    "limitValue": {
+      "@id": "hcta:limitValue",
+      "@type": "xsd:decimal"
+    },
+    "lineAmount": {
+      "@id": "hcta:lineAmount",
+      "@type": "@id"
+    },
+    "listensTo": {
+      "@id": "hcta:listensTo",
+      "@type": "@id"
+    },
+    "loadPort": {
+      "@id": "hcta:loadPort",
+      "@type": "@id"
+    },
+    "mapsTo": {
+      "@id": "hcta:mapsTo",
+      "@type": "@id"
+    },
+    "marketReference": {
+      "@id": "hcta:marketReference",
+      "@type": "@id"
+    },
+    "matchKind": {
+      "@id": "hcta:matchKind",
+      "@type": "@id"
+    },
+    "message": {
+      "@id": "hcta:message"
+    },
+    "offset": {
+      "@id": "hcta:offset",
+      "@type": "@id"
+    },
+    "optionHolder": {
+      "@id": "hcta:optionHolder",
+      "@type": "@id"
+    },
+    "overrides": {
+      "@id": "hcta:overrides",
+      "@type": "@id"
+    },
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "partOf": {
+      "@id": "hcta:partOf",
+      "@type": "@id"
+    },
+    "perUnit": {
+      "@id": "hcta:perUnit"
+    },
+    "periodEnd": {
+      "@id": "hcta:periodEnd",
+      "@type": "xsd:dateTime"
+    },
+    "periodStart": {
+      "@id": "hcta:periodStart",
+      "@type": "xsd:dateTime"
+    },
+    "pnlState": {
+      "@id": "hcta:pnlState",
+      "@type": "@id"
+    },
+    "precedenceRank": {
+      "@id": "hcta:precedenceRank",
+      "@type": "xsd:positiveInteger"
+    },
+    "prefLabel": "skos:prefLabel",
+    "premium": {
+      "@id": "hcta:premium",
+      "@type": "@id"
+    },
+    "pricingPeriod": {
+      "@id": "hcta:pricingPeriod",
+      "@type": "@id"
+    },
+    "proposedBy": {
+      "@id": "hcta:proposedBy",
+      "@type": "@id"
+    },
+    "prov": "http://www.w3.org/ns/prov#",
+    "qualityParameter": {
+      "@id": "hcta:qualityParameter",
+      "@type": "@id"
+    },
+    "quantityValue": {
+      "@id": "hcta:quantityValue",
+      "@type": "xsd:decimal"
+    },
+    "quotedText": {
+      "@id": "hcta:quotedText"
+    },
+    "raisedAt": {
+      "@id": "hcta:raisedAt",
+      "@type": "xsd:dateTime"
+    },
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "realises": {
+      "@id": "hcta:realises",
+      "@type": "@id"
+    },
+    "referencedText": {
+      "@id": "hcta:referencedText",
+      "@type": "@id"
+    },
+    "refersTo": {
+      "@id": "hcta:refersTo",
+      "@type": "@id"
+    },
+    "resolutionDate": {
+      "@id": "hcta:resolutionDate",
+      "@type": "xsd:date"
+    },
+    "resolvedAtLevel": {
+      "@id": "hcta:resolvedAtLevel",
+      "@type": "@id"
+    },
+    "resolvedEdition": {
+      "@id": "hcta:resolvedEdition",
+      "@type": "@id"
+    },
+    "responsibleRole": {
+      "@id": "hcta:responsibleRole",
+      "@type": "@id"
+    },
+    "sameGroupAs": {
+      "@id": "hcta:sameGroupAs",
+      "@type": "@id"
+    },
+    "seller": {
+      "@id": "hcta:seller",
+      "@type": "@id"
+    },
+    "semanticDifference": {
+      "@id": "hcta:semanticDifference"
+    },
+    "severity": {
+      "@id": "hcta:severity",
+      "@type": "@id"
+    },
+    "sh": "http://www.w3.org/ns/shacl#",
+    "shipowner": {
+      "@id": "hcta:shipowner",
+      "@type": "@id"
+    },
+    "signedOn": {
+      "@id": "hcta:signedOn",
+      "@type": "xsd:date"
+    },
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "startOffset": {
+      "@id": "hcta:startOffset",
+      "@type": "xsd:nonNegativeInteger"
+    },
+    "state": {
+      "@id": "hcta:state",
+      "@type": "@id"
+    },
+    "supersedes": {
+      "@id": "hcta:supersedes",
+      "@type": "@id"
+    },
+    "takesChargeOf": {
+      "@id": "hcta:takesChargeOf",
+      "@type": "@id"
+    },
+    "time": "http://www.w3.org/2006/time#",
+    "toCanonicalConcept": {
+      "@id": "hcta:toCanonicalConcept",
+      "@type": "@id"
+    },
+    "toleranceOption": {
+      "@id": "hcta:toleranceOption",
+      "@type": "@id"
+    },
+    "tolerancePercent": {
+      "@id": "hcta:tolerancePercent",
+      "@type": "xsd:decimal"
+    },
+    "transactionTime": {
+      "@id": "hcta:transactionTime",
+      "@type": "xsd:dateTime"
+    },
+    "transferPoint": {
+      "@id": "hcta:transferPoint",
+      "@type": "@id"
+    },
+    "triggeredBy": {
+      "@id": "hcta:triggeredBy",
+      "@type": "@id"
+    },
+    "type": "@type",
+    "unit": {
+      "@id": "hcta:unit"
+    },
+    "usesDefinition": {
+      "@id": "hcta:usesDefinition",
+      "@type": "@id"
+    },
+    "validTime": {
+      "@id": "hcta:validTime",
+      "@type": "xsd:dateTime"
+    },
+    "validatedBy": {
+      "@id": "hcta:validatedBy",
+      "@type": "@id"
+    },
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "@graph": [
+    {
+      "id": "ex:Inc-Pur-Incoterms",
+      "precedenceRank": "3",
+      "referencedText": "ex:Incoterms",
+      "resolutionDate": "2026-02-02",
+      "resolvedEdition": "ex:Incoterms2020",
+      "type": "Incorporation"
+    },
+    {
+      "action": "Deliver the contract quantity free on board the nominated vessel within the shipment period",
+      "compiledFrom": [
+        "ex:Span-Pur-Qty",
+        "ex:Span-Pur-Deliver"
+      ],
+      "creditor": "ex:OriginBR",
+      "debtor": "ex:Supplier",
+      "directlyPartOf": "ex:Cl-Pur-Quantity",
+      "hasTerm": [
+        "ex:T-Pur-Qty",
+        "ex:T-Pur-ShipmentPeriod"
+      ],
+      "holonId": "PRV-PUR-DLV",
+      "id": "ex:P-Pur-Deliver",
+      "realises": "hcta:QuantityTolerance",
+      "resolvedAtLevel": "ex:Inc-Pur-ANEC",
+      "state": "hcta:Fulfilled",
+      "triggeredBy": "hcta:VesselNominated",
+      "type": "Obligation"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "concernsContract": [
+        "ex:SaleB",
+        "ex:CharterParty"
+      ],
+      "eventType": "hcta:NORTenderedDischarge",
+      "factStatus": "hcta:Actual",
+      "id": "ex:Ev-NORDischarge",
+      "supersedes": "ex:Ev-NORDischarge-Fc",
+      "transactionTime": "2026-04-16T09:45:00+00:00",
+      "type": "Event",
+      "validTime": "2026-04-16T09:30:00+00:00"
+    },
+    {
+      "compiledFrom": "ex:Span-SaA-Washout",
+      "directlyPartOf": "ex:Cl-SaA-Washout",
+      "holonId": "PRV-SAA-WSH",
+      "id": "ex:P-SaA-Washout",
+      "type": "WashoutClause"
+    },
+    {
+      "emits": "hcta:DocumentsPresented",
+      "holonId": "PROC-LC-0001",
+      "id": "ex:Proc-LC",
+      "listensTo": "hcta:BLIssued",
+      "responsibleRole": "hcta:BackOffice",
+      "takesChargeOf": "ex:P-SaB-Payment",
+      "type": "LetterOfCreditProcess"
+    },
+    {
+      "id": "ex:Legacy-CTRM-SaleB",
+      "legacyKey": "TRD-778812",
+      "legacySystem": "CTRM",
+      "mapsTo": "ex:SaleB",
+      "type": "LegacyRecord"
+    },
+    {
+      "compiledFrom": "ex:Span-SaB-Weight",
+      "directlyPartOf": "ex:Cl-SaB-Weight",
+      "finalAt": "hcta:FinalAtDischarge",
+      "holonId": "PRV-SAB-WGT",
+      "id": "ex:P-SaB-WeightFinality",
+      "realises": "hcta:WeightFinality",
+      "type": "Condition"
+    },
+    {
+      "id": "ex:PortTarragona",
+      "label": "Tarragona, ES",
+      "type": "Port"
+    },
+    {
+      "clauseNumber": "9",
+      "directlyPartOf": "ex:Purchase",
+      "holonId": "CL-PUR-CST",
+      "id": "ex:Cl-Pur-Costs",
+      "type": "Clause"
+    },
+    {
+      "emits": "hcta:LaytimeStarted",
+      "holonId": "PROC-LAY-0001",
+      "id": "ex:Proc-Laytime",
+      "listensTo": [
+        "hcta:NORTenderedDischarge",
+        "hcta:DischargeCompleted"
+      ],
+      "responsibleRole": "hcta:Chartering",
+      "type": "LaytimeProcess"
+    },
+    {
+      "hcta:endOffset": 860,
+      "hcta:startOffset": 800,
+      "id": "ex:Span-SaA-Washout",
+      "inDocument": "ex:Doc-SaleARecap",
+      "quotedText": "Contract may be washed out by mutual agreement at settlement price",
+      "type": "SourceSpan"
+    },
+    {
+      "id": "ex:FOSFA-CFR-Form",
+      "issuingBody": "ex:FOSFA",
+      "label": "FOSFA standard form, CFR (illustrative)",
+      "type": "StandardForm"
+    },
+    {
+      "backToBackWith": "ex:P-SaB-WeightFinality",
+      "compiledFrom": "ex:Span-Pur-Weight",
+      "directlyPartOf": "ex:Cl-Pur-Weight",
+      "finalAt": "hcta:FinalAtLoading",
+      "holonId": "PRV-PUR-WGT",
+      "id": "ex:P-Pur-WeightFinality",
+      "realises": "hcta:WeightFinality",
+      "type": "Condition"
+    },
+    {
+      "id": "ex:GAFTA",
+      "label": "GAFTA",
+      "type": "IssuingBody"
+    },
+    {
+      "buyer": "ex:BuyerB",
+      "holonId": "CTR-SAL-0002",
+      "id": "ex:SaleB",
+      "incorporates": [
+        "ex:Inc-SaB-FOSFA",
+        "ex:Inc-SaB-Incoterms",
+        "ex:Inc-SaB-Law"
+      ],
+      "incoterm": "hcta:CFR",
+      "label": "Sale B, FOSFA CFR Tarragona",
+      "seller": "ex:BranchGVA",
+      "signedOn": "2026-04-02",
+      "state": "hcta:Performing",
+      "type": "SaleContract"
+    },
+    {
+      "about": [
+        "ex:P-CP-Laytime",
+        "ex:P-SaB-Laytime"
+      ],
+      "diagnosticKind": "hcta:LaytimeMismatch",
+      "id": "ex:Diag-Laytime",
+      "message": "Charter party discharge rate 8,000 t/day at USD 18,000/day demurrage versus sale B 10,000 t/day at USD 14,000/day: demurrage paid to the owner is only partly recoverable.",
+      "raisedAt": "2026-04-02T15:12:00+00:00",
+      "severity": "hcta:Warning",
+      "type": "Diagnostic"
+    },
+    {
+      "clauseNumber": "5",
+      "directlyPartOf": "ex:SaleB",
+      "holonId": "CL-SAB-PAY",
+      "id": "ex:Cl-SaB-Payment",
+      "type": "Clause"
+    },
+    {
+      "id": "ex:T-Pur-ShipmentPeriod",
+      "periodEnd": "2026-03-31T23:59:59+00:00",
+      "periodStart": "2026-03-01T00:00:00+00:00",
+      "type": "Period"
+    },
+    {
+      "id": "ex:BuyerB",
+      "jurisdiction": "ES",
+      "label": "Example Crushing B",
+      "type": "LegalEntity"
+    },
+    {
+      "id": "ex:ICC",
+      "label": "ICC",
+      "type": "IssuingBody"
+    },
+    {
+      "action": "Notify any quality claim within the time bar",
+      "compiledFrom": "ex:Span-SaB-Claim",
+      "creditor": "ex:BranchGVA",
+      "debtor": "ex:BuyerB",
+      "directlyPartOf": "ex:Cl-SaB-Claims",
+      "hasTerm": "ex:T-SaB-ClaimDeadline",
+      "holonId": "PRV-SAB-CLM",
+      "id": "ex:P-SaB-ClaimNotice",
+      "realises": "hcta:ClaimTimeBar",
+      "state": "hcta:Pending",
+      "triggeredBy": "hcta:DischargeCompleted",
+      "type": "Obligation"
+    },
+    {
+      "id": "ex:Inc-Pur-ANEC",
+      "precedenceRank": "2",
+      "referencedText": "ex:ANEC-FOB-Form",
+      "resolutionDate": "2026-02-02",
+      "resolvedEdition": "ex:ANEC-FOB-Form-E1",
+      "type": "Incorporation"
+    },
+    {
+      "id": "ex:IntakeModel",
+      "label": "AI intake model (illustrative)",
+      "type": "prov:SoftwareAgent"
+    },
+    {
+      "id": "ex:CBOT-Soybeans-May26",
+      "label": "CBOT soybean futures, May 2026",
+      "type": "MarketReference"
+    },
+    {
+      "id": "ex:ChecksFrontEndFOSFA",
+      "label": "FOSFA front-end type and consistency checks",
+      "type": "prov:SoftwareAgent"
+    },
+    {
+      "hcta:endOffset": 580,
+      "hcta:startOffset": 520,
+      "id": "ex:Span-SaB-Super",
+      "inDocument": "ex:Doc-SaleBRecap",
+      "quotedText": "Loadport superintendence for Seller's account",
+      "type": "SourceSpan"
+    },
+    {
+      "id": "ex:T-SaB-DischargeRate",
+      "quantityValue": "10000.0",
+      "type": "QuantityTerm",
+      "unit": "t/day"
+    },
+    {
+      "amount": "14000.0",
+      "currency": "USD",
+      "id": "ex:T-SaB-Demurrage",
+      "perUnit": "day",
+      "type": "MoneyTerm"
+    },
+    {
+      "attachedContract": "ex:SaleB",
+      "attachedFrom": "2026-04-02T15:00:00+00:00",
+      "attachedTo": "ex:Cargo-0001",
+      "id": "ex:Att-SaleB",
+      "type": "ContractAttachment"
+    },
+    {
+      "id": "ex:BuyerA",
+      "jurisdiction": "NL",
+      "label": "Example Crushing A",
+      "type": "LegalEntity"
+    },
+    {
+      "id": "ex:PortRotterdam",
+      "label": "Rotterdam, NL",
+      "type": "Port"
+    },
+    {
+      "hcta:endOffset": 660,
+      "hcta:startOffset": 600,
+      "id": "ex:Span-Pur-Super",
+      "inDocument": "ex:Doc-PurchaseRecap",
+      "quotedText": "Superintendence at loadport for Buyer's account",
+      "type": "SourceSpan"
+    },
+    {
+      "hedgeInstrument": "ex:CBOT-Soybeans-May26",
+      "hedgeQuantity": "ex:T-HedgeQty",
+      "hedgedExposure": "ex:T-Pur-Price",
+      "hedges": "ex:Cargo-0001",
+      "id": "ex:Hedge-0001",
+      "type": "HedgePosition"
+    },
+    {
+      "id": "ex:CP-Form",
+      "label": "Grain voyage charter party form (illustrative)",
+      "type": "CharterPartyForm"
+    },
+    {
+      "id": "ex:T-CP-DischargeRate",
+      "quantityValue": "8000.0",
+      "type": "QuantityTerm",
+      "unit": "t/day"
+    },
+    {
+      "countingRule": "hcta:CalendarDays",
+      "durationValue": "P21D",
+      "id": "ex:T-21Days",
+      "type": "Duration"
+    },
+    {
+      "fromStandardConcept": "ex:SC-ANEC-WeightFinalLoading",
+      "id": "ex:Map-ANEC-WeightFinality",
+      "matchKind": "skos:closeMatch",
+      "toCanonicalConcept": "hcta:WeightFinality",
+      "type": "ConceptMapping"
+    },
+    {
+      "id": "ex:Legacy-Excel-Laytime",
+      "legacyKey": "Sheet1!B4",
+      "legacySystem": "Excel: laytime_Q2_2026.xlsx",
+      "mapsTo": "ex:P-CP-Laytime",
+      "type": "LegacyRecord"
+    },
+    {
+      "buyer": "ex:BranchGVA",
+      "holonId": "CTR-ICO-0001",
+      "id": "ex:Intercompany",
+      "incoterm": "hcta:FOB",
+      "label": "Intercompany, origin entity to Geneva branch",
+      "seller": "ex:OriginBR",
+      "signedOn": "2026-02-02",
+      "state": "hcta:Performing",
+      "type": "IntercompanyContract"
+    },
+    {
+      "currency": "USD",
+      "id": "ex:T-Pur-Price",
+      "marketReference": "ex:CBOT-Soybeans-May26",
+      "perUnit": "bu",
+      "premium": "ex:T-Pur-Premium",
+      "type": "PriceFormula"
+    },
+    {
+      "hcta:endOffset": 452,
+      "hcta:startOffset": 410,
+      "id": "ex:Span-Pur-Weight",
+      "inDocument": "ex:Doc-PurchaseRecap",
+      "quotedText": "Weight and quality final at loading",
+      "type": "SourceSpan"
+    },
+    {
+      "id": "ex:Inc-Pur-Law",
+      "precedenceRank": "5",
+      "referencedText": "ex:BrazilianLaw",
+      "resolutionDate": "2026-02-02",
+      "resolvedEdition": "ex:BrazilianLaw-Current",
+      "type": "Incorporation"
+    },
+    {
+      "id": "ex:Inc-SaB-Law",
+      "precedenceRank": "5",
+      "referencedText": "ex:EnglishLaw",
+      "resolutionDate": "2026-04-02",
+      "resolvedEdition": "ex:EnglishLaw-Current",
+      "type": "Incorporation"
+    },
+    {
+      "dcterms:title": {
+        "@language": "en",
+        "@value": "HCTA example: soybean chain with resale in transit"
+      },
+      "id": "ex:"
+    },
+    {
+      "branchOf": "ex:ExampleGroup",
+      "hasSeparateLegalPersonality": "false",
+      "id": "ex:BranchGVA",
+      "jurisdiction": "CH",
+      "label": "Example Trading Group SA, Geneva branch",
+      "sameGroupAs": "ex:ExampleGroup",
+      "type": "Branch"
+    },
+    {
+      "id": "ex:Supplier",
+      "jurisdiction": "BR",
+      "label": "Example Grains Exportadora Ltda",
+      "type": "LegalEntity"
+    },
+    {
+      "contentHash": "sha256:example-english-law-snapshot",
+      "editionOf": "ex:EnglishLaw",
+      "effectiveFrom": "2000-01-01",
+      "id": "ex:EnglishLaw-Current",
+      "type": "Edition"
+    },
+    {
+      "id": "ex:FOSFA",
+      "label": "FOSFA",
+      "type": "IssuingBody"
+    },
+    {
+      "id": "ex:MV-Example",
+      "label": "MV Example Star",
+      "type": "Vessel"
+    },
+    {
+      "id": "ex:Inc-SaB-FOSFA",
+      "precedenceRank": "2",
+      "referencedText": "ex:FOSFA-CFR-Form",
+      "resolutionDate": "2026-04-02",
+      "resolvedEdition": "ex:FOSFA-CFR-Form-E1",
+      "type": "Incorporation"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "eventType": "hcta:NORTenderedDischarge",
+      "factStatus": "hcta:Forecast",
+      "id": "ex:Ev-NORDischarge-Fc",
+      "transactionTime": "2026-04-02T15:30:00+00:00",
+      "type": "Event",
+      "validTime": "2026-04-14T06:00:00+00:00"
+    },
+    {
+      "action": "Bear load-port superintendence costs",
+      "compiledFrom": "ex:Span-SaB-Super",
+      "costCategory": "hcta:Superintendence",
+      "creditor": "ex:BuyerB",
+      "debtor": "ex:BranchGVA",
+      "directlyPartOf": "ex:Cl-SaB-Costs",
+      "holonId": "PRV-SAB-SUP",
+      "id": "ex:P-SaB-Superintendence",
+      "realises": "hcta:CostBearer",
+      "state": "hcta:Triggered",
+      "triggeredBy": "hcta:LoadingCompleted",
+      "type": "CostAllocation"
+    },
+    {
+      "bookedTo": "ex:BranchGVA",
+      "drivenBy": "ex:Ev-NORDischarge",
+      "explainedBy": [
+        "ex:P-CP-Laytime",
+        "ex:P-SaB-Laytime"
+      ],
+      "id": "ex:Line-DemurrageGap",
+      "label": "Unrecoverable discharge demurrage (accrual)",
+      "lineAmount": "ex:Amt-DemGap",
+      "type": "PnLLine"
+    },
+    {
+      "action": "Pay the contract price",
+      "compiledFrom": "ex:Span-Pur-Price",
+      "creditor": "ex:Supplier",
+      "debtor": "ex:OriginBR",
+      "directlyPartOf": "ex:Cl-Pur-Price",
+      "hasTerm": "ex:T-Pur-Price",
+      "holonId": "PRV-PUR-PRC",
+      "id": "ex:P-Pur-Price",
+      "state": "hcta:Triggered",
+      "triggeredBy": "hcta:DocumentsPresented",
+      "type": "Obligation"
+    },
+    {
+      "id": "ex:GAFTA-CIF-Form",
+      "issuingBody": "ex:GAFTA",
+      "label": "GAFTA standard form, CIF (illustrative)",
+      "type": "StandardForm"
+    },
+    {
+      "contentHash": "sha256:example-brazilian-law-snapshot",
+      "editionOf": "ex:BrazilianLaw",
+      "effectiveFrom": "2000-01-01",
+      "id": "ex:BrazilianLaw-Current",
+      "type": "Edition"
+    },
+    {
+      "id": "ex:BrazilianLaw",
+      "label": "Law of Brazil",
+      "type": "GoverningLaw"
+    },
+    {
+      "anchorEvent": "hcta:DischargeCompleted",
+      "id": "ex:T-SaB-ClaimDeadline",
+      "offset": "ex:T-21Days",
+      "type": "Deadline"
+    },
+    {
+      "id": "ex:T-Pur-Qty",
+      "quantityValue": "60000.0",
+      "toleranceOption": "ex:Supplier",
+      "tolerancePercent": "10.0",
+      "type": "QuantityTerm",
+      "unit": "t"
+    },
+    {
+      "action": "Pay by irrevocable letter of credit against shipping documents",
+      "compiledFrom": "ex:Span-SaB-Pay",
+      "creditor": "ex:BranchGVA",
+      "debtor": "ex:BuyerB",
+      "directlyPartOf": "ex:Cl-SaB-Payment",
+      "holonId": "PRV-SAB-PAY",
+      "id": "ex:P-SaB-Payment",
+      "state": "hcta:Pending",
+      "triggeredBy": "hcta:DocumentsPresented",
+      "type": "Obligation"
+    },
+    {
+      "clauseNumber": "10",
+      "directlyPartOf": "ex:SaleB",
+      "holonId": "CL-SAB-LAY",
+      "id": "ex:Cl-SaB-Laytime",
+      "type": "Clause"
+    },
+    {
+      "contentHash": "sha256:example-doc-2",
+      "id": "ex:Doc-SaleARecap",
+      "label": "Sale A recap, 3 Feb 2026",
+      "type": "SourceDocument"
+    },
+    {
+      "contentHash": "sha256:example-fosfa-e1",
+      "editionOf": "ex:FOSFA-CFR-Form",
+      "effectiveFrom": "2023-06-01",
+      "id": "ex:FOSFA-CFR-Form-E1",
+      "licence": "client-provided",
+      "type": "Edition"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "concernsContract": "ex:SaleA",
+      "eventType": "hcta:ContractWashedOut",
+      "factStatus": "hcta:Actual",
+      "id": "ex:Ev-WashoutA",
+      "transactionTime": "2026-04-02T15:10:00+00:00",
+      "type": "Event",
+      "validTime": "2026-04-02T15:00:00+00:00"
+    },
+    {
+      "hcta:endOffset": 118,
+      "hcta:startOffset": 90,
+      "id": "ex:Span-Pur-Deliver",
+      "inDocument": "ex:Doc-PurchaseRecap",
+      "quotedText": "Shipment 1-31 March 2026 FOB Santos",
+      "type": "SourceSpan"
+    },
+    {
+      "hcta:endOffset": 380,
+      "hcta:startOffset": 300,
+      "id": "ex:Span-CP-Laytime",
+      "inDocument": "ex:Doc-CPFixture",
+      "quotedText": "Discharge 8,000 mt per WWD SHEX, demurrage USD 18,000 per day",
+      "type": "SourceSpan"
+    },
+    {
+      "hcta:endOffset": 188,
+      "hcta:startOffset": 120,
+      "id": "ex:Span-Pur-Qty",
+      "inDocument": "ex:Doc-PurchaseRecap",
+      "quotedText": "60,000 mt 10 pct more or less at Seller's option",
+      "type": "SourceSpan"
+    },
+    {
+      "contentHash": "sha256:example-doc-3",
+      "id": "ex:Doc-SaleBRecap",
+      "label": "Sale B recap, 2 Apr 2026",
+      "type": "SourceDocument"
+    },
+    {
+      "hcta:endOffset": 320,
+      "hcta:startOffset": 250,
+      "id": "ex:Span-SaB-Pay",
+      "inDocument": "ex:Doc-SaleBRecap",
+      "quotedText": "Payment by irrevocable LC against shipping documents",
+      "type": "SourceSpan"
+    },
+    {
+      "amount": "0.85",
+      "currency": "USD",
+      "id": "ex:T-Pur-Premium",
+      "perUnit": "bu",
+      "type": "MoneyTerm"
+    },
+    {
+      "definedIn": "ex:ANEC-FOB-Form-E1",
+      "id": "ex:SC-ANEC-WeightFinalLoading",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final at loading (ANEC form, illustrative)"
+      },
+      "type": "StandardConcept"
+    },
+    {
+      "hcta:endOffset": 500,
+      "hcta:startOffset": 420,
+      "id": "ex:Span-SaB-Laytime",
+      "inDocument": "ex:Doc-SaleBRecap",
+      "quotedText": "Discharge 10,000 mt per WWD SHEX, demurrage USD 14,000 per day",
+      "type": "SourceSpan"
+    },
+    {
+      "buyer": "ex:OriginBR",
+      "holonId": "CTR-PUR-0001",
+      "id": "ex:Purchase",
+      "incorporates": [
+        "ex:Inc-Pur-ANEC",
+        "ex:Inc-Pur-Incoterms",
+        "ex:Inc-Pur-Law"
+      ],
+      "incoterm": "hcta:FOB",
+      "label": "Purchase, ANEC FOB Santos",
+      "seller": "ex:Supplier",
+      "signedOn": "2026-02-02",
+      "state": "hcta:Performing",
+      "type": "PurchaseContract"
+    },
+    {
+      "attachedContract": "ex:SaleA",
+      "attachedFrom": "2026-02-03T09:00:00+00:00",
+      "attachedTo": "ex:Cargo-0001",
+      "detachedAt": "2026-04-02T15:00:00+00:00",
+      "detachmentReason": "hcta:WashedOut",
+      "id": "ex:Att-SaleA",
+      "type": "ContractAttachment"
+    },
+    {
+      "id": "ex:ANEC-FOB-Form",
+      "issuingBody": "ex:ANEC",
+      "label": "ANEC standard form, FOB Brazil (illustrative)",
+      "type": "StandardForm"
+    },
+    {
+      "id": "ex:Owner",
+      "jurisdiction": "GR",
+      "label": "Example Shipping Co",
+      "type": "LegalEntity"
+    },
+    {
+      "about": [
+        "ex:P-Pur-WeightFinality",
+        "ex:P-SaB-WeightFinality"
+      ],
+      "diagnosticKind": "hcta:FinalityMismatch",
+      "id": "ex:Diag-Finality",
+      "message": "Weight final at loading under the purchase but final at discharge under sale B: the branch carries outturn risk.",
+      "raisedAt": "2026-04-02T15:12:00+00:00",
+      "severity": "hcta:Warning",
+      "type": "Diagnostic"
+    },
+    {
+      "id": "ex:Inc-SaA-GAFTA",
+      "precedenceRank": "2",
+      "referencedText": "ex:GAFTA-CIF-Form",
+      "resolutionDate": "2026-02-03",
+      "resolvedEdition": "ex:GAFTA-CIF-Form-E1",
+      "type": "Incorporation"
+    },
+    {
+      "emits": "hcta:InvoiceIssued",
+      "holonId": "PROC-INV-0001",
+      "id": "ex:Proc-Invoicing",
+      "listensTo": [
+        "hcta:BLIssued",
+        "hcta:InspectionReported"
+      ],
+      "responsibleRole": "hcta:BackOffice",
+      "takesChargeOf": [
+        "ex:P-Pur-Price",
+        "ex:P-Pur-Superintendence",
+        "ex:P-SaB-Superintendence"
+      ],
+      "type": "InvoicingProcess"
+    },
+    {
+      "fromStandardConcept": "ex:SC-FOSFA-WeightFinalDischarge",
+      "id": "ex:Map-FOSFA-WeightFinality",
+      "matchKind": "skos:closeMatch",
+      "semanticDifference": "Illustrative: the standard's own rules on weighing method and tolerance apply on top of the canonical concept.",
+      "toCanonicalConcept": "hcta:WeightFinality",
+      "type": "ConceptMapping"
+    },
+    {
+      "amount": "-36000.0",
+      "currency": "USD",
+      "id": "ex:Amt-DemGap",
+      "type": "MoneyTerm"
+    },
+    {
+      "id": "ex:Inc-SaA-Incoterms",
+      "precedenceRank": "3",
+      "referencedText": "ex:Incoterms",
+      "resolutionDate": "2026-02-03",
+      "resolvedEdition": "ex:Incoterms2020",
+      "type": "Incorporation"
+    },
+    {
+      "bookedTo": "ex:BranchGVA",
+      "drivenBy": "ex:Ev-WashoutA",
+      "explainedBy": "ex:P-SaA-Washout",
+      "id": "ex:Line-Washout",
+      "label": "Sale A washout settlement",
+      "lineAmount": "ex:Amt-Washout",
+      "type": "PnLLine"
+    },
+    {
+      "charterer": "ex:BranchGVA",
+      "holonId": "CTR-CP-0001",
+      "id": "ex:CharterParty",
+      "incorporates": "ex:Inc-CP-Form",
+      "label": "Voyage charter party, Santos to Europe",
+      "shipowner": "ex:Owner",
+      "signedOn": "2026-02-20",
+      "state": "hcta:Performing",
+      "type": "CharterParty"
+    },
+    {
+      "action": "Bear load-port superintendence costs",
+      "compiledFrom": "ex:Span-Pur-Super",
+      "costCategory": "hcta:Superintendence",
+      "creditor": "ex:Supplier",
+      "debtor": "ex:OriginBR",
+      "directlyPartOf": "ex:Cl-Pur-Costs",
+      "holonId": "PRV-PUR-SUP",
+      "id": "ex:P-Pur-Superintendence",
+      "realises": "hcta:CostBearer",
+      "state": "hcta:Fulfilled",
+      "triggeredBy": "hcta:LoadingCompleted",
+      "type": "CostAllocation"
+    },
+    {
+      "contentHash": "sha256:example-doc-1",
+      "id": "ex:Doc-PurchaseRecap",
+      "label": "Purchase recap, 2 Feb 2026",
+      "type": "SourceDocument"
+    },
+    {
+      "hcta:endOffset": 395,
+      "hcta:startOffset": 350,
+      "id": "ex:Span-SaB-Weight",
+      "inDocument": "ex:Doc-SaleBRecap",
+      "quotedText": "Weight final at discharge",
+      "type": "SourceSpan"
+    },
+    {
+      "contentHash": "sha256:example-incoterms-2020",
+      "editionOf": "ex:Incoterms",
+      "effectiveFrom": "2020-01-01",
+      "id": "ex:Incoterms2020",
+      "licence": "client-provided",
+      "type": "Edition"
+    },
+    {
+      "contentHash": "sha256:example-doc-4",
+      "id": "ex:Doc-CPFixture",
+      "label": "Charter party fixture recap, 20 Feb 2026",
+      "type": "SourceDocument"
+    },
+    {
+      "backToBackWith": "ex:P-SaB-Laytime",
+      "compiledFrom": "ex:Span-CP-Laytime",
+      "demurrageRate": "ex:T-CP-Demurrage",
+      "directlyPartOf": "ex:Cl-CP-Laytime",
+      "hasTerm": "ex:T-CP-DischargeRate",
+      "holonId": "PRV-CP-LAY",
+      "id": "ex:P-CP-Laytime",
+      "realises": "hcta:Laytime",
+      "type": "LaytimeProvision"
+    },
+    {
+      "carriedBy": "ex:MV-Example",
+      "commodity": "hcta:Soybeans",
+      "dischargePort": "ex:PortTarragona",
+      "holonId": "CARGO-2026-0001",
+      "id": "ex:Cargo-0001",
+      "label": "Soybeans, Brazil to Europe, 60,000 t",
+      "loadPort": "ex:PortSantos",
+      "state": "hcta:Performing",
+      "type": "Cargo"
+    },
+    {
+      "hcta:endOffset": 290,
+      "hcta:startOffset": 200,
+      "id": "ex:Span-Pur-Price",
+      "inDocument": "ex:Doc-PurchaseRecap",
+      "quotedText": "CBOT May futures plus 85 cents per bushel, priced before B/L date",
+      "type": "SourceSpan"
+    },
+    {
+      "clauseNumber": "8",
+      "directlyPartOf": "ex:SaleB",
+      "holonId": "CL-SAB-WGT",
+      "id": "ex:Cl-SaB-Weight",
+      "type": "Clause"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "concernsContract": "ex:SaleB",
+      "eventType": "hcta:ResaleFixed",
+      "factStatus": "hcta:Actual",
+      "id": "ex:Ev-ResaleB",
+      "transactionTime": "2026-04-02T15:10:00+00:00",
+      "type": "Event",
+      "validTime": "2026-04-02T15:00:00+00:00"
+    },
+    {
+      "id": "ex:Inc-SaA-Law",
+      "precedenceRank": "5",
+      "referencedText": "ex:EnglishLaw",
+      "resolutionDate": "2026-02-03",
+      "resolvedEdition": "ex:EnglishLaw-Current",
+      "type": "Incorporation"
+    },
+    {
+      "emits": "hcta:VesselNominated",
+      "holonId": "PROC-NOM-0001",
+      "id": "ex:Proc-Nomination",
+      "listensTo": "hcta:VesselFixed",
+      "responsibleRole": "hcta:TradeExecution",
+      "takesChargeOf": "ex:P-Pur-Deliver",
+      "type": "NominationProcess"
+    },
+    {
+      "id": "ex:PortSantos",
+      "label": "Santos, BR",
+      "type": "Port"
+    },
+    {
+      "clauseNumber": "6",
+      "directlyPartOf": "ex:Purchase",
+      "holonId": "CL-PUR-WGT",
+      "id": "ex:Cl-Pur-Weight",
+      "type": "Clause"
+    },
+    {
+      "clauseNumber": "15",
+      "directlyPartOf": "ex:SaleB",
+      "holonId": "CL-SAB-CLM",
+      "id": "ex:Cl-SaB-Claims",
+      "type": "Clause"
+    },
+    {
+      "id": "ex:T-HedgeQty",
+      "quantityValue": "60000.0",
+      "type": "QuantityTerm",
+      "unit": "t"
+    },
+    {
+      "attachedContract": "ex:CharterParty",
+      "attachedFrom": "2026-02-20T14:00:00+00:00",
+      "attachedTo": "ex:Cargo-0001",
+      "id": "ex:Att-CP",
+      "type": "ContractAttachment"
+    },
+    {
+      "attachedContract": "ex:Purchase",
+      "attachedFrom": "2026-02-02T10:00:00+00:00",
+      "attachedTo": "ex:Cargo-0001",
+      "id": "ex:Att-Purchase",
+      "type": "ContractAttachment"
+    },
+    {
+      "compiledFrom": "ex:Span-SaB-Laytime",
+      "demurrageRate": "ex:T-SaB-Demurrage",
+      "directlyPartOf": "ex:Cl-SaB-Laytime",
+      "hasTerm": "ex:T-SaB-DischargeRate",
+      "holonId": "PRV-SAB-LAY",
+      "id": "ex:P-SaB-Laytime",
+      "prov:wasDerivedFrom": {
+        "id": "ex:AI-Prop-SaB-Laytime"
+      },
+      "realises": "hcta:Laytime",
+      "type": "LaytimeProvision"
+    },
+    {
+      "contentHash": "sha256:example-cp-e1",
+      "editionOf": "ex:CP-Form",
+      "effectiveFrom": "2022-01-01",
+      "id": "ex:CP-Form-E1",
+      "licence": "client-provided",
+      "type": "Edition"
+    },
+    {
+      "clauseNumber": "2",
+      "directlyPartOf": "ex:Purchase",
+      "holonId": "CL-PUR-QTY",
+      "id": "ex:Cl-Pur-Quantity",
+      "type": "Clause"
+    },
+    {
+      "buyer": "ex:BuyerA",
+      "holonId": "CTR-SAL-0001",
+      "id": "ex:SaleA",
+      "incorporates": [
+        "ex:Inc-SaA-GAFTA",
+        "ex:Inc-SaA-Incoterms",
+        "ex:Inc-SaA-Law"
+      ],
+      "incoterm": "hcta:CIF",
+      "label": "Sale A, GAFTA CIF Rotterdam (washed out)",
+      "seller": "ex:BranchGVA",
+      "signedOn": "2026-02-03",
+      "state": "hcta:ContractWashedOutState",
+      "type": "SaleContract"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "concernsContract": "ex:Purchase",
+      "eventType": "hcta:DealAgreed",
+      "factStatus": "hcta:Actual",
+      "id": "ex:Ev-Deal",
+      "transactionTime": "2026-02-02T10:05:00+00:00",
+      "type": "Event",
+      "validTime": "2026-02-02T10:00:00+00:00"
+    },
+    {
+      "clauseNumber": "20",
+      "directlyPartOf": "ex:SaleA",
+      "holonId": "CL-SAA-WSH",
+      "id": "ex:Cl-SaA-Washout",
+      "type": "Clause"
+    },
+    {
+      "amount": "18000.0",
+      "currency": "USD",
+      "id": "ex:T-CP-Demurrage",
+      "perUnit": "day",
+      "type": "MoneyTerm"
+    },
+    {
+      "hasSeparateLegalPersonality": "true",
+      "id": "ex:ExampleGroup",
+      "jurisdiction": "CH",
+      "label": "Example Trading Group SA",
+      "type": "LegalEntity"
+    },
+    {
+      "clauseNumber": "11",
+      "directlyPartOf": "ex:SaleB",
+      "holonId": "CL-SAB-CST",
+      "id": "ex:Cl-SaB-Costs",
+      "type": "Clause"
+    },
+    {
+      "about": [
+        "ex:P-Pur-Superintendence",
+        "ex:P-SaB-Superintendence"
+      ],
+      "diagnosticKind": "hcta:DoubleCostAllocation",
+      "id": "ex:Diag-Super",
+      "message": "Load-port superintendence is borne by the origin entity under the purchase and by the branch under sale B: the group may pay it twice.",
+      "raisedAt": "2026-04-02T15:12:00+00:00",
+      "severity": "hcta:Warning",
+      "type": "Diagnostic"
+    },
+    {
+      "id": "ex:EnglishLaw",
+      "label": "Law of England and Wales",
+      "type": "GoverningLaw"
+    },
+    {
+      "hcta:endOffset": 760,
+      "hcta:startOffset": 700,
+      "id": "ex:Span-SaB-Claim",
+      "inDocument": "ex:Doc-SaleBRecap",
+      "quotedText": "Quality claims to be notified within 21 days of completion of discharge",
+      "type": "SourceSpan"
+    },
+    {
+      "attachedContract": "ex:Intercompany",
+      "attachedFrom": "2026-02-02T12:00:00+00:00",
+      "attachedTo": "ex:Cargo-0001",
+      "id": "ex:Att-Intercompany",
+      "type": "ContractAttachment"
+    },
+    {
+      "amount": "-120000.0",
+      "currency": "USD",
+      "id": "ex:Amt-Washout",
+      "type": "MoneyTerm"
+    },
+    {
+      "id": "ex:ANEC",
+      "label": "ANEC",
+      "type": "IssuingBody"
+    },
+    {
+      "clauseNumber": "12",
+      "directlyPartOf": "ex:CharterParty",
+      "holonId": "CL-CP-LAY",
+      "id": "ex:Cl-CP-Laytime",
+      "type": "Clause"
+    },
+    {
+      "clauseNumber": "3",
+      "directlyPartOf": "ex:Purchase",
+      "holonId": "CL-PUR-PRC",
+      "id": "ex:Cl-Pur-Price",
+      "type": "Clause"
+    },
+    {
+      "id": "ex:Incoterms",
+      "issuingBody": "ex:ICC",
+      "label": "Incoterms",
+      "type": "TradeTermRules"
+    },
+    {
+      "contentHash": "sha256:example-gafta-e1",
+      "editionOf": "ex:GAFTA-CIF-Form",
+      "effectiveFrom": "2023-01-01",
+      "id": "ex:GAFTA-CIF-Form-E1",
+      "licence": "client-provided",
+      "type": "Edition"
+    },
+    {
+      "hasSeparateLegalPersonality": "true",
+      "id": "ex:OriginBR",
+      "jurisdiction": "BR",
+      "label": "Example Trading Brasil Ltda (origin entity)",
+      "sameGroupAs": "ex:ExampleGroup",
+      "type": "LegalEntity"
+    },
+    {
+      "concernsCargo": "ex:Cargo-0001",
+      "concernsContract": "ex:Purchase",
+      "eventType": "hcta:BLIssued",
+      "factStatus": "hcta:Actual",
+      "id": "ex:Ev-BL",
+      "transactionTime": "2026-03-19T08:30:00+00:00",
+      "type": "Event",
+      "validTime": "2026-03-18T16:00:00+00:00"
+    },
+    {
+      "asKnownAt": "2026-04-16T10:00:00+00:00",
+      "forCargo": "ex:Cargo-0001",
+      "hasLine": [
+        "ex:Line-DemurrageGap",
+        "ex:Line-Washout"
+      ],
+      "id": "ex:PnL-Live-0416",
+      "pnlState": "hcta:LivePnL",
+      "type": "PnLEvaluation"
+    },
+    {
+      "id": "ex:Inc-CP-Form",
+      "precedenceRank": "2",
+      "referencedText": "ex:CP-Form",
+      "resolutionDate": "2026-02-20",
+      "resolvedEdition": "ex:CP-Form-E1",
+      "type": "Incorporation"
+    },
+    {
+      "definedIn": "ex:FOSFA-CFR-Form-E1",
+      "id": "ex:SC-FOSFA-WeightFinalDischarge",
+      "prefLabel": {
+        "@language": "en",
+        "@value": "Final at discharge (FOSFA form, illustrative)"
+      },
+      "type": "StandardConcept"
+    },
+    {
+      "compiledFrom": "ex:Span-SaB-Laytime",
+      "confidence": "0.93",
+      "id": "ex:AI-Prop-SaB-Laytime",
+      "proposedBy": "ex:IntakeModel",
+      "type": "AIProposal",
+      "validatedBy": "ex:ChecksFrontEndFOSFA"
+    },
+    {
+      "contentHash": "sha256:example-anec-e1",
+      "editionOf": "ex:ANEC-FOB-Form",
+      "effectiveFrom": "2024-01-01",
+      "id": "ex:ANEC-FOB-Form-E1",
+      "licence": "client-provided",
+      "type": "Edition"
+    },
+    {
+      "contentHash": "sha256:example-doc-5",
+      "id": "ex:Doc-Intercompany",
+      "label": "Intercompany agreement",
+      "type": "SourceDocument"
+    },
+    {
+      "id": "ex:Inc-SaB-Incoterms",
+      "precedenceRank": "3",
+      "referencedText": "ex:Incoterms",
+      "resolutionDate": "2026-04-02",
+      "resolvedEdition": "ex:Incoterms2020",
+      "type": "Incorporation"
+    }
+  ]
+}
